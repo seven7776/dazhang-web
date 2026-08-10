@@ -351,6 +351,7 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
   <div class="hero-left">
     <div class="date" id="todayLine">加载中…</div>
     <h1 id="greet">你好,大张</h1>
+    <div id="syncDot" title="云备份状态" style="font-size:10px;color:var(--mist);margin-top:5px;letter-spacing:1px;cursor:pointer" onclick="loadFromCloud()"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#8B8B92;margin-right:4px"></span>云备份</div>
   </div>
   <div class="hero-right" id="weatherBox" onclick="loadWeather()">
     <div class="w-icon" id="wIcon">⏳</div>
@@ -1178,31 +1179,70 @@ function renderClasses(){
 
 
 /* ================= 文档上传+展示 ================= */
-var COS_BUCKET='dazhang-web-1301165422';
-var COS_REG='ap-nanjing';
-/* ===== 数据云端备份(COS预签名URL,防手机清localStorage丢数据) ===== */
-var COS_UPLOAD_URL='';
-async function cosPut(bodyStr){
-  if(!COS_UPLOAD_URL)return;
-  return fetch(COS_UPLOAD_URL,{method:'PUT',body:bodyStr,headers:{'Content-Type':'application/json'}});
+/* ===== 数据云端备份(GitHub 私有仓,免费不限量不欠费;防手机清localStorage丢数据) ===== */
+var GH_REPO='seven7776/dazhang-backup';
+var GH_FILE='user-data.json';
+var GH_API='https://api.github.com';
+var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';  /*@GHTOKEN 部署时注入*/
+function _ghTok(){return (typeof GHTOKEN==='string'&&GHTOKEN)?atob(GHTOKEN):'';}
+function _ghH(){return {'Authorization':'Bearer '+_ghTok(),'Accept':'application/vnd.github+json','Content-Type':'application/json'};}
+/* 同步状态点 */
+function setSync(state){ // ok | err | saving | off
+  var el=document.getElementById('syncDot');if(!el)return;
+  var map={ok:['#3D7A57','已同步'],saving:['#A8722E','同步中'],err:['#A94438','未同步'],off:['#8B8B92','未开启']};
+  var m=map[state]||map.off;
+  el.innerHTML='<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+m[0]+';margin-right:4px"></span>'+m[1];
+  el.setAttribute('data-state',state);
+}
+var _ghSha=null;
+function ghPut(bodyStr){
+  if(!_ghTok()){setSync('off');return Promise.resolve(false);}
+  setSync('saving');
+  var url=GH_API+'/repos/'+GH_REPO+'/contents/'+GH_FILE;
+  function doPut(sha){
+    var payload={message:'backup '+new Date().toISOString(),content:btoa(unescape(encodeURIComponent(bodyStr)))};
+    if(sha)payload.sha=sha;
+    return fetch(url,{method:'PUT',headers:_ghH(),body:JSON.stringify(payload)})
+      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(d){_ghSha=(d&&d.content&&d.content.sha)||_ghSha;setSync('ok');return true;});
+  }
+  function getSha(){
+    if(_ghSha)return Promise.resolve(_ghSha);
+    return fetch(url,headers:_ghH()).then(function(r){return r.ok?r.json():null;})
+      .then(function(d){return d&&d.sha?d.sha:null;}).catch(function(){return null;});
+  }
+  return getSha().then(doPut).catch(function(){
+    // sha 过期/冲突:取最新 sha 重试一次
+    return fetch(url,headers:_ghH()).then(function(r){return r.ok?r.json():null;})
+      .then(function(d){_ghSha=d&&d.sha?d.sha:null;return doPut(_ghSha);})
+      .catch(function(){setSync('err');return false;});
+  });
 }
 var _cloudSaveTimer=null;
 function saveToCloud(){_cloudSave();}  // 防抖版(常规save用)
 function _cloudSave(){
   if(_cloudSaveTimer)clearTimeout(_cloudSaveTimer);
   _cloudSaveTimer=setTimeout(function(){
-    try{cosPut(JSON.stringify(DB)).catch(function(){});}catch(e){}
+    try{ghPut(JSON.stringify(DB));}catch(e){setSync('err');}
   },2000);
 }
 function saveCloudNow(){  // 立刻上传(页面关闭/切后台用)
   if(_cloudSaveTimer){clearTimeout(_cloudSaveTimer);_cloudSaveTimer=null;}
-  try{cosPut(JSON.stringify(DB)).catch(function(){});}catch(e){}
+  try{ghPut(JSON.stringify(DB));}catch(e){setSync('err');}
 }
 function loadFromCloud(){
-  fetch('https://'+COS_BUCKET+'.cos.'+COS_REG+'.myqcloud.com/user-data.json?v='+Date.now())
-    .then(function(r){return r.json();})
-    .then(function(d){if(d&&d.todo){DB=d;var b=blank();for(var k in b){if(typeof DB[k]==='undefined')DB[k]=b[k];}save();renderAll();renderAllBoards();if(DB.lockEnabled)_showLock();}})
-    .catch(function(){});
+  if(!_ghTok()){setSync('off');return;}
+  fetch(GH_API+'/repos/'+GH_REPO+'/contents/'+GH_FILE,headers:_ghH())
+    .then(function(r){return r.ok?r.json():null;})
+    .then(function(d){
+      if(!d||!d.content){setSync('err');return;}
+      _ghSha=d.sha||_ghSha;
+      var data=null;
+      try{data=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));}catch(e){}
+      if(data&&data.todo){DB=data;var b=blank();for(var k in b){if(typeof DB[k]==='undefined')DB[k]=b[k];}save();renderAll();renderAllBoards();if(DB.lockEnabled)_showLock();}
+      setSync('ok');
+    })
+    .catch(function(){setSync('err');});
 }
 function renderDocsLocal(){
   var el=document.getElementById('docList');if(!el)return;
@@ -1460,9 +1500,9 @@ var DOCS=[];
 <!--@DIDATOKEN-->
 var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 <!--@DIDATOKEN-END-->
-<!--@COSURL-->
-var COS_UPLOAD_URL=atob('aHR0cHM6Ly9kYXpoYW5nLXdlYi0xMzAxMTY1NDIyLmNvcy5hcC1uYW5qaW5nLm15cWNsb3VkLmNvbS91c2VyLWRhdGEuanNvbj9xLXNpZ24tYWxnb3JpdGhtPXNoYTEmcS1haz1BS0lEMkhRVUwyWXQ5RDRHSUcxYjBFRzZrRVo3Y3k4SU5LajMmcS1zaWduLXRpbWU9MTc4NjMxNDU1NTsxNzg2OTE5MzU1JnEta2V5LXRpbWU9MTc4NjMxNDU1NTsxNzg2OTE5MzU1JnEtaGVhZGVyLWxpc3Q9JnEtdXJsLXBhcmFtLWxpc3Q9JnEtc2lnbmF0dXJlPThmNmVlZWZiZDBjMDYyNzFiNjVmMjAyMzdkZjAyOGNiNjNjMTI5NGU=');
-<!--@COSURL-END-->
+<!--@GHTOKEN-->
+var GHTOKEN='';
+<!--@GHTOKEN-END-->
 <!--@VER-->
 var APP_VER='202608100630';
 <!--@VER-END-->
