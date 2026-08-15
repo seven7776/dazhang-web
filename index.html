@@ -288,13 +288,19 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .fun-tag-btn{border:none;border-radius:10px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;flex:none}
 .fun-sel{flex:0 0 auto;border:1px solid var(--line);border-radius:10px;padding:7px 4px;font-size:13px;background:var(--field);color:var(--ink)}
 /* ===== 应用锁 ===== */
-.lock-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#f0f4ff,#f5f0ff);z-index:9999;display:flex;align-items:center;justify-content:center}
-.lock-box{text-align:center;padding:30px;max-width:300px}
-.lock-icon{font-size:48px;margin-bottom:12px}
-.lock-title{font-size:20px;font-weight:700;margin-bottom:24px;color:var(--ink)}
-.lock-btn{background:var(--accent);color:#fff;border:none;border-radius:12px;padding:12px 32px;font-size:16px;font-weight:600;cursor:pointer}
-.lock-pin-input{border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center;font-size:20px;letter-spacing:8px;width:120px}
-.lock-msg{color:#ff453a;font-size:12px;margin-top:8px;min-height:16px}
+.lock-overlay{position:fixed;inset:0;background:linear-gradient(160deg,#eef2f8,#e8edf5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px}
+.lock-box{text-align:center;max-width:320px;width:100%;display:flex;flex-direction:column;align-items:center}
+.lock-mark{width:64px;height:64px;border-radius:18px;background:var(--accent);color:#fff;font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:Georgia,"Songti SC","Noto Serif SC",serif;box-shadow:0 10px 24px rgba(31,68,104,.28);margin-bottom:18px;letter-spacing:0}
+.lock-title{font-size:24px;font-weight:700;letter-spacing:3px;color:var(--ink);margin-bottom:6px}
+.lock-sub{font-size:13px;letter-spacing:2px;color:var(--mist);margin-bottom:30px}
+.lock-btn{background:var(--accent);color:#fff;border:none;border-radius:14px;padding:14px 0;font-size:16px;font-weight:600;letter-spacing:4px;cursor:pointer;width:100%;box-shadow:0 8px 20px rgba(31,68,104,.22)}
+.lock-btn-block{width:100%;margin-top:14px;padding:13px 0}
+#lockPinArea{width:100%;text-align:center}
+.lock-or{display:flex;align-items:center;gap:12px;width:100%;margin:28px 0 16px;color:var(--faint);font-size:12px;letter-spacing:2px}
+.lock-or::before,.lock-or::after{content:"";flex:1;height:1px;background:var(--line)}
+.lock-pin-input{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px;text-align:center;font-size:24px;letter-spacing:10px;width:172px;color:var(--ink);outline:none}
+.lock-pin-input:focus{border-color:var(--accent-tint2)}
+.lock-msg{color:var(--bad);font-size:13px;margin-top:14px;min-height:18px;letter-spacing:1px}
 /* ===== 个人提升状态药丸 ===== */
 .status-pill{flex:none;border:1px solid var(--line);background:var(--field);border-radius:12px;padding:3px 10px;font-size:11px;color:var(--mist);cursor:pointer}
 /* ===== AI 任务看板 ===== */
@@ -365,8 +371,16 @@ body{background:var(--paper)}
 .hot-item.rank-top .hot-rank{background:var(--amber)}
 .en-card{background:linear-gradient(135deg,#EDF3F9,#F2F3EF)}
 .flashcard-card{background:linear-gradient(135deg,#EDF3F9,#FDFDFB)}
-.lock-overlay{background:linear-gradient(150deg,#1F4468 0%,#1B2530 60%,#141C25 100%)}
-.lock-title{color:#F2F6FA}.lock-btn{background:var(--accent);box-shadow:0 6px 18px rgba(47,93,138,.4)}
+.lock-overlay{background:radial-gradient(130% 100% at 50% 0%,#284C75 0%,#1B2C42 52%,#121C2A 100%)}
+.lock-mark{background:linear-gradient(165deg,#42709F,#2C567F);box-shadow:0 14px 34px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.10);color:#EFF5FB}
+.lock-title{color:#EFF4FA}
+.lock-sub{color:#8AA0B6}
+.lock-btn{background:linear-gradient(165deg,#3E6B99,#2C567F);box-shadow:0 12px 28px rgba(8,20,34,.55),inset 0 0 0 1px rgba(255,255,255,.08);color:#EFF5FB}
+.lock-or{color:#5C7288}.lock-or::before,.lock-or::after{background:#2B3E54}
+.lock-pin-input{background:rgba(255,255,255,.05);border-color:#31465D;color:#EFF4FA}
+.lock-pin-input::placeholder{color:#54697E}
+.lock-pin-input:focus{border-color:#5C84AF}
+.lock-msg{color:#E79B8F}
 .done .cb{background:var(--accent);border-color:var(--accent)}
 .done .cb::after{content:"✓";color:#fff;font-size:12px;font-weight:700}
 .acc-bar-fill{background:var(--accent)}
@@ -1621,7 +1635,7 @@ var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';
 <!--@GHTOKEN-END-->
 <!--@VER-->
-var APP_VER='202608151320';
+var APP_VER='202608151420';
 <!--@VER-END-->
 <!--@DIDA-->
 var DIDA={"todo": [{"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查（贫血+甲状腺+乳腺+心脏）", "due": "2026-08-13"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-14"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-14"}, {"id": "6a6a17f6e4b09f591408146e", "pri": "中", "title": "🌿 每日养生提醒（贫血/护胃/防结石）", "due": "2026-08-14"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-16"}, {"id": "6a60b8d3e4b0f67952d3dad3", "pri": "高", "title": "周日10:00装牙冠", "due": "2026-08-16"}, {"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b8d3e4b0f67952d3dad3", "pri": "高", "title": "周日10:00装牙冠", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-14", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-14", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6a17f6e4b09f591408146e", "pri": "中", "title": "🌿 每日养生提醒（贫血/护胃/防结石）", "due": "2026-08-14", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查（贫血+甲状腺+乳腺+心脏）", "due": "2026-08-13", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18", "project": "69f1999221fab4f52de43863"}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
@@ -2131,12 +2145,14 @@ window.addEventListener('load',function(){
 </div>
 <div id="lockOverlay" class="lock-overlay" style="display:none">
   <div class="lock-box">
-    <div class="lock-icon">🔒</div>
+    <div class="lock-mark">张</div>
     <div class="lock-title">大张工作台</div>
-    <button class="lock-btn" id="lockUnlockBtn" onclick="App.unlock()">点击解锁</button>
-    <div id="lockPinArea" style="display:none;margin-top:12px">
-      <input type="password" id="lockPinInput" placeholder="输入PIN码" maxlength="4" inputmode="numeric" class="lock-pin-input">
-      <button class="lock-btn" style="margin-top:8px;padding:8px 20px;font-size:14px" onclick="App.unlockPin()">确认PIN</button>
+    <div class="lock-sub">私人内容 · 已锁定</div>
+    <button class="lock-btn" id="lockUnlockBtn" onclick="App.unlock()">解&nbsp;&nbsp;锁</button>
+    <div id="lockPinArea" style="display:none">
+      <div class="lock-or"><span>输入 PIN 解锁</span></div>
+      <input type="password" id="lockPinInput" placeholder="••••" maxlength="4" inputmode="numeric" class="lock-pin-input">
+      <button class="lock-btn lock-btn-block" onclick="App.unlockPin()">确认解锁</button>
     </div>
     <div id="lockMsg" class="lock-msg"></div>
   </div>
