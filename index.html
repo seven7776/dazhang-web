@@ -2023,6 +2023,16 @@ function maybeSeed(n){
   if((n||0)<40)setTimeout(function(){maybeSeed((n||0)+1);},500); // 云端状态未知:等探测(最多20s)
 }
 
+/* ===== 侧栏图标自定义(读 localStorage navIcons,图标自选页保存) ===== */
+var NAV_ICONS_DEFAULT={home:'🏠',wenyi:'🏛️',qicai:'🎵',social:'🎭',studio:'🎙️',family:'🌿',account:'💰',english:'📖',fun:'🎬',growth:'📈',trash:'🗑️'};
+function applyNavIcons(){
+  var map={};try{map=JSON.parse(localStorage.getItem('navIcons')||'{}');}catch(e){}
+  var navs=document.querySelectorAll('#sidenav .s-nav');
+  for(var i=0;i<navs.length;i++){
+    var p=navs[i].getAttribute('data-page');var ic=navs[i].querySelector('.sn-ico');if(!ic)continue;
+    var v=(map[p]||NAV_ICONS_DEFAULT[p]);if(v)ic.textContent=v;
+  }
+}
 renderAll();App.go('home');
 maybeSeed();
 </script>
@@ -2054,6 +2064,8 @@ window.addEventListener('load',function(){
   // 滴答实时同步:打开拉一次,切回前台再拉一次
   refreshDida();
   document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')refreshDida();});
+  // 侧栏自定义图标
+  applyNavIcons();
 });
 </script>
 <div id="pinSetupModal" class="dm-overlay" style="display:none">
