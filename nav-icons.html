@@ -45,7 +45,7 @@ body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Harmon
 </div>
 <div class="bar">
   <button class="btn-reset" onclick="resetAll()">恢复默认</button>
-  <button class="btn-done" onclick="history.back()">完成</button>
+  <button class="btn-done" onclick="location.replace('index.html?v='+Date.now())">完成</button>
 </div>
 <div class="toast" id="toast"></div>
 <script>
