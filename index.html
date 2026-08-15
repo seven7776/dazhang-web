@@ -977,7 +977,8 @@ function renderBoard(key){
   var didaKey=key==='zx'?null:key;
   var darr=didaKey?((DIDA&&DIDA[didaKey])||[]).filter(function(t){return DB.didaDone.indexOf(t.id)<0;}).map(function(t){return {id:t.id,title:t.title,due:(DB.didaDue&&DB.didaDue[t.id])||t.due||'',dida:true,done:false};}):[];
   var lk=BOARD_LOCAL[key]||key;
-  var larr=(DB[lk]||[]).filter(function(o){return !o.done;}).map(function(o){return {id:o.id,title:o.t,due:o.due||o.sub||'',dida:false,done:false};});
+  var _didaTitles={};darr.forEach(function(t){_didaTitles[t.title]=1;});
+  var larr=(DB[lk]||[]).filter(function(o){return !o.done&&!_didaTitles[o.t];}).map(function(o){return {id:o.id,title:o.t,due:o.due||o.sub||'',dida:false,done:false};});
   var all=darr.concat(larr);
   if(!all.length){el.innerHTML='<div class="empty">还没有,下面加一条</div>';return;}
   el.innerHTML=all.map(function(t){
@@ -1018,6 +1019,53 @@ function didaUncomplete(t,origId){
         fetch('https://api.dida365.com/open/v1/project/'+t.project+'/task/'+realId,{method:'DELETE',headers:{'Authorization':'Bearer '+DIDATOKEN}}).catch(function(){});
       }
     }).catch(function(){});
+}
+/* ===== 滴答实时双向同步(打开/回前台自动拉最新 + 改日期实时推回) ===== */
+var DIDA_API='https://api.dida365.com/open/v1';
+function _didaH(){return {'Authorization':'Bearer '+DIDATOKEN,'Content-Type':'application/json'};}
+function _findDidaTask(id){
+  var ks=['todo','fam','shop','qicai','studio','wenyi','social'];
+  for(var a=0;a<ks.length;a++){var arr=(DIDA&&DIDA[ks[a]])||[];for(var k=0;k<arr.length;k++){if(arr[a][k].id===id)return arr[a][k];}}
+  return null;
+}
+/* 改日期实时推回滴答(POST /task/{id},实测仅改期、保留任务本体) */
+function didaPushDate(id,val){
+  var t=_findDidaTask(id);if(!t||!t.project||!DIDATOKEN)return;
+  var rid=(DB.didaIdMap&&DB.didaIdMap[id])||id;
+  var body={id:rid,projectId:t.project,isAllDay:true};
+  if(val){body.dueDate=val+'T09:00:00+0800';}
+  fetch(DIDA_API+'/task/'+rid,{method:'POST',headers:_didaH(),body:JSON.stringify(body)}).catch(function(){});
+}
+function _normDidaTask(t){return {id:t.id,title:t.title,due:(t.dueDate||'').slice(0,10),project:t.projectId,pri:t.priority||0};}
+/* 从滴答实时拉最新(覆盖 build 快照);清掉已被滴答确认的本地改期覆盖;刷新界面 */
+function refreshDida(){
+  if(!DIDATOKEN)return;
+  var P={org:'69f178f6288a2d99229c7697',wenyi:'69c0cf16ebad38000000016c',social:'69f1999221fab4f52de43863',fam:'69c0cf59ebad3800000001bd',shop:'69f081f8e4b00a29c8f261d3'};
+  var keys=Object.keys(P);
+  function grab(pid){return fetch(DIDA_API+'/project/'+pid+'/data',{headers:_didaH()}).then(function(r){return r.json();}).catch(function(){return null;});}
+  var jobs=[grab('inbox')].concat(keys.map(function(k){return grab(P[k]);}));
+  Promise.all(jobs).then(function(res){
+    function tasksOf(d){return (d&&d.tasks?d.tasks:[]).filter(function(t){return t.status===0;}).map(_normDidaTask);}
+    var byKey={};keys.forEach(function(k,i){byKey[k]=tasksOf(res[i+1]);});
+    var fresh={};
+    fresh.shop=byKey.shop;fresh.fam=byKey.fam;
+    fresh.qicai=byKey.org;fresh.studio=byKey.org;
+    fresh.wenyi=byKey.wenyi;fresh.social=byKey.social;
+    /* To Do:5清单本周内到期 或 全部范围高优先(priority==5=高) */
+    var five=tasksOf(res[0]).concat(byKey.org,byKey.wenyi,byKey.social,byKey.fam);
+    var allScope=five.concat(byKey.shop);
+    var now=new Date();var pwd=(now.getDay()+6)%7;
+    var weekEnd=new Date(now.getFullYear(),now.getMonth(),now.getDate()+(6-pwd),23,59,59);
+    var seen={};
+    five.forEach(function(t){if(t.due&&new Date(t.due+'T00:00:00')<=weekEnd)seen[t.id]=t;});
+    allScope.forEach(function(t){if(t.pri===5)seen[t.id]=t;});
+    fresh.todo=Object.keys(seen).map(function(k){return seen[k];});
+    fresh.todo.sort(function(a,b){return (a.due===''?1:0)-(b.due===''?1:0)||(a.due||'9999').localeCompare(b.due||'9999');});
+    /* 已被滴答确认的任务清掉本地改期覆盖,以滴答为准 */
+    Object.keys(fresh).forEach(function(k){fresh[k].forEach(function(t){if(DB.didaDue)delete DB.didaDue[t.id];});});
+    DIDA=fresh;
+    save();renderAll();renderAllBoards();
+  }).catch(function(){});
 }
 /* ===== 回收站(勾选完成+删除都进这里,可恢复) ===== */
 var TRASH_NAMES={todo:'待办',shop:'购物',fam:'家庭',org:'机构',book:'录音预约',work:'待办工作',rehe:'策划排练',zx:'政协',funItems:'娱乐',diary:'复盘',money:'记账',anni:'纪念日',enWords:'生词本',songs:'歌单',videos:'视频',aiSkills:'AI看板'};
@@ -1827,21 +1875,21 @@ window.App={
     var el=document.getElementById('detailModal');
     if(!el){el=document.createElement('div');el.id='detailModal';el.className='dm-overlay';el.onclick=function(e){if(e.target===el)el.style.display='none';};document.body.appendChild(el);}
     el.innerHTML='<div class="dm-card"><div class="dm-t">'+esc(it.t)+'</div>'+
-      '<div class="dm-d">📅 '+(it.due||'未设置日期')+(it.local?'':'  (滴答项,改期仅本机生效)')+'</div>'+
-      '<div class="dm-d">📅 <input type="date" class="due-chip-input" value="'+(it.due||'')+'" onchange="App.setDue(\''+scope+'\',\''+id+'\',this.value)">'+(it.local?'':'  (滴答项,改期仅本机)')+'</div><div class="dm-actions"><button class="dm-btn dm-close" onclick="document.getElementById(\'detailModal\').style.display=\'none\'">关闭</button></div></div>';
+      '<div class="dm-d">📅 '+(it.due||'未设置日期')+(it.local?'':'  (滴答项,改期实时同步)')+'</div>'+
+      '<div class="dm-d">📅 <input type="date" class="due-chip-input" value="'+(it.due||'')+'" onchange="App.setDue(\''+scope+'\',\''+id+'\',this.value)">'+(it.local?'':'  (改期实时同步滴答)')+'</div><div class="dm-actions"><button class="dm-btn dm-close" onclick="document.getElementById(\'detailModal\').style.display=\'none\'">关闭</button></div></div>';
     el.style.display='flex';
   },
   editDue:function(scope,id){this.itemDetail(scope,id);},
   setDue:function(scope,id,val){
     if(scope==='todo'){
       var o=DB.todo.find(function(x){return x.id===id;});
-      if(o){o.due=val;save();}else{DB.didaDue[id]=val;save();}
+      if(o){o.due=val;save();}else{DB.didaDue[id]=val;save();didaPushDate(id,val);}
     }else if(scope==='fun'){
       var f=(DB.funItems||[]).find(function(x){return x.id===id;});if(f){f.due=val;save();}
     }else{
       var lk=BOARD_LOCAL[scope]||scope;
       var o2=(DB[lk]||[]).find(function(x){return x.id===id;});
-      if(o2){o2.due=val;save();}else{DB.didaDue[id]=val;save();}
+      if(o2){o2.due=val;save();}else{DB.didaDue[id]=val;save();didaPushDate(id,val);}
     }
     renderAll();renderAllBoards();renderFun();
   },
@@ -2003,6 +2051,9 @@ window.addEventListener('load',function(){
   // 页面隐藏/关闭时立刻上传备份(不等防抖)
   document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')saveCloudNow();});
   window.addEventListener('pagehide',function(){saveCloudNow();});
+  // 滴答实时同步:打开拉一次,切回前台再拉一次
+  refreshDida();
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')refreshDida();});
 });
 </script>
 <div id="pinSetupModal" class="dm-overlay" style="display:none">
