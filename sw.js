@@ -1,6 +1,6 @@
 // 大张工作台 PWA service worker
 // 策略: HTML network-first / ver.json+hot.json network-only / 同源静态 cache-first / 跨域放行
-const CACHE = 'dazhang-shell-v1';
+const CACHE = 'dazhang-shell-v2';
 const SHELL = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', function (e) {
