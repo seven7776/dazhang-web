@@ -1276,6 +1276,7 @@ function renderDocsLocal(){
 /* ================= 朗读(百度发音mp3直播,浏览器语音合成兜底) ================= */
 var _ttsAudio=null;
 function speakText(t,onend){
+  if(window.AndroidTTS&&AndroidTTS.ready&&AndroidTTS.ready()){try{AndroidTTS.speak(t);}catch(e){}if(onend)onend();return;}
   var done=false;
   function next(){if(!done){done=true;if(onend)onend();}}
   try{
@@ -1308,6 +1309,7 @@ function playFileSeq(urls,texts,i){
   playFile(urls[i],texts[i],function(){playFileSeq(urls,texts,i+1);});
 }
 function playFile(url,text,onend){
+  if(window.AndroidTTS&&AndroidTTS.ready&&AndroidTTS.ready()){try{AndroidTTS.speak(text);}catch(e){}if(onend)onend();return;}
   var done=false;
   function next(){if(!done){done=true;if(onend)onend();}}
   try{
