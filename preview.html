@@ -326,30 +326,32 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .trash-restore{flex:none;border:none;background:#E8F2FF;color:var(--accent);font-size:12px;font-weight:600;border-radius:8px;padding:4px 12px;cursor:pointer}
 .perm-del{flex:none;width:24px;height:24px;border-radius:50%;background:#FFF0F0;color:#ff453a;font-size:15px;font-weight:700;border:none;cursor:pointer}
 </style>
-<style id="theme-gilded">
+<style id="theme-celadon">
 /* ============================================================
-   鎏金墨谱 · 主题覆盖层（追加在原 <style> 之后，删除本块即还原）
-   声乐/录音棚质感：暖纸 + 深墨 + 鎏金铜；签名 = 五线谱细线
+   青瓷暖水 · 主题覆盖层（追加在原 <style> 之后，删除本块即还原）
+   青绿蓝主色系 + 暖奶油纸 + 琥珀对比点缀；签名 = 底部水波线
    ============================================================ */
 :root{
-  --paper:#F6F4ED;      /* 暖乐谱纸 */
-  --card:#FDFCF8;
-  --ink:#1D1A14;        /* 暖墨 */
-  --ink-soft:#2E2B22;
-  --mist:#8E8878;
-  --faint:#C7C2B2;
-  --line:#EAE6D8;
-  --field:#F5F1E7;
-  --accent:#9A7B2D;     /* 鎏金铜 */
-  --accent-deep:#6E5A1E;
-  --accent-tint:#F1E9D2;
-  --accent-tint2:#E8DDBB;
+  --paper:#F5F4EC;      /* 暖奶油纸 */
+  --card:#FDFDFA;
+  --ink:#18302E;        /* 深青墨 */
+  --ink-soft:#24403D;
+  --mist:#6E7C75;
+  --faint:#B9C2B6;
+  --line:#E5E7D9;
+  --field:#F1F2E7;
+  --accent:#177E70;     /* 青瓷青绿 */
+  --accent-deep:#0E5A50;
+  --accent-tint:#DCF0EB;
+  --accent-tint2:#BBE0D7;
+  --amber:#C07A1E;      /* 琥珀对比 */
+  --amber-tint:#F7EAD2;
   --good:#3D7A57;--good-bg:#E9F1EC;
   --warn:#A8722E;--warn-bg:#F6EEE1;
   --bad:#A94438;--bad-bg:#F6E7E4;
 }
 
-/* 编辑感衬线：数字/日期/大字标题（Georgia 保底，鸿蒙有宋体更佳） */
+/* 编辑感衬线：数字/日期/大字标题 */
 .hero .date,.hero h1,.big-sec,.cd .num,.acc-ov-item span:last-child,
 .fc-word,.w-temp,.en-sentence,.dm-t,.lock-title{
   font-family:Georgia,"Times New Roman","Songti SC","Noto Serif SC","STSong",serif;
@@ -357,78 +359,79 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 
 body{background:var(--paper)}
 
-/* ===== 首屏：深墨金大卡片（专辑封面感） ===== */
+/* ===== 首屏：深青绿大卡片（深水/瓷感），暖金文字 ===== */
 .hero{
-  background:linear-gradient(158deg,#2A251A 0%,#1D1A14 58%,#16130E 100%);
-  color:#F3EEDF;padding:34px 22px 30px;border-radius:0 0 28px 28px;
+  background:linear-gradient(158deg,#12645B 0%,#0E5A50 55%,#0A463F 100%);
+  color:#EAF3EC;padding:34px 22px 30px;border-radius:0 0 28px 28px;
   position:relative;overflow:hidden;
-  box-shadow:0 12px 32px rgba(29,26,20,.28);
+  box-shadow:0 12px 32px rgba(14,90,80,.30);
 }
-.hero .date{color:#CEAA54;opacity:.95;letter-spacing:3.5px;font-weight:600}
-.hero h1{color:#F6F1E3;font-size:30px;letter-spacing:1.5px;margin:10px 0 8px;text-shadow:0 2px 12px rgba(0,0,0,.3)}
-.hero .quote{color:#C4BCA6;opacity:.92;border-left:2px solid var(--accent);letter-spacing:1.5px}
-.hero-right{color:#F3EEDF}
-.hero .w-temp{color:#EAD9A6}
-.hero .w-desc{color:#C4BCA6;opacity:.85}
-.hero #syncDot{color:#8E8878 !important}
-/* 签名：五线谱细线压底 */
+.hero .date{color:#EFC87E;opacity:.96;letter-spacing:3.5px;font-weight:600}
+.hero h1{color:#F2F7F1;font-size:30px;letter-spacing:1.5px;margin:10px 0 8px;text-shadow:0 2px 12px rgba(0,0,0,.28)}
+.hero .quote{color:#BCD3C8;opacity:.92;border-left:2px solid var(--amber);letter-spacing:1.5px}
+.hero-right{color:#EAF3EC}
+.hero .w-temp{color:#F3D9A0}
+.hero .w-desc{color:#BCD3C8;opacity:.85}
+.hero #syncDot{color:#7FA294 !important}
+/* 签名：底部三道水波线 */
 .hero::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:16px;pointer-events:none;
-  background:repeating-linear-gradient(to bottom, rgba(206,170,84,.34) 0 1px, transparent 1px 4px);
-  opacity:.55;
+  content:"";position:absolute;left:0;right:0;bottom:0;height:18px;pointer-events:none;
+  background:repeating-linear-gradient(to bottom, rgba(239,200,126,.32) 0 1px, transparent 1px 6px);
+  opacity:.6;
 }
 
-/* ===== 分区标题：金色小标记 + 字距 ===== */
+/* ===== 分区标题：青绿小标记 ===== */
 .sec-title{color:var(--mist);letter-spacing:2.5px;font-weight:700}
 .sec-title::before{background:var(--accent);width:5px;height:5px;box-shadow:0 0 0 2px var(--accent-tint)}
 .big-sec{color:var(--ink);letter-spacing:1px}
 
-/* ===== 卡片：暖白 + 分层软影（比原来有"分量"） ===== */
+/* ===== 卡片：暖白 + 青调软影 ===== */
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;
-  box-shadow:0 1px 2px rgba(29,26,20,.04),0 10px 28px rgba(29,26,20,.06)}
+  box-shadow:0 1px 2px rgba(20,48,44,.05),0 10px 28px rgba(20,48,44,.07)}
 .nav-card{background:var(--card);border:1px solid var(--line);border-radius:18px;
-  box-shadow:0 1px 2px rgba(29,26,20,.04),0 8px 22px rgba(29,26,20,.05)}
+  box-shadow:0 1px 2px rgba(20,48,44,.05),0 8px 22px rgba(20,48,44,.06)}
 .nav-card .ico{background:var(--accent-tint)}
 .nav-card .name{color:var(--ink);letter-spacing:.5px}
 
-/* ===== 侧栏：暖纸 + 鎏金选中 ===== */
-#sidenav{background:#F4F1E8;border-right:1px solid var(--line)}
-.s-nav .sn-ico{background:#EDE9DB}
-#sidenav .s-nav.cur .sn-ico{background:var(--accent);box-shadow:0 4px 12px rgba(154,123,45,.35)}
+/* ===== 侧栏：暖纸 + 青绿选中 ===== */
+#sidenav{background:#F4F3E9;border-right:1px solid var(--line)}
+.s-nav .sn-ico{background:#EBEADF}
+#sidenav .s-nav.cur .sn-ico{background:var(--accent);box-shadow:0 4px 12px rgba(23,126,112,.35)}
 #sidenav .s-nav.cur .sn-lbl{color:var(--accent-deep)}
-.qk-ico{background:#EDE9DB}
+.qk-ico{background:#EBEADF}
 
-/* ===== 蓝色 chip/标签 → 鎏金 ===== */
+/* ===== chip/标签 → 青绿 ===== */
 .en-tts,.fun-tag,.due-chip,.trash-ic.done,.trash-restore{background:var(--accent-tint);color:var(--accent-deep)}
 .due-chip-input{background:var(--accent-tint);color:var(--accent-deep);border:1px solid var(--accent-tint2)}
 .fc-zh{color:var(--accent-deep)}
 .doc-item a{color:var(--accent-deep)}
-.meal-tip .tip-lbl{color:var(--accent-deep)}
 
-/* ===== 渐变卡 → 暖金 ===== */
-.en-card{background:linear-gradient(135deg,#FBF6E8,#F4ECD7)}
-.flashcard-card{background:linear-gradient(135deg,#FBF6E8,#FDFCF8)}
-.lock-overlay{background:linear-gradient(150deg,#2A251A 0%,#1D1A14 60%,#16130E 100%)}
-.lock-title{color:#F6F1E3}
-.lock-btn{background:var(--accent);box-shadow:0 6px 18px rgba(154,123,45,.4)}
+/* ===== 琥珀对比点缀：提示标签/标记/热点 ===== */
+.meal-tip .tip-lbl{color:var(--amber)}
+.fc-mark{background:var(--amber-tint);color:var(--amber);border-color:#EBCF9C}
+.hot-item.rank-top .hot-rank{background:var(--amber)}
+
+/* ===== 渐变卡 → 暖青 ===== */
+.en-card{background:linear-gradient(135deg,#EAF3EE,#F4F1E4)}
+.flashcard-card{background:linear-gradient(135deg,#EAF3EE,#FDFDFA)}
+.lock-overlay{background:linear-gradient(150deg,#12645B 0%,#0E5A50 55%,#0A463F 100%)}
+.lock-title{color:#F2F7F1}
+.lock-btn{background:var(--amber);box-shadow:0 6px 18px rgba(192,122,30,.4)}
 .lock-icon{filter:drop-shadow(0 4px 10px rgba(0,0,0,.3))}
 
-/* ===== 复选框对勾乱码修复（¹3 → ✓） + 鎏金 ===== */
+/* ===== 复选框对勾乱码修复 + 青绿 ===== */
 .done .cb{background:var(--accent);border-color:var(--accent)}
 .done .cb::after{content:"✓";color:#fff;font-size:12px;font-weight:700}
 
-/* ===== 热点/记账强调 ===== */
-.hot-item.rank-top .hot-rank{background:var(--bad)}
+/* ===== 主按钮/弹窗/回顶 ===== */
 .acc-bar-fill{background:var(--accent)}
 .add-btn,.dm-btn{background:var(--accent);letter-spacing:1px}
-#updToast{background:var(--accent-deep);box-shadow:0 4px 16px rgba(110,90,30,.4)}
+#updToast{background:var(--accent-deep);box-shadow:0 4px 16px rgba(14,90,80,.4)}
 #updToast button{color:var(--accent-deep)}
-.back-top{background:var(--accent);box-shadow:0 4px 14px rgba(29,26,20,.3)}
+.back-top{background:var(--accent);box-shadow:0 4px 14px rgba(20,48,44,.3)}
 
-/* ===== 输入框聚焦 → 鎏金描边 ===== */
+/* ===== 输入框聚焦 → 青绿描边 ===== */
 .add-row input:focus,textarea.diary:focus{border-color:var(--accent-tint2);background:#fff}
-
-/* ===== 选中态统一鎏金（accent 已是金） ===== */
 .alm-lbl input{accent-color:var(--accent)}
 
 </style>
@@ -2186,18 +2189,13 @@ window.addEventListener('load',function(){
   </div>
 </div>
 <script>
-/* 演示模式(#demo): 不读云不写云不上锁,塞演示数据,仅供截图预览 */
 if(location.hash.indexOf('demo')>=0){
   loadFromCloud=function(){};saveToCloud=function(){};saveCloudNow=function(){};
   window.addEventListener('load',function(){
     try{
       DB=blank();DB.lockEnabled=false;
-      DB.todo=[{id:'d1',t:'备周六声乐课教案',done:false,due:'2026-08-16'},{id:'d2',t:'给语儿转生活费',done:false,due:'2026-08-18'},{id:'d3',t:'录音棚周六设备检修',done:false,due:''}];
-      DB.fam=[{id:'f1',t:'源远家长会',done:false,due:'2026-08-20'},{id:'f2',t:'艾灸',done:false,due:''}];
-      DB.shop=[{id:'s1',t:'美瞳',done:false,due:''},{id:'s2',t:'矿泉水',done:false,due:''}];
-      DB.money=[{id:'m1',type:'out',amt:268,note:'食材采购',d:'2026-08-15'},{id:'m2',type:'in',amt:4600,note:'课时费',d:'2026-08-14'},{id:'m3',type:'out',amt:88,note:'打车',d:'2026-08-14'}];
-      DB.anni=[{id:'a1',t:'结婚纪念日',date:'2026-09-20'},{id:'a2',t:'源远生日',date:'2026-10-05'}];
-      DB.funItems=[{id:'fn1',t:'《歌手2026》总决赛',cat:'演唱会',due:'2026-08-22'}];
+      DB.todo=[{id:'d1',t:'备周六声乐课教案',done:false,due:'2026-08-16'},{id:'d2',t:'给语儿转生活费',done:false,due:'2026-08-18'}];
+      DB.money=[{id:'m1',type:'out',amt:268,note:'食材采购',d:'2026-08-15'},{id:'m2',type:'in',amt:4600,note:'课时费',d:'2026-08-14'}];
       renderAll();renderAllBoards();App.go('home');
     }catch(e){}
   });
