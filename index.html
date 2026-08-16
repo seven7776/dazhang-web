@@ -77,7 +77,7 @@ a{text-decoration:none;color:inherit}
 #tabbar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:flex;justify-content:center;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
 #tabScroll{display:flex;width:100%;max-width:680px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:9px 8px 11px}
 #tabScroll::-webkit-scrollbar{display:none}
-.b-tab{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:96px;padding:2px 4px;border:none;background:none;cursor:pointer;color:#6A6A70;user-select:none;font-family:inherit}
+.b-tab{flex:1 1 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-width:0;padding:2px 2px;border:none;background:none;cursor:pointer;color:#6A6A70;user-select:none;font-family:inherit}
 .b-tab .bt-ico{width:70px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:33px;line-height:1;transition:all .15s}
 .b-tab .bt-lbl{font-size:13px;font-weight:600;line-height:1;letter-spacing:.3px;white-space:nowrap;transition:color .15s}
 .b-tab:active .bt-ico{transform:scale(.92)}
@@ -203,26 +203,35 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .anim-page .task-scroll .item:nth-child(5),.anim-page #todoAll .item:nth-child(5){animation-delay:.26s}
 .anim-page .task-scroll .item:nth-child(6),.anim-page #todoAll .item:nth-child(6){animation-delay:.3s}
 
-.hero{display:flex;justify-content:space-between;align-items:center}
+.hero{display:flex;justify-content:space-between;align-items:center;position:relative}
 .hero-left{flex:1;min-width:0}
-.hero-right{flex:none}
+.hero-right{flex:none;max-width:48%;display:flex;flex-direction:column;align-items:flex-end}
 .hero-weather{display:flex;align-items:center;gap:7px;margin:6px 0 1px;cursor:pointer;transition:opacity .15s}
 .hero-weather:active{opacity:.6}
 .hero-weather .w-icon{font-size:22px;line-height:1}
 .hero-weather .w-temp{font-size:18px;font-weight:700;letter-spacing:.5px;color:var(--accent-deep)}
 .hero-weather .w-desc{font-size:11px;opacity:.55;letter-spacing:1px}
-/* 首屏右侧:五行穿搭紧凑块(从独立卡并入,省下方空间) */
-.hero-wx{max-width:47%;text-align:right}
-.hwx-nav{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-bottom:3px}
+/* 首屏右上:⋯菜单钮 + 五行穿搭淡色圆角边框块(大吉/次吉/不宜左对齐) */
+.hero-dots{margin-bottom:5px}
+.dots-btn{border:none;background:rgba(255,255,255,.5);color:var(--ink);width:30px;height:30px;border-radius:50%;font-size:17px;line-height:1;cursor:pointer;padding:0 0 3px;transition:transform .12s}
+.dots-btn:active{transform:scale(.88)}
+.hero-wx{text-align:left;border:1px solid var(--accent-tint);border-radius:14px;padding:7px 10px;background:rgba(255,255,255,.38)}
+.hwx-nav{display:flex;align-items:center;justify-content:flex-start;gap:6px;margin-bottom:3px}
 .hwx-nav button{border:none;background:var(--accent-tint);color:var(--accent-deep);border-radius:7px;width:20px;height:20px;font-size:13px;line-height:1;padding:0;cursor:pointer;flex:none}
 .hwx-nav button:disabled{opacity:.3;cursor:default}
 .hwx-date{font-size:10px;color:var(--mist);letter-spacing:.5px}
-.hero-wx .wx-row{gap:5px;padding:2px 0;border-bottom:none;justify-content:flex-end}
+.hero-wx .wx-row{gap:5px;padding:2px 0;border-bottom:none;justify-content:flex-start}
 .hero-wx .wx-tag{width:auto;padding:2px 6px;font-size:10px;letter-spacing:1px;margin-top:0}
 .hero-wx .wx-body{flex:none}
-.hero-wx .wx-colors{gap:3px;justify-content:flex-end}
+.hero-wx .wx-colors{gap:3px;justify-content:flex-start}
 .hero-wx .wx-box{width:11px;height:11px;border-radius:3px}
 .hero-wx .wx-desc{display:none}
+/* ⋯ 下拉菜单(其余板块+回收站入口) */
+.home-menu{position:fixed;top:70px;right:10px;background:#fff;border:.5px solid var(--line);border-radius:14px;box-shadow:0 10px 32px rgba(20,30,45,.16);z-index:80;min-width:148px;padding:6px}
+.home-menu .mi{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:600;color:var(--ink);cursor:pointer}
+.home-menu .mi:active{background:#F1F1F4}
+.home-menu .mi-ic{font-size:16px}
+.home-menu .mi-sep{height:.5px;background:var(--line);margin:4px 8px}
 
 .meal-row{display:flex;align-items:center;gap:10px;padding:6px 0}
 .meal-row .mt{flex:none;width:40px;font-size:13px;font-weight:700;color:var(--ink);letter-spacing:1px}
@@ -292,20 +301,6 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .fun-tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
 .fun-tag-btn{border:none;border-radius:10px;padding:5px 11px;font-size:12px;font-weight:600;cursor:pointer;flex:none}
 .fun-sel{flex:0 0 auto;border:1px solid var(--line);border-radius:10px;padding:7px 4px;font-size:13px;background:var(--field);color:var(--ink)}
-/* ===== 应用锁 ===== */
-.lock-overlay{position:fixed;inset:0;background:linear-gradient(160deg,#eef2f8,#e8edf5);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px}
-.lock-box{text-align:center;max-width:320px;width:100%;display:flex;flex-direction:column;align-items:center}
-.lock-mark{width:64px;height:64px;border-radius:18px;background:var(--accent);color:#fff;font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:Georgia,"Songti SC","Noto Serif SC",serif;box-shadow:0 10px 24px rgba(31,68,104,.28);margin-bottom:18px;letter-spacing:0}
-.lock-title{font-size:24px;font-weight:700;letter-spacing:3px;color:var(--ink);margin-bottom:6px}
-.lock-sub{font-size:13px;letter-spacing:2px;color:var(--mist);margin-bottom:30px}
-.lock-btn{background:var(--accent);color:#fff;border:none;border-radius:14px;padding:14px 0;font-size:16px;font-weight:600;letter-spacing:4px;cursor:pointer;width:100%;box-shadow:0 8px 20px rgba(31,68,104,.22)}
-.lock-btn-block{width:100%;margin-top:14px;padding:13px 0}
-#lockPinArea{width:100%;text-align:center}
-.lock-or{display:flex;align-items:center;gap:12px;width:100%;margin:28px 0 16px;color:var(--faint);font-size:12px;letter-spacing:2px}
-.lock-or::before,.lock-or::after{content:"";flex:1;height:1px;background:var(--line)}
-.lock-pin-input{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:12px;text-align:center;font-size:24px;letter-spacing:10px;width:172px;color:var(--ink);outline:none}
-.lock-pin-input:focus{border-color:var(--accent-tint2)}
-.lock-msg{color:var(--bad);font-size:13px;margin-top:14px;min-height:18px;letter-spacing:1px}
 /* ===== 个人提升状态药丸 ===== */
 .status-pill{flex:none;border:1px solid var(--line);background:var(--field);border-radius:12px;padding:3px 10px;font-size:11px;color:var(--mist);cursor:pointer}
 /* ===== AI 任务看板(单栏三组:进行中/待办/归档) ===== */
@@ -380,16 +375,6 @@ body{background:var(--paper)}
 .hot-item.rank-top .hot-rank{background:var(--amber)}
 .en-card{background:linear-gradient(135deg,#EDF3F9,#F2F3EF)}
 .flashcard-card{background:linear-gradient(135deg,#EDF3F9,#FDFDFB)}
-.lock-overlay{background:radial-gradient(130% 100% at 50% 0%,#284C75 0%,#1B2C42 52%,#121C2A 100%)}
-.lock-mark{background:linear-gradient(165deg,#42709F,#2C567F);box-shadow:0 14px 34px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.10);color:#EFF5FB}
-.lock-title{color:#EFF4FA}
-.lock-sub{color:#8AA0B6}
-.lock-btn{background:linear-gradient(165deg,#3E6B99,#2C567F);box-shadow:0 12px 28px rgba(8,20,34,.55),inset 0 0 0 1px rgba(255,255,255,.08);color:#EFF5FB}
-.lock-or{color:#5C7288}.lock-or::before,.lock-or::after{background:#2B3E54}
-.lock-pin-input{background:rgba(255,255,255,.05);border-color:#31465D;color:#EFF4FA}
-.lock-pin-input::placeholder{color:#54697E}
-.lock-pin-input:focus{border-color:#5C84AF}
-.lock-msg{color:#E79B8F}
 .done .cb{background:var(--accent);border-color:var(--accent)}
 .done .cb::after{content:"✓";color:#fff;font-size:12px;font-weight:700}
 .acc-bar-fill{background:var(--accent)}
@@ -415,13 +400,16 @@ body{background:var(--paper)}
     </div>
     <div id="syncDot" title="云备份状态" style="font-size:10px;color:var(--mist);margin-top:5px;letter-spacing:1px;cursor:pointer" onclick="loadFromCloud()"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#8B8B92;margin-right:4px"></span>云备份</div>
   </div>
-  <div class="hero-right hero-wx">
-    <div class="hwx-nav">
-      <button id="wxPrev" onclick="App.wxNav(-1)" aria-label="前一天">‹</button>
-      <span class="hwx-date" id="wxDate">--</span>
-      <button id="wxNext" onclick="App.wxNav(1)" aria-label="后一天">›</button>
+  <div class="hero-right">
+    <div class="hero-dots"><button class="dots-btn" onclick="App.toggleMenu(event)" aria-label="更多板块">⋯</button></div>
+    <div class="hero-wx">
+      <div class="hwx-nav">
+        <button id="wxPrev" onclick="App.wxNav(-1)" aria-label="前一天">‹</button>
+        <span class="hwx-date" id="wxDate">--</span>
+        <button id="wxNext" onclick="App.wxNav(1)" aria-label="后一天">›</button>
+      </div>
+      <div id="wxBody"></div>
     </div>
-    <div id="wxBody"></div>
   </div>
 </div>
 
@@ -429,8 +417,8 @@ body{background:var(--paper)}
 
   <!-- ========== 首页 page-home ========== -->
   <div class="page" id="page-home">
-    <!-- To Do List(滴答5清单同步 + 本地随手记 + 🔔提醒) -->
-    <div class="sec-title" id="home-todo">To Do List</div>
+    <!-- 每日待办(滴答5清单同步 + 本地随手记 + 🔔提醒) -->
+    <div class="sec-title" id="home-todo">每日待办</div>
     <div class="card">
       <div class="todo-scroll" id="todoAll"></div>
       <div class="add-row">
@@ -443,8 +431,31 @@ body{background:var(--paper)}
 
     <!-- 五行穿搭已并入首屏 hero 右侧(见 .hero-wx) -->
 
-    <!-- 随手笔记(可写) -->
-    <div class="sec-title">随手笔记</div>
+    <!-- 🤖 AI 任务看板(从个人提升挪到首页;单栏三组:进行中/待办/归档) -->
+    <div class="sec-title">🤖 AI 任务看板</div>
+    <div class="card tight">
+      <div class="kb-board" id="aiBoard"></div>
+      <div class="add-row">
+        <input id="aiTopic" placeholder="新任务">
+        <button class="add-btn" onclick="App.addAI()">＋</button>
+      </div>
+    </div>
+
+    <!-- 三餐饮食(从家庭生活挪到首页) -->
+    <div class="sec-title">三餐饮食</div>
+    <div class="card tight">
+      <div id="mealPlan"></div>
+      <div class="divider"></div>
+      <div class="col-h">食材清单</div>
+      <div id="foodList"></div>
+      <div class="add-row">
+        <input id="foodIn" placeholder="买过的食材">
+        <button class="add-btn" onclick="App.addFood()">＋</button>
+      </div>
+    </div>
+
+    <!-- 每日随记(可写) -->
+    <div class="sec-title">✍🏻 每日随记</div>
     <div class="card">
       <textarea class="diary" id="diaryIn" placeholder="记一笔…"></textarea>
       <div class="add-row">
@@ -466,15 +477,6 @@ body{background:var(--paper)}
     <div class="sec-title">🔥 每日热点<span style="margin-left:auto;display:flex;gap:4px"><button class="hot-tab on" id="hotTabDouyin" onclick="App.switchHot('douyin')">抖音</button><button class="hot-tab" id="hotTabWeibo" onclick="App.switchHot('weibo')">微博</button></span></div>
     <div class="card hot-card">
       <div id="hotList" class="hot-list"></div>
-    </div>
-
-    <!-- 应用锁 -->
-    <div class="sec-title">🔒 安全</div>
-    <div class="card">
-      <div class="item">
-        <div class="body"><div class="t">应用锁</div><div class="s" id="lockStatus">未开启</div></div>
-        <button class="add-btn" id="lockToggle" onclick="App.toggleLock()">开启</button>
-      </div>
     </div>
   </div>
   <!-- /page-home -->
@@ -507,18 +509,6 @@ body{background:var(--paper)}
       <div id="healthToday" class="muted" style="margin-top:6px;font-size:12px"></div>
       <div class="divider"></div>
       <div id="healthList"></div>
-    </div>
-
-    <div class="sec-title">三餐饮食</div>
-    <div class="card tight">
-      <div id="mealPlan"></div>
-      <div class="divider"></div>
-      <div class="col-h">食材清单</div>
-      <div id="foodList"></div>
-      <div class="add-row">
-        <input id="foodIn" placeholder="买过的食材">
-        <button class="add-btn" onclick="App.addFood()">＋</button>
-      </div>
     </div>
 
     <div class="sec-title">家庭事务</div>
@@ -647,16 +637,6 @@ body{background:var(--paper)}
         <label class="add-btn" style="cursor:pointer;position:relative;overflow:hidden">上传<input type="file" id="docFile" style="position:absolute;left:0;top:0;width:1px;height:1px;opacity:0" onchange="App.uploadDoc()"></label>
       </div>
     </div>
-
-    <div class="sec-title">工作节点</div>
-    <div class="card tight">
-      <div id="nodeList"></div>
-      <div class="add-row">
-        <input id="nodeName" placeholder="工作内容">
-        <input id="nodeDate" type="date" class="date">
-        <button class="add-btn" onclick="App.addNode()">＋</button>
-      </div>
-    </div>
   </div>
   <!-- /page-wenyi -->
 
@@ -773,6 +753,17 @@ body{background:var(--paper)}
       </div>
       <div class="fun-tag-row" id="funTagRow"></div>
     </div>
+
+    <div class="sec-title">👋 亲友会晤</div>
+    <div class="card tight">
+      <div class="task-scroll" id="meetList"></div>
+      <div class="add-row">
+        <input id="meetWho" placeholder="人名" class="small">
+        <input id="meetWhat" placeholder="事项">
+        <input id="meetDate" type="date" class="date">
+        <button class="add-btn" onclick="App.addMeet()">＋</button>
+      </div>
+    </div>
   </div>
   <!-- /page-fun -->
 
@@ -799,15 +790,6 @@ body{background:var(--paper)}
         <button class="add-btn" onclick="App.addVideo()">＋</button>
       </div>
     </div>
-
-    <div class="sec-title">🤖 AI 任务看板</div>
-    <div class="card tight">
-      <div class="kb-board" id="aiBoard"></div>
-      <div class="add-row">
-        <input id="aiTopic" placeholder="新任务">
-        <button class="add-btn" onclick="App.addAI()">＋</button>
-      </div>
-    </div>
   </div>
   <!-- /page-growth -->
 
@@ -828,7 +810,7 @@ body{background:var(--paper)}
 /* ================= 数据层(localStorage 持久化) ================= */
 var DB_KEY='dz_app_v1';
 var DB=null;
-function blank(){return {todo:[],shop:[],fam:[],food:[],classes:[],stu:[],org:[],book:[],proj:[],work:[],node:[],rehe:[],zx:[],money:[],health:{},cds:[],diary:[],didaDone:[],didaIdMap:{},didaDue:{},trash:[],docs:[],anni:[],funItems:[],songs:[],videos:[],aiSkills:[],enWords:[],accCat:'餐饮',lockEnabled:false,lockCredId:'',lockPin:''};}
+function blank(){return {todo:[],shop:[],fam:[],food:[],classes:[],stu:[],org:[],book:[],proj:[],work:[],node:[],rehe:[],zx:[],money:[],health:{},cds:[],diary:[],didaDone:[],didaIdMap:{},didaDue:{},trash:[],docs:[],anni:[],funItems:[],meets:[],songs:[],videos:[],aiSkills:[],enWords:[],accCat:'餐饮',lockEnabled:false,lockCredId:'',lockPin:''};}
 function load(){try{DB=JSON.parse(localStorage.getItem(DB_KEY))||blank();}catch(e){DB=blank();}
   var b=blank();for(var k in b){if(typeof DB[k]==='undefined')DB[k]=b[k];}}
 function save(){try{localStorage.setItem('dz_rev',String((parseInt(localStorage.getItem('dz_rev')||'0',10)||0)+1));}catch(e){}try{localStorage.setItem(DB_KEY,JSON.stringify(DB));}catch(e){}saveToCloud();}
@@ -838,6 +820,8 @@ function todayStr(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)
 load();
 /* 旧"AI技能学习"状态迁移到看板三态(进行中/待办/归档) */
 (function(){var m={'待学':'待办','学习中':'进行中','已掌握':'归档','完成':'归档'};(DB.aiSkills||[]).forEach(function(x){if(m[x.status])x.status=m[x.status];});})();
+/* 旧娱乐清单里 tag='亲友会晤' 的项迁到独立会晤列表(人名留在标题里) */
+(function(){var rest=[],mv=[];(DB.funItems||[]).forEach(function(x){if(x.cat==='亲友会晤')mv.push(x);else rest.push(x);});if(mv.length){DB.funItems=rest;mv.forEach(function(x){DB.meets.unshift({id:x.id,who:'',what:x.t,due:x.due||'',done:false});});save();}})();
 
 /* ================= 每日英语句库(90句,按日轮换) ================= */
 var EN_SENTENCES=[
@@ -990,9 +974,9 @@ var ACC_CATS_OUT=[{k:'餐饮',ic:'🍽️'},{k:'交通',ic:'🚗'},{k:'购物',i
 var ACC_CATS_IN=[{k:'工资',ic:'💼'},{k:'课时',ic:'🎵'},{k:'录音',ic:'🎙️'},{k:'其他',ic:'📌'}];
 var _accType='out';
 var _funCat='电影';
-var FUN_CATS=['电影','演唱会','旅游','阅读','追剧','亲友会晤','其他'];
-var FUN_CAT_BG=['#E8D5D5','#D5DDE5','#D5E0D5','#DDD5E0','#E5DDD0','#E8DFC8','#DDD8D0'];
-var FUN_CAT_SEL=['#C9A7A7','#A8BCC8','#A8C0A8','#B0A8C0','#C8B8A0','#C3B190','#B8B0A8'];
+var FUN_CATS=['电影','演唱会','旅游','阅读','追剧','其他'];
+var FUN_CAT_BG=['#E8D5D5','#D5DDE5','#D5E0D5','#DDD5E0','#E5DDD0','#DDD8D0'];
+var FUN_CAT_SEL=['#C9A7A7','#A8BCC8','#A8C0A8','#B0A8C0','#C8B8A0','#B8B0A8'];
 var _funCat='电影';
 
 /* ================= 每日热点 ================= */
@@ -1121,7 +1105,7 @@ function refreshDida(){
   }).catch(function(){});
 }
 /* ===== 回收站(勾选完成+删除都进这里,可恢复) ===== */
-var TRASH_NAMES={todo:'待办',shop:'购物',fam:'家庭',org:'机构',book:'录音预约',work:'待办工作',rehe:'策划排练',zx:'政协',funItems:'娱乐',diary:'笔记',money:'记账',anni:'纪念日',enWords:'生词本',songs:'歌单',videos:'视频',aiSkills:'AI看板'};
+var TRASH_NAMES={todo:'待办',shop:'购物',fam:'家庭',org:'机构',book:'录音预约',work:'待办工作',rehe:'策划排练',zx:'政协',funItems:'娱乐',meets:'会晤',diary:'笔记',money:'记账',anni:'纪念日',enWords:'生词本',songs:'歌单',videos:'视频',aiSkills:'AI看板'};
 function trashItem(from,obj,reason){
   if(!DB.trash)DB.trash=[];
   DB.trash.unshift({id:uid(),from:from,obj:obj,reason:reason||'deleted',ts:Date.now()});
@@ -1180,6 +1164,8 @@ function _ensureDueInput(){
         if(o){o.due=inp.value;save();}else{DB.didaDue[it.id]=inp.value;save();}
       }else if(it.scope==='fun'){
         var f=(DB.funItems||[]).find(function(x){return x.id===it.id;});if(f){f.due=inp.value;save();}
+      }else if(it.scope==='meet'){
+        var mt=(DB.meets||[]).find(function(x){return x.id===it.id;});if(mt){mt.due=inp.value;save();}
       }else{
         var lk=BOARD_LOCAL[it.scope]||it.scope;
         var o2=(DB[lk]||[]).find(function(x){return x.id===it.id;});
@@ -1191,31 +1177,6 @@ function _ensureDueInput(){
   return inp;
 }
 
-
-/* ================= 应用锁(WebAuthn生物认证+PIN兜底) ================= */
-function _b64enc(buf){return btoa(String.fromCharCode.apply(null,new Uint8Array(buf)));}
-function _b64dec(str){return Uint8Array.from(atob(str),function(c){return c.charCodeAt(0);});}
-function renderLockStatus(){
-  var st=document.getElementById('lockStatus'),tg=document.getElementById('lockToggle');
-  if(!st||!tg)return;
-  if(DB.lockEnabled){
-    st.textContent=DB.lockCredId?'已开启 · 生物认证':'已开启 · PIN码';
-    tg.textContent='关闭';
-  }else{st.textContent='未开启';tg.textContent='开启';}
-}
-function _showLock(){
-  var ov=document.getElementById('lockOverlay');if(ov)ov.style.display='flex';
-  var pa=document.getElementById('lockPinArea');if(pa)pa.style.display='none';
-  var msg=document.getElementById('lockMsg');if(msg)msg.textContent='';
-  var pi=document.getElementById('lockPinInput');if(pi)pi.value='';
-}
-function _hideLock(){
-  var ov=document.getElementById('lockOverlay');
-  if(ov){ov.style.display='none';if(ov.parentNode)ov.parentNode.removeChild(ov);}
-  // 强制重绘(手机上 fixed overlay 移除后可能留白)
-  document.body.style.height='auto';
-  setTimeout(function(){window.scrollTo(0,1);window.scrollTo(0,0);},50);
-}
 
 /* ================= 版本更新检测(部署后旧版页面自动提示刷新) ================= */
 function checkUpdate(){
@@ -1349,7 +1310,7 @@ function loadFromCloud(retry){
         window.__cloudEmpty=false;
         if(cloudRev>=localRev){
           DB=data;var b=blank();for(var k in b){if(typeof DB[k]==='undefined')DB[k]=b[k];}
-          save();renderAll();renderAllBoards();if(DB.lockEnabled)_showLock();
+          save();renderAll();renderAllBoards();
         }else{
           saveCloudNow(); // 本地比云端新:回传纠正云端
         }
@@ -1575,6 +1536,17 @@ function renderWordList(){
   }).join('');
 }
 
+/* ================= 亲友会晤(人名+事项+时间) ================= */
+function renderMeets(){
+  var el=document.getElementById('meetList');if(!el)return;
+  var arr=(DB.meets||[]).filter(function(x){return !x.done;});
+  if(!arr.length){el.innerHTML='<div class="empty">还没有会晤安排,下面加一条</div>';return;}
+  el.innerHTML=arr.map(function(x){
+    var who=x.who?'<b>'+esc(x.who)+'</b> ':'';
+    return '<div class="item"><div class="cb" onclick="App.togMeet(\''+x.id+'\')"></div><div class="body"><div class="t">'+who+esc(x.what||'')+'</div>'+(x.due?'<div class="s">'+x.due+'</div>':'')+'</div>'+(x.due?'<span class="due-chip" onclick="App.editMeetDue(\''+x.id+'\')">'+x.due+'</span>':'')+'<button class="del" onclick="App.delMeet(\''+x.id+'\')">×</button></div>';
+  }).join('');
+}
+
 /* ================= 娱乐休闲 ================= */
 function renderFunTabs(){}
 function renderFunTagRow(){
@@ -1637,25 +1609,24 @@ function renderAll(){
   renderClasses();
   renderList('stu','stuList',false,'sub');
     renderList('proj','projList',false,'sub');
-  renderList('node','nodeList',false,'sub');
   renderMoney();renderHealth();renderDiary();renderMeal();
   renderBot();renderDocsLocal();renderAllDida();renderWx(wxIdx);
   renderTodoAll();
   renderAllBoards();
-  renderEnglish();renderAnni();renderAccount();renderFlashcard();renderWordList();renderFun();renderGrowth();renderTrashPage();renderLockStatus();
+  renderEnglish();renderAnni();renderAccount();renderFlashcard();renderWordList();renderFun();renderMeets();renderGrowth();renderTrashPage();
 }
 function addTo(list,obj){obj.id=uid();DB[list].unshift(obj);save();renderAll();}
 
 /* ================= 注入数据占位(构建脚本 update_wuxing.py 填充) ================= */
 <!--@WXDATA-->
-var WXDATA={"2026-8-13": {"date": "2026年8月13日", "gz": "丙午年 丙申月 己未日", "daji": {"colors": ["gray", "#f5f5dc", "silver", "white"], "labels": ["灰色", "米白", "银色", "白色"], "desc": ""}, "ciji": {"colors": ["saddlebrown", "#f6a21a", "yellow", "#8b4513", "brown"], "labels": ["棕色", "橙黄", "黄色", "褐色", "咖色"], "desc": ""}, "buyi": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}}, "2026-8-14": {"date": "2026年8月14日", "gz": "丙午年 丙申月 庚申日", "daji": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}, "ciji": {"colors": ["gray", "white", "silver", "#f5f5dc"], "labels": ["灰色", "白色", "银色", "米白"], "desc": ""}, "buyi": {"colors": ["green", "cyan", "#00a88f", "#00a86b"], "labels": ["绿色", "青色", "青绿", "翠绿"], "desc": ""}}, "2026-8-15": {"date": "2026年8月15日", "gz": "丙午年 丙申月 辛酉日", "daji": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}, "ciji": {"colors": ["#f5f5dc", "silver", "gray", "white"], "labels": ["米白", "银色", "灰色", "白色"], "desc": ""}, "buyi": {"colors": ["cyan", "#00a86b", "#00a88f", "green"], "labels": ["青色", "翠绿", "青绿", "绿色"], "desc": ""}}, "2026-8-16": {"date": "2026年8月16日", "gz": "丙午年 丙申月 壬戌日", "daji": {"colors": ["#f5f5dc", "silver", "gray", "white"], "labels": ["米白", "银色", "灰色", "白色"], "desc": ""}, "ciji": {"colors": ["brown", "#8b4513", "saddlebrown", "yellow", "#f6a21a"], "labels": ["咖色", "褐色", "棕色", "黄色", "橙黄"], "desc": ""}, "buyi": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}}, "2026-8-17": {"date": "2026年8月17日", "gz": "丙午年 丙申月 癸亥日", "daji": {"colors": ["#00a88f", "cyan", "green", "#00a86b"], "labels": ["青绿", "青色", "绿色", "翠绿"], "desc": ""}, "ciji": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}, "buyi": {"colors": ["pink", "#ff4500", "red", "purple"], "labels": ["粉色", "橙红", "红色", "紫色"], "desc": ""}}, "2026-8-18": {"date": "2026年8月18日", "gz": "丙午年 丙申月 甲子日", "daji": {"colors": ["green", "#00a88f", "cyan", "#00a86b"], "labels": ["绿色", "青绿", "青色", "翠绿"], "desc": ""}, "ciji": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}, "buyi": {"colors": ["pink", "#ff4500", "red", "purple"], "labels": ["粉色", "橙红", "红色", "紫色"], "desc": ""}}, "2026-8-19": {"date": "2026年8月19日", "gz": "丙午年 丙申月 乙丑日", "daji": {"colors": ["silver", "gray", "white", "#f5f5dc"], "labels": ["银色", "灰色", "白色", "米白"], "desc": ""}, "ciji": {"colors": ["#f6a21a", "saddlebrown", "brown", "yellow", "#8b4513"], "labels": ["橙黄", "棕色", "咖色", "黄色", "褐色"], "desc": ""}, "buyi": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}}, "2026-8-20": {"date": "2026年8月20日", "gz": "丙午年 丙申月 丙寅日", "daji": {"colors": ["#ff4500", "purple", "red", "pink"], "labels": ["橙红", "紫色", "红色", "粉色"], "desc": ""}, "ciji": {"colors": ["cyan", "green", "#00a86b", "#00a88f"], "labels": ["青色", "绿色", "翠绿", "青绿"], "desc": ""}, "buyi": {"colors": ["#8b4513", "brown", "yellow", "saddlebrown", "#f6a21a"], "labels": ["褐色", "咖色", "黄色", "棕色", "橙黄"], "desc": ""}}, "2026-8-21": {"date": "2026年8月21日", "gz": "丙午年 丙申月 丁卯日", "daji": {"colors": ["pink", "#ff4500", "red", "purple"], "labels": ["粉色", "橙红", "红色", "紫色"], "desc": ""}, "ciji": {"colors": ["#00a86b", "cyan", "#00a88f", "green"], "labels": ["翠绿", "青色", "青绿", "绿色"], "desc": ""}, "buyi": {"colors": ["brown", "yellow", "#f6a21a", "saddlebrown", "#8b4513"], "labels": ["咖色", "黄色", "橙黄", "棕色", "褐色"], "desc": ""}}, "2026-8-22": {"date": "2026年8月22日", "gz": "丙午年 丙申月 戊辰日", "daji": {"colors": ["gray", "silver", "#f5f5dc", "white"], "labels": ["灰色", "银色", "米白", "白色"], "desc": ""}, "ciji": {"colors": ["yellow", "brown", "#8b4513", "#f6a21a", "saddlebrown"], "labels": ["黄色", "咖色", "褐色", "橙黄", "棕色"], "desc": ""}, "buyi": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}}, "2026-8-23": {"date": "2026年8月23日", "gz": "丙午年 丙申月 己巳日", "daji": {"colors": ["brown", "#8b4513", "yellow", "#f6a21a", "saddlebrown"], "labels": ["咖色", "褐色", "黄色", "橙黄", "棕色"], "desc": ""}, "ciji": {"colors": ["red", "pink", "purple", "#ff4500"], "labels": ["红色", "粉色", "紫色", "橙红"], "desc": ""}, "buyi": {"colors": ["silver", "gray", "white", "#f5f5dc"], "labels": ["银色", "灰色", "白色", "米白"], "desc": ""}}, "2026-8-24": {"date": "2026年8月24日", "gz": "丙午年 丙申月 庚午日", "daji": {"colors": ["#f6a21a", "saddlebrown", "#8b4513", "brown", "yellow"], "labels": ["橙黄", "棕色", "褐色", "咖色", "黄色"], "desc": ""}, "ciji": {"colors": ["purple", "red", "#ff4500", "pink"], "labels": ["紫色", "红色", "橙红", "粉色"], "desc": ""}, "buyi": {"colors": ["#f5f5dc", "silver", "white", "gray"], "labels": ["米白", "银色", "白色", "灰色"], "desc": ""}}, "2026-8-25": {"date": "2026年8月25日", "gz": "丙午年 丙申月 辛未日", "daji": {"colors": ["silver", "#f5f5dc", "gray", "white"], "labels": ["银色", "米白", "灰色", "白色"], "desc": ""}, "ciji": {"colors": ["saddlebrown", "yellow", "#8b4513", "#f6a21a", "brown"], "labels": ["棕色", "黄色", "褐色", "橙黄", "咖色"], "desc": ""}, "buyi": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}}, "2026-8-26": {"date": "2026年8月26日", "gz": "丙午年 丙申月 壬申日", "daji": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}, "ciji": {"colors": ["gray", "#f5f5dc", "silver", "white"], "labels": ["灰色", "米白", "银色", "白色"], "desc": ""}, "buyi": {"colors": ["#00a88f", "cyan", "green", "#00a86b"], "labels": ["青绿", "青色", "绿色", "翠绿"], "desc": ""}}};
-var WXKEYS=["2026-8-13", "2026-8-14", "2026-8-15", "2026-8-16", "2026-8-17", "2026-8-18", "2026-8-19", "2026-8-20", "2026-8-21", "2026-8-22", "2026-8-23", "2026-8-24", "2026-8-25", "2026-8-26"];
+var WXDATA={"2026-8-14": {"date": "2026年8月14日", "gz": "丙午年 丙申月 庚申日", "daji": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}, "ciji": {"colors": ["gray", "white", "silver", "#f5f5dc"], "labels": ["灰色", "白色", "银色", "米白"], "desc": ""}, "buyi": {"colors": ["green", "cyan", "#00a88f", "#00a86b"], "labels": ["绿色", "青色", "青绿", "翠绿"], "desc": ""}}, "2026-8-15": {"date": "2026年8月15日", "gz": "丙午年 丙申月 辛酉日", "daji": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}, "ciji": {"colors": ["#f5f5dc", "silver", "gray", "white"], "labels": ["米白", "银色", "灰色", "白色"], "desc": ""}, "buyi": {"colors": ["cyan", "#00a86b", "#00a88f", "green"], "labels": ["青色", "翠绿", "青绿", "绿色"], "desc": ""}}, "2026-8-16": {"date": "2026年8月16日", "gz": "丙午年 丙申月 壬戌日", "daji": {"colors": ["#f5f5dc", "silver", "gray", "white"], "labels": ["米白", "银色", "灰色", "白色"], "desc": ""}, "ciji": {"colors": ["brown", "#8b4513", "saddlebrown", "yellow", "#f6a21a"], "labels": ["咖色", "褐色", "棕色", "黄色", "橙黄"], "desc": ""}, "buyi": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}}, "2026-8-17": {"date": "2026年8月17日", "gz": "丙午年 丙申月 癸亥日", "daji": {"colors": ["#00a88f", "cyan", "green", "#00a86b"], "labels": ["青绿", "青色", "绿色", "翠绿"], "desc": ""}, "ciji": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}, "buyi": {"colors": ["pink", "#ff4500", "red", "purple"], "labels": ["粉色", "橙红", "红色", "紫色"], "desc": ""}}, "2026-8-18": {"date": "2026年8月18日", "gz": "丙午年 丙申月 甲子日", "daji": {"colors": ["green", "#00a88f", "cyan", "#00a86b"], "labels": ["绿色", "青绿", "青色", "翠绿"], "desc": ""}, "ciji": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}, "buyi": {"colors": ["pink", "#ff4500", "red", "purple"], "labels": ["粉色", "橙红", "红色", "紫色"], "desc": ""}}, "2026-8-19": {"date": "2026年8月19日", "gz": "丙午年 丙申月 乙丑日", "daji": {"colors": ["silver", "gray", "white", "#f5f5dc"], "labels": ["银色", "灰色", "白色", "米白"], "desc": ""}, "ciji": {"colors": ["#f6a21a", "saddlebrown", "brown", "yellow", "#8b4513"], "labels": ["橙黄", "棕色", "咖色", "黄色", "褐色"], "desc": ""}, "buyi": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}}, "2026-8-20": {"date": "2026年8月20日", "gz": "丙午年 丙申月 丙寅日", "daji": {"colors": ["#ff4500", "purple", "red", "pink"], "labels": ["橙红", "紫色", "红色", "粉色"], "desc": ""}, "ciji": {"colors": ["cyan", "green", "#00a86b", "#00a88f"], "labels": ["青色", "绿色", "翠绿", "青绿"], "desc": ""}, "buyi": {"colors": ["#8b4513", "brown", "yellow", "saddlebrown", "#f6a21a"], "labels": ["褐色", "咖色", "黄色", "棕色", "橙黄"], "desc": ""}}, "2026-8-21": {"date": "2026年8月21日", "gz": "丙午年 丙申月 丁卯日", "daji": {"colors": ["pink", "#ff4500", "red", "purple"], "labels": ["粉色", "橙红", "红色", "紫色"], "desc": ""}, "ciji": {"colors": ["#00a86b", "cyan", "#00a88f", "green"], "labels": ["翠绿", "青色", "青绿", "绿色"], "desc": ""}, "buyi": {"colors": ["brown", "yellow", "#f6a21a", "saddlebrown", "#8b4513"], "labels": ["咖色", "黄色", "橙黄", "棕色", "褐色"], "desc": ""}}, "2026-8-22": {"date": "2026年8月22日", "gz": "丙午年 丙申月 戊辰日", "daji": {"colors": ["gray", "silver", "#f5f5dc", "white"], "labels": ["灰色", "银色", "米白", "白色"], "desc": ""}, "ciji": {"colors": ["yellow", "brown", "#8b4513", "#f6a21a", "saddlebrown"], "labels": ["黄色", "咖色", "褐色", "橙黄", "棕色"], "desc": ""}, "buyi": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}}, "2026-8-23": {"date": "2026年8月23日", "gz": "丙午年 丙申月 己巳日", "daji": {"colors": ["brown", "#8b4513", "yellow", "#f6a21a", "saddlebrown"], "labels": ["咖色", "褐色", "黄色", "橙黄", "棕色"], "desc": ""}, "ciji": {"colors": ["red", "pink", "purple", "#ff4500"], "labels": ["红色", "粉色", "紫色", "橙红"], "desc": ""}, "buyi": {"colors": ["silver", "gray", "white", "#f5f5dc"], "labels": ["银色", "灰色", "白色", "米白"], "desc": ""}}, "2026-8-24": {"date": "2026年8月24日", "gz": "丙午年 丙申月 庚午日", "daji": {"colors": ["#f6a21a", "saddlebrown", "#8b4513", "brown", "yellow"], "labels": ["橙黄", "棕色", "褐色", "咖色", "黄色"], "desc": ""}, "ciji": {"colors": ["purple", "red", "#ff4500", "pink"], "labels": ["紫色", "红色", "橙红", "粉色"], "desc": ""}, "buyi": {"colors": ["#f5f5dc", "silver", "white", "gray"], "labels": ["米白", "银色", "白色", "灰色"], "desc": ""}}, "2026-8-25": {"date": "2026年8月25日", "gz": "丙午年 丙申月 辛未日", "daji": {"colors": ["silver", "#f5f5dc", "gray", "white"], "labels": ["银色", "米白", "灰色", "白色"], "desc": ""}, "ciji": {"colors": ["saddlebrown", "yellow", "#8b4513", "#f6a21a", "brown"], "labels": ["棕色", "黄色", "褐色", "橙黄", "咖色"], "desc": ""}, "buyi": {"colors": ["black", "blue"], "labels": ["黑色", "蓝色"], "desc": ""}}, "2026-8-26": {"date": "2026年8月26日", "gz": "丙午年 丙申月 壬申日", "daji": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}, "ciji": {"colors": ["gray", "#f5f5dc", "silver", "white"], "labels": ["灰色", "米白", "银色", "白色"], "desc": ""}, "buyi": {"colors": ["#00a88f", "cyan", "green", "#00a86b"], "labels": ["青绿", "青色", "绿色", "翠绿"], "desc": ""}}, "2026-8-27": {"date": "2026年8月27日", "gz": "丙午年 丙申月 癸酉日", "daji": {"colors": ["blue", "black"], "labels": ["蓝色", "黑色"], "desc": ""}, "ciji": {"colors": ["silver", "gray", "#f5f5dc", "white"], "labels": ["银色", "灰色", "米白", "白色"], "desc": ""}, "buyi": {"colors": ["#00a86b", "cyan", "#00a88f", "green"], "labels": ["翠绿", "青色", "青绿", "绿色"], "desc": ""}}};
+var WXKEYS=["2026-8-14", "2026-8-15", "2026-8-16", "2026-8-17", "2026-8-18", "2026-8-19", "2026-8-20", "2026-8-21", "2026-8-22", "2026-8-23", "2026-8-24", "2026-8-25", "2026-8-26", "2026-8-27"];
 <!--@WXDATA-END-->
 <!--@BOTASKS-->
 var BOTASKS={"zhaoxi": [], "yushang": [], "zhaojiu": ["视频加歌词任务：大张要\"把大海小城歌词按时间戳加进 1:1 演出视频用于户外大屏\"，但视频以 media 类型发来（桥不"], "chaosheng": []};
 <!--@BOTASKS-END-->
 <!--@AITASKS-->
-var AITASKS={"doing": [], "todo": [], "done": [{"t": "源远的「希望峰学园」学习App v1.0 于 2026-08-16 上线,GitHub Page", "src": "zelda", "d": "2026-08-16"}, {"t": "源远「希望峰学园」学习App v1.0 于 2026-08-16 上线：手搓全流程交付。GitH", "src": "zelda", "d": "2026-08-16"}, {"t": "微信-Codex 桥 (wechat-codex-bridge) 驱动 Codex 跑语儿App", "src": "zelda", "d": "2026-08-15"}, {"t": "大张工作台 App 英语学习朗读功能在 v1.1 版本修复（2026-08-15）：根因为三级兜", "src": "zelda", "d": "2026-08-15"}, {"t": "语儿App「小天地」交付完成：Claude接手Codex烂尾任务，在原index.html+st", "src": "zelda", "d": "2026-08-15"}, {"t": "App采用商务蓝主题，11 个导航与板块图标硬编码进 dazhang-single.html 源", "src": "zelda", "d": "2026-08-15"}]};
+var AITASKS={"doing": [{"t": "大张工作台v202608162241六项改版已上线：删回顶箭头；AI看板改单栏三组（进行中/待办", "src": "zelda", "d": "2026-08-16"}], "todo": [], "done": [{"t": "源远的「希望峰学园」学习App v1.0 于 2026-08-16 上线,GitHub Page", "src": "zelda", "d": "2026-08-16"}, {"t": "源远「希望峰学园」学习App v1.0 于 2026-08-16 上线：手搓全流程交付。GitH", "src": "zelda", "d": "2026-08-16"}, {"t": "微信-Codex 桥 (wechat-codex-bridge) 驱动 Codex 跑语儿App", "src": "zelda", "d": "2026-08-15"}, {"t": "大张工作台 App 英语学习朗读功能在 v1.1 版本修复（2026-08-15）：根因为三级兜", "src": "zelda", "d": "2026-08-15"}, {"t": "语儿App「小天地」交付完成：Claude接手Codex烂尾任务，在原index.html+st", "src": "zelda", "d": "2026-08-15"}, {"t": "App采用商务蓝主题，11 个导航与板块图标硬编码进 dazhang-single.html 源", "src": "zelda", "d": "2026-08-15"}]};
 <!--@AITASKS-END-->
 <!--@DOCS-->
 var DOCS=[];
@@ -1667,7 +1638,7 @@ var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';
 <!--@GHTOKEN-END-->
 <!--@VER-->
-var APP_VER='202608162241';
+var APP_VER='202608170512';
 <!--@VER-END-->
 <!--@DIDA-->
 var DIDA={"todo": [{"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a80c2102099c08f282fb4d7", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17"}, {"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a80c2102099c08f282fb4d7", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18", "project": "69f1999221fab4f52de43863"}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
@@ -1896,6 +1867,8 @@ window.App={
       });
     }
   },
+  toggleMenu:function(e){if(e&&e.stopPropagation)e.stopPropagation();var m=document.getElementById('homeMenu');if(!m)return;m.style.display=(m.style.display==='block')?'none':'block';},
+  menuGo:function(p){var m=document.getElementById('homeMenu');if(m)m.style.display='none';App.go(p);},
   addTodo:function(){var v=document.getElementById('todoIn').value.trim();if(!v)return;var d=document.getElementById('todoDate').value;addTo('todo',{t:v,done:false,due:d||''});pushTodo(v);document.getElementById('todoIn').value='';},
   addShop:function(){var v=document.getElementById('shopIn').value.trim();if(!v)return;var d=document.getElementById('shopDate').value;var a=document.getElementById('shopAlm').checked;var it={id:uid(),t:v,done:false,due:d||''};DB.shop.unshift(it);save();renderAllBoards();document.getElementById('shopIn').value='';document.getElementById('shopDate').value='';document.getElementById('shopAlm').checked=false;didaCreateTask('shop',v,d);if(a)dlIcs(v);},
   addFam:function(){var v=document.getElementById('famIn').value.trim();if(!v)return;var d=document.getElementById('famDate').value;var a=document.getElementById('famAlm').checked;var it={id:uid(),t:v,due:d||''};DB.fam.unshift(it);save();renderAllBoards();document.getElementById('famIn').value='';document.getElementById('famDate').value='';document.getElementById('famAlm').checked=false;didaCreateTask('fam',v,d);if(a)dlIcs(v);},
@@ -1905,7 +1878,6 @@ window.App={
   addBook:function(){var w=document.getElementById('bookWho').value.trim();if(!w)return;var d=document.getElementById('bookDate').value;var a=document.getElementById('bookAlm').checked;var it={id:uid(),t:w,due:d||''};DB.book.unshift(it);save();renderAllBoards();document.getElementById('bookWho').value='';document.getElementById('bookDate').value='';document.getElementById('bookAlm').checked=false;didaCreateTask('studio',w,d);if(a)dlIcs(w);},
   addProj:function(){var n=document.getElementById('projName').value.trim(),s=document.getElementById('projStage').value.trim();if(!n)return;addTo('proj',{t:n,sub:s});document.getElementById('projName').value='';document.getElementById('projStage').value='';},
   addWork:function(){var v=document.getElementById('workIn').value.trim();if(!v)return;var d=document.getElementById('workDate').value;var a=document.getElementById('workAlm').checked;var it={id:uid(),t:v,done:false,due:d||''};DB.work.unshift(it);save();renderAllBoards();document.getElementById('workIn').value='';document.getElementById('workDate').value='';document.getElementById('workAlm').checked=false;didaCreateTask('wenyi',v,d);if(a)dlIcs(v);},
-  addNode:function(){var n=document.getElementById('nodeName').value.trim(),d=document.getElementById('nodeDate').value;if(!n)return;addTo('node',{t:n,sub:d||''});document.getElementById('nodeName').value='';},
   addRehe:function(){var v=document.getElementById('reheIn').value.trim();if(!v)return;var d=document.getElementById('reheDate').value;var a=document.getElementById('reheAlm').checked;var it={id:uid(),t:v,due:d||''};DB.rehe.unshift(it);save();renderAllBoards();document.getElementById('reheIn').value='';document.getElementById('reheDate').value='';document.getElementById('reheAlm').checked=false;didaCreateTask('social',v,d);if(a)dlIcs(v);},
   addZx:function(){var v=document.getElementById('zxIn').value.trim();if(!v)return;var d=document.getElementById('zxDate').value;var a=document.getElementById('zxAlm').checked;var it={id:uid(),t:v,due:d||''};DB.zx.unshift(it);save();renderAllBoards();document.getElementById('zxIn').value='';document.getElementById('zxDate').value='';document.getElementById('zxAlm').checked=false;didaCreateTask('social',v,d);if(a)dlIcs(v);},
   addFood:function(){var v=document.getElementById('foodIn').value.trim();if(!v)return;addTo('food',{t:v,sub:todayStr()});document.getElementById('foodIn').value='';},
@@ -1994,56 +1966,6 @@ window.App={
   },
   restoreFromTrash:function(tid){restoreItem(tid);renderAll();renderAllBoards();renderFun();renderTrashPage();},
   purgeTrash:function(tid){if(!confirm('确认彻底删除？此操作不可恢复。'))return;DB.trash=DB.trash.filter(function(r){return r.id!==tid;});save();renderTrashPage();},
-  /* ===== 应用锁 ===== */
-  toggleLock:function(){if(DB.lockEnabled){if(confirm('关闭应用锁？')){DB.lockEnabled=false;DB.lockCredId='';DB.lockPin='';save();renderLockStatus();}}else{this.setupLock();}},
-  setupLock:function(){
-    var self=this;
-    if(window.PublicKeyCredential&&window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable){
-      window.PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable().then(function(avail){
-        if(!avail){self._showPinSetup();return;}
-        navigator.credentials.create({publicKey:{
-          challenge:new Uint8Array(32),rp:{name:'大张工作台'},
-          user:{id:new Uint8Array(16),name:'dazhang',displayName:'大张'},
-          pubKeyCredParams:[{type:'public-key',alg:-7},{type:'public-key',alg:-257}],
-          authenticatorSelection:{authenticatorAttachment:'platform',userVerification:'required'},timeout:60000
-        }}).then(function(cred){
-          DB.lockCredId=_b64enc(cred.rawId);save();
-          self._showPinSetup();
-        }).catch(function(){self._showPinSetup();});
-      }).catch(function(){self._showPinSetup();});
-    }else{self._showPinSetup();}
-  },
-  _showPinSetup:function(){var m=document.getElementById('pinSetupModal');if(!m)return;m.style.display='flex';var i=document.getElementById('pinSetupInput');if(i)i.value='';if(i)i.focus();},
-  confirmPinSetup:function(){
-    var pin=document.getElementById('pinSetupInput').value;
-    if(pin.length<4){alert('PIN至少4位');return;}
-    DB.lockPin=pin;DB.lockEnabled=true;save();
-    document.getElementById('pinSetupModal').style.display='none';
-    renderLockStatus();
-    alert(DB.lockCredId?'应用锁已开启(生物认证+PIN)':'PIN锁已开启');
-  },
-  unlock:function(){
-    var msg=document.getElementById('lockMsg');if(msg)msg.textContent='';
-    var toPin=function(){
-      var pa=document.getElementById('lockPinArea');if(pa)pa.style.display='block';
-      var b=document.getElementById('lockUnlockBtn');if(b)b.style.display='none';
-      var pi=document.getElementById('lockPinInput');if(pi){pi.value='';if(pi.focus)pi.focus();}
-    };
-    if(DB.lockCredId&&navigator.credentials){
-      navigator.credentials.get({publicKey:{
-        challenge:new Uint8Array(32),
-        allowCredentials:[{id:_b64dec(DB.lockCredId),type:'public-key',userVerification:'required'}],
-        timeout:60000
-      }}).then(function(){_hideLock();})
-      .catch(function(){toPin();if(msg)msg.textContent='请输 PIN 解锁';});
-    }else{toPin();}
-  },
-  unlockPin:function(){
-    var v=document.getElementById('lockPinInput').value;
-    var msg=document.getElementById('lockMsg');
-    if(v===DB.lockPin){_hideLock();}
-    else{if(msg)msg.textContent='PIN码错误';}
-  },
   /* ===== 每日英语 TTS(预生成mp3同源播放,百度直播+语音合成兜底) ===== */
   speakEn:function(){var i=enDayIdx();playFile('tts/s'+i+'.mp3',EN_SENTENCES[i].en);},
   /* ===== 每日热点切换 ===== */
@@ -2079,6 +2001,11 @@ window.App={
   pickFunTag:function(i){_funCat=FUN_CATS[i];renderFunTagRow();},
   togFun:function(id){var i=-1;for(var k=0;k<(DB.funItems||[]).length;k++){if(DB.funItems[k].id===id){i=k;break;}}if(i<0)return;trashItem('funItems',DB.funItems[i],'done');DB.funItems.splice(i,1);save();renderFun();},
   delFun:function(id){var i=-1;for(var k=0;k<(DB.funItems||[]).length;k++){if(DB.funItems[k].id===id){i=k;break;}}if(i<0)return;trashItem('funItems',DB.funItems[k],'deleted');DB.funItems.splice(i,1);save();renderFun();},
+  /* ===== 亲友会晤 ===== */
+  addMeet:function(){var w=document.getElementById('meetWho').value.trim();var t=document.getElementById('meetWhat').value.trim();var d=document.getElementById('meetDate').value;if(!w&&!t)return;DB.meets.unshift({id:uid(),who:w,what:t,due:d||'',done:false});document.getElementById('meetWho').value='';document.getElementById('meetWhat').value='';document.getElementById('meetDate').value='';save();renderMeets();},
+  togMeet:function(id){var i=-1;for(var k=0;k<(DB.meets||[]).length;k++){if(DB.meets[k].id===id){i=k;break;}}if(i<0)return;trashItem('meets',DB.meets[i],'done');DB.meets.splice(i,1);save();renderMeets();},
+  delMeet:function(id){var i=-1;for(var k=0;k<(DB.meets||[]).length;k++){if(DB.meets[k].id===id){i=k;break;}}if(i<0)return;trashItem('meets',DB.meets[i],'deleted');DB.meets.splice(i,1);save();renderMeets();},
+  editMeetDue:function(id){var o=(DB.meets||[]).find(function(x){return x.id===id;});if(!o)return;var inp=_ensureDueInput();_dueTarget={scope:'meet',id:id};inp.value=o.due||'';try{if(inp.showPicker)inp.showPicker();else inp.focus();}catch(e){inp.focus();}},
   /* ===== 个人提升 ===== */
   addSong:function(){var n=document.getElementById('songName').value.trim();if(!n)return;DB.songs.unshift({id:uid(),t:n,status:'想学'});document.getElementById('songName').value='';save();renderGrowth();},
   addVideo:function(){var n=document.getElementById('videoTopic').value.trim();var d=document.getElementById('videoDue').value;if(!n)return;DB.videos.unshift({id:uid(),t:n,due:d||'',status:'待拍'});document.getElementById('videoTopic').value='';document.getElementById('videoDue').value='';save();renderGrowth();},
@@ -2174,7 +2101,7 @@ maybeSeed();
 </div><!-- /#main -->
 </div><!-- /#layout -->
 
-<!-- 底部标签导航(11 板块,顺序与原版侧栏一致;超出可横向滑动) -->
+<!-- 底部标签导航(5 个主板块,一屏等宽整显;其余板块+回收站收进首屏右上 ⋯ 菜单) -->
 <nav id="tabbar">
   <div id="tabScroll">
     <button class="b-tab" data-page="home" onclick="App.go('home')"><span class="bt-ico">🗓️</span><span class="bt-lbl">首页</span></button>
@@ -2182,14 +2109,19 @@ maybeSeed();
     <button class="b-tab" data-page="qicai" onclick="App.go('qicai')"><span class="bt-ico">🌈</span><span class="bt-lbl">七彩和弦</span></button>
     <button class="b-tab" data-page="social" onclick="App.go('social')"><span class="bt-ico">🤝</span><span class="bt-lbl">社会事务</span></button>
     <button class="b-tab" data-page="studio" onclick="App.go('studio')"><span class="bt-ico">🎙️</span><span class="bt-lbl">录音棚</span></button>
-    <button class="b-tab" data-page="family" onclick="App.go('family')"><span class="bt-ico">🧡</span><span class="bt-lbl">家庭生活</span></button>
-    <button class="b-tab" data-page="account" onclick="App.go('account')"><span class="bt-ico">💰</span><span class="bt-lbl">记账</span></button>
-    <button class="b-tab" data-page="english" onclick="App.go('english')"><span class="bt-ico">🔤</span><span class="bt-lbl">英语学习</span></button>
-    <button class="b-tab" data-page="fun" onclick="App.go('fun')"><span class="bt-ico">🍿</span><span class="bt-lbl">娱乐休闲</span></button>
-    <button class="b-tab" data-page="growth" onclick="App.go('growth')"><span class="bt-ico">💪</span><span class="bt-lbl">个人提升</span></button>
-    <button class="b-tab" data-page="trash" onclick="App.go('trash')"><span class="bt-ico">🗑️</span><span class="bt-lbl">回收站</span></button>
   </div>
 </nav>
+
+<!-- 右上角 ⋯ 菜单(首屏 hero 内触发;其余板块+回收站入口) -->
+<div id="homeMenu" class="home-menu" style="display:none" onclick="event.stopPropagation()">
+  <div class="mi" onclick="App.menuGo('family')"><span class="mi-ic">🧡</span>家庭生活</div>
+  <div class="mi" onclick="App.menuGo('account')"><span class="mi-ic">💰</span>记账</div>
+  <div class="mi" onclick="App.menuGo('english')"><span class="mi-ic">🔤</span>英语学习</div>
+  <div class="mi" onclick="App.menuGo('fun')"><span class="mi-ic">🍿</span>娱乐休闲</div>
+  <div class="mi" onclick="App.menuGo('growth')"><span class="mi-ic">💪</span>个人提升</div>
+  <div class="mi-sep"></div>
+  <div class="mi" onclick="App.menuGo('trash')"><span class="mi-ic">🗑️</span>回收站</div>
+</div>
 
 <script>
 window.addEventListener('load',function(){
@@ -2199,12 +2131,7 @@ window.addEventListener('load',function(){
   loadWeather();
   loadHot();
   setTimeout(checkUpdate,1500);
-  // localStorage 有数据:立刻检查锁屏; 空:先从云端恢复再检查
-  if(localStorage.getItem(DB_KEY)){
-    if(DB.lockEnabled)_showLock();
-  }else{
-    loadFromCloud();
-  }
+  // localStorage 空时从云端恢复(下方另有兜底调用)
   // 请求持久化存储权限(防手机清localStorage)
   if(navigator.storage&&navigator.storage.persist){navigator.storage.persist().then(function(){}).catch(function(){});}
   // localStorage 空时从云端恢复
@@ -2217,32 +2144,9 @@ window.addEventListener('load',function(){
   document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')refreshDida();});
   // 侧栏自定义图标
   applyNavIcons();
+  // 点页面任意处收起 ⋯ 菜单
+  document.addEventListener('click',function(){var m=document.getElementById('homeMenu');if(m&&m.style.display==='block')m.style.display='none';});
 });
 </script>
-<div id="pinSetupModal" class="dm-overlay" style="display:none">
-  <div class="dm-card">
-    <div class="dm-t">设置 PIN 码</div>
-    <div class="dm-d">生物认证失败时用 PIN 解锁</div>
-    <input type="password" id="pinSetupInput" maxlength="4" inputmode="numeric" class="lock-pin-input" style="margin:10px auto;display:block">
-    <div class="dm-actions">
-      <button class="dm-btn dm-close" onclick="document.getElementById('pinSetupModal').style.display='none'">取消</button>
-      <button class="dm-btn" onclick="App.confirmPinSetup()">确认</button>
-    </div>
-  </div>
-</div>
-<div id="lockOverlay" class="lock-overlay" style="display:none">
-  <div class="lock-box">
-    <div class="lock-mark">张</div>
-    <div class="lock-title">大张工作台</div>
-    <div class="lock-sub">私人内容 · 已锁定</div>
-    <button class="lock-btn" id="lockUnlockBtn" onclick="App.unlock()">解&nbsp;&nbsp;锁</button>
-    <div id="lockPinArea" style="display:none">
-      <div class="lock-or"><span>输入 PIN 解锁</span></div>
-      <input type="password" id="lockPinInput" placeholder="••••" maxlength="4" inputmode="numeric" class="lock-pin-input">
-      <button class="lock-btn lock-btn-block" onclick="App.unlockPin()">确认解锁</button>
-    </div>
-    <div id="lockMsg" class="lock-msg"></div>
-  </div>
-</div>
 </body>
 </html>
