@@ -70,7 +70,6 @@ a{text-decoration:none;color:inherit}
 .tag{font-size:11px;padding:2px 8px;border-radius:10px;background:#F1F1F4;color:var(--mist);font-weight:600;flex:none;white-space:nowrap;letter-spacing:.5px}
 .tag.warn{background:var(--warn-bg);color:var(--warn)}
 .muted{color:var(--mist);font-size:13px}
-.back-top{position:fixed;right:14px;bottom:calc(126px + env(safe-area-inset-bottom));width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 14px rgba(20,20,24,.25);z-index:60}
 
 /* ===== 底部标签导航(仿语儿App框架:导航在底部,每板块独立整页) ===== */
 #layout{display:block;width:100%;max-width:100vw}
@@ -195,8 +194,6 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .nav-card:active{transform:scale(.975)}
 .item{transition:opacity .25s ease,transform .25s ease}
 .del:active{transform:scale(.85) rotate(90deg)}
-.back-top{transition:transform .15s ease,opacity .15s ease}
-.back-top:active{transform:scale(.88)}
 
 .anim-page .task-scroll .item,.anim-page #todoAll .item{animation:itemIn .3s ease both}
 .anim-page .task-scroll .item:nth-child(1),.anim-page #todoAll .item:nth-child(1){animation-delay:.1s}
@@ -208,11 +205,24 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 
 .hero{display:flex;justify-content:space-between;align-items:center}
 .hero-left{flex:1;min-width:0}
-.hero-right{text-align:right;flex:none;cursor:pointer;transition:opacity .15s}
-.hero-right:active{opacity:.6}
-.w-icon{font-size:30px;line-height:1}
-.w-temp{font-size:20px;font-weight:700;letter-spacing:.5px;margin-top:2px}
-.w-desc{font-size:11px;opacity:.5;letter-spacing:1px;margin-top:1px}
+.hero-right{flex:none}
+.hero-weather{display:flex;align-items:center;gap:7px;margin:6px 0 1px;cursor:pointer;transition:opacity .15s}
+.hero-weather:active{opacity:.6}
+.hero-weather .w-icon{font-size:22px;line-height:1}
+.hero-weather .w-temp{font-size:18px;font-weight:700;letter-spacing:.5px;color:var(--accent-deep)}
+.hero-weather .w-desc{font-size:11px;opacity:.55;letter-spacing:1px}
+/* 首屏右侧:五行穿搭紧凑块(从独立卡并入,省下方空间) */
+.hero-wx{max-width:47%;text-align:right}
+.hwx-nav{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-bottom:3px}
+.hwx-nav button{border:none;background:var(--accent-tint);color:var(--accent-deep);border-radius:7px;width:20px;height:20px;font-size:13px;line-height:1;padding:0;cursor:pointer;flex:none}
+.hwx-nav button:disabled{opacity:.3;cursor:default}
+.hwx-date{font-size:10px;color:var(--mist);letter-spacing:.5px}
+.hero-wx .wx-row{gap:5px;padding:2px 0;border-bottom:none;justify-content:flex-end}
+.hero-wx .wx-tag{width:auto;padding:2px 6px;font-size:10px;letter-spacing:1px;margin-top:0}
+.hero-wx .wx-body{flex:none}
+.hero-wx .wx-colors{gap:3px;justify-content:flex-end}
+.hero-wx .wx-box{width:11px;height:11px;border-radius:3px}
+.hero-wx .wx-desc{display:none}
 
 .meal-row{display:flex;align-items:center;gap:10px;padding:6px 0}
 .meal-row .mt{flex:none;width:40px;font-size:13px;font-weight:700;color:var(--ink);letter-spacing:1px}
@@ -298,13 +308,18 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .lock-msg{color:var(--bad);font-size:13px;margin-top:14px;min-height:18px;letter-spacing:1px}
 /* ===== 个人提升状态药丸 ===== */
 .status-pill{flex:none;border:1px solid var(--line);background:var(--field);border-radius:12px;padding:3px 10px;font-size:11px;color:var(--mist);cursor:pointer}
-/* ===== AI 任务看板 ===== */
-.kb-board{display:flex;gap:6px}
-.kb-col{flex:1;min-width:0;background:var(--field);border-radius:10px;padding:6px;min-height:90px}
-.kb-col-h{font-size:11px;font-weight:700;color:var(--mist);text-align:center;padding-bottom:4px;border-bottom:1px dashed #D8D8DE;margin-bottom:6px}
-.kb-card{position:relative;background:#fff;border-radius:8px;padding:6px 20px 6px 6px;margin-bottom:6px;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer}
+/* ===== AI 任务看板(单栏三组:进行中/待办/归档) ===== */
+.kb-board{display:flex;flex-direction:column;gap:8px}
+.kb-col{background:var(--field);border-radius:10px;padding:8px}
+.kb-col-h{font-size:12px;font-weight:700;color:var(--mist);padding-bottom:5px;border-bottom:1px dashed #D8D8DE;margin-bottom:6px;letter-spacing:2px}
+.kb-col-h.kb-doing{color:var(--accent-deep)}
+.kb-col-h.kb-todo{color:var(--warn)}
+.kb-col-h.kb-done{color:var(--good)}
+.kb-card{position:relative;background:#fff;border-radius:8px;padding:6px 20px 6px 8px;margin-bottom:6px;font-size:12px;box-shadow:0 1px 3px rgba(0,0,0,.06);cursor:pointer;border-left:3px solid transparent}
 .kb-card .t{white-space:normal;word-break:break-all;line-height:1.4}
 .kb-card .del{position:absolute;top:2px;right:2px;width:16px;height:16px;font-size:11px;border:none;border-radius:50%;background:#F1F1F4;color:var(--bad);display:flex;align-items:center;justify-content:center;cursor:pointer}
+.kb-ch{background:#F3F6FA;border-left:3px solid var(--accent-tint2);cursor:default;padding-right:8px}
+.kb-src{display:block;font-size:10px;color:var(--faint);margin-top:3px;letter-spacing:.5px}
 .kb-empty{text-align:center;color:#E0E0E5;font-size:12px;padding:8px 0}
 /* ===== 版本更新提示 ===== */
 #updToast{position:fixed;left:50%;top:16px;transform:translateX(-50%);display:none;align-items:center;gap:10px;background:var(--accent);color:#fff;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:600;z-index:100;box-shadow:0 4px 16px rgba(10,132,255,.35);cursor:pointer}
@@ -380,7 +395,6 @@ body{background:var(--paper)}
 .acc-bar-fill{background:var(--accent)}
 .add-btn,.dm-btn{background:var(--accent);letter-spacing:1px}
 #updToast{background:var(--accent-deep)}#updToast button{color:var(--accent-deep)}
-.back-top{background:var(--accent);box-shadow:0 4px 14px rgba(20,50,80,.3)}
 .add-row input:focus,textarea.diary:focus{border-color:var(--accent-tint2);background:#fff}
 .alm-lbl input{accent-color:var(--accent)}
 </style>
@@ -394,12 +408,20 @@ body{background:var(--paper)}
   <div class="hero-left">
     <div class="date" id="todayLine">加载中…</div>
     <h1 id="greet">你好,大张</h1>
+    <div class="hero-weather" id="weatherBox" onclick="loadWeather()">
+      <span class="w-icon" id="wIcon">⏳</span>
+      <span class="w-temp" id="wTemp">--</span>
+      <span class="w-desc" id="wDesc">天气</span>
+    </div>
     <div id="syncDot" title="云备份状态" style="font-size:10px;color:var(--mist);margin-top:5px;letter-spacing:1px;cursor:pointer" onclick="loadFromCloud()"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#8B8B92;margin-right:4px"></span>云备份</div>
   </div>
-  <div class="hero-right" id="weatherBox" onclick="loadWeather()">
-    <div class="w-icon" id="wIcon">⏳</div>
-    <div class="w-temp" id="wTemp">--</div>
-    <div class="w-desc" id="wDesc">天气</div>
+  <div class="hero-right hero-wx">
+    <div class="hwx-nav">
+      <button id="wxPrev" onclick="App.wxNav(-1)" aria-label="前一天">‹</button>
+      <span class="hwx-date" id="wxDate">--</span>
+      <button id="wxNext" onclick="App.wxNav(1)" aria-label="后一天">›</button>
+    </div>
+    <div id="wxBody"></div>
   </div>
 </div>
 
@@ -419,23 +441,14 @@ body{background:var(--paper)}
       </div>
     </div>
 
-    <!-- 五行穿搭(每日抓取注入,可翻前一天/后一天) -->
-    <div class="sec-title">五行穿搭</div>
-    <div class="card">
-      <div class="wx-nav">
-        <button id="wxPrev" onclick="App.wxNav(-1)">‹ 前一天</button>
-        <span class="wx-date" id="wxDate">--</span>
-        <button id="wxNext" onclick="App.wxNav(1)">后一天 ›</button>
-      </div>
-      <div id="wxBody"></div>
-    </div>
+    <!-- 五行穿搭已并入首屏 hero 右侧(见 .hero-wx) -->
 
-    <!-- 今日复盘(可写) -->
-    <div class="sec-title">今日复盘</div>
+    <!-- 随手笔记(可写) -->
+    <div class="sec-title">随手笔记</div>
     <div class="card">
-      <textarea class="diary" id="diaryIn" placeholder="吾日三省吾身：为人谋而不忠乎？与朋友交而不信乎？传不习乎？"></textarea>
+      <textarea class="diary" id="diaryIn" placeholder="记一笔…"></textarea>
       <div class="add-row">
-        <button class="add-btn" style="width:100%" onclick="App.saveDiary()">保存复盘</button>
+        <button class="add-btn" style="width:100%" onclick="App.saveDiary()">保存</button>
       </div>
       <div id="diaryList" style="margin-top:8px"></div>
     </div>
@@ -631,7 +644,7 @@ body{background:var(--paper)}
       <div class="col-h" style="margin-top:8px">公文/材料文档</div>
       <div id="docList"></div>
       <div class="add-row">
-        <label class="add-btn" style="cursor:pointer">上传<input type="file" id="docFile" style="display:none" onchange="App.uploadDoc()"></label>
+        <label class="add-btn" style="cursor:pointer;position:relative;overflow:hidden">上传<input type="file" id="docFile" style="position:absolute;left:0;top:0;width:1px;height:1px;opacity:0" onchange="App.uploadDoc()"></label>
       </div>
     </div>
 
@@ -811,8 +824,6 @@ body{background:var(--paper)}
 
 </div>
 
-<a class="back-top" href="#top">↑</a>
-
 <script>
 /* ================= 数据层(localStorage 持久化) ================= */
 var DB_KEY='dz_app_v1';
@@ -825,8 +836,8 @@ function uid(){return 'i'+Math.random().toString(36).slice(2,9);}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function todayStr(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
 load();
-/* 旧"AI技能学习"状态迁移到看板三态 */
-(function(){var m={'待学':'待办','学习中':'进行中','已掌握':'完成'};(DB.aiSkills||[]).forEach(function(x){if(m[x.status])x.status=m[x.status];});})();
+/* 旧"AI技能学习"状态迁移到看板三态(进行中/待办/归档) */
+(function(){var m={'待学':'待办','学习中':'进行中','已掌握':'归档','完成':'归档'};(DB.aiSkills||[]).forEach(function(x){if(m[x.status])x.status=m[x.status];});})();
 
 /* ================= 每日英语句库(90句,按日轮换) ================= */
 var EN_SENTENCES=[
@@ -979,9 +990,9 @@ var ACC_CATS_OUT=[{k:'餐饮',ic:'🍽️'},{k:'交通',ic:'🚗'},{k:'购物',i
 var ACC_CATS_IN=[{k:'工资',ic:'💼'},{k:'课时',ic:'🎵'},{k:'录音',ic:'🎙️'},{k:'其他',ic:'📌'}];
 var _accType='out';
 var _funCat='电影';
-var FUN_CATS=['电影','演唱会','旅游','阅读','追剧','其他'];
-var FUN_CAT_BG=['#E8D5D5','#D5DDE5','#D5E0D5','#DDD5E0','#E5DDD0','#DDD8D0'];
-var FUN_CAT_SEL=['#C9A7A7','#A8BCC8','#A8C0A8','#B0A8C0','#C8B8A0','#B8B0A8'];
+var FUN_CATS=['电影','演唱会','旅游','阅读','追剧','亲友会晤','其他'];
+var FUN_CAT_BG=['#E8D5D5','#D5DDE5','#D5E0D5','#DDD5E0','#E5DDD0','#E8DFC8','#DDD8D0'];
+var FUN_CAT_SEL=['#C9A7A7','#A8BCC8','#A8C0A8','#B0A8C0','#C8B8A0','#C3B190','#B8B0A8'];
 var _funCat='电影';
 
 /* ================= 每日热点 ================= */
@@ -1110,7 +1121,7 @@ function refreshDida(){
   }).catch(function(){});
 }
 /* ===== 回收站(勾选完成+删除都进这里,可恢复) ===== */
-var TRASH_NAMES={todo:'待办',shop:'购物',fam:'家庭',org:'机构',book:'录音预约',work:'待办工作',rehe:'策划排练',zx:'政协',funItems:'娱乐',diary:'复盘',money:'记账',anni:'纪念日',enWords:'生词本',songs:'歌单',videos:'视频',aiSkills:'AI看板'};
+var TRASH_NAMES={todo:'待办',shop:'购物',fam:'家庭',org:'机构',book:'录音预约',work:'待办工作',rehe:'策划排练',zx:'政协',funItems:'娱乐',diary:'笔记',money:'记账',anni:'纪念日',enWords:'生词本',songs:'歌单',videos:'视频',aiSkills:'AI看板'};
 function trashItem(from,obj,reason){
   if(!DB.trash)DB.trash=[];
   DB.trash.unshift({id:uid(),from:from,obj:obj,reason:reason||'deleted',ts:Date.now()});
@@ -1351,16 +1362,47 @@ function loadFromCloud(retry){
       if(retry<3)setTimeout(function(){loadFromCloud(retry+1);},2500*(retry+1)); // 失败重试,手机上网慢不一失败就放弃
     });
 }
+/* ===== 文档本机存储(IndexedDB 真存文件内容;仅元数据进 DB.docs 同步云端,避免撑爆备份) ===== */
+var _docDb=null;
+function docDb(){return new Promise(function(res,rej){
+  if(_docDb)return res(_docDb);
+  if(!window.indexedDB)return rej('no-idb');
+  var r=indexedDB.open('dz_docs',1);
+  r.onupgradeneeded=function(){if(!r.result.objectStoreNames.contains('files'))r.result.createObjectStore('files');};
+  r.onsuccess=function(){_docDb=r.result;res(_docDb);};
+  r.onerror=function(){rej(r.error);};
+});}
+function docPutBlob(id,blob){return docDb().then(function(db){return new Promise(function(res,rej){
+  var tx=db.transaction('files','readwrite');tx.objectStore('files').put(blob,id);
+  tx.oncomplete=function(){res();};tx.onerror=function(){rej(tx.error);};});});}
+function docGetBlob(id){return docDb().then(function(db){return new Promise(function(res,rej){
+  var rq=db.transaction('files','readonly').objectStore('files').get(id);
+  rq.onsuccess=function(){res(rq.result);};rq.onerror=function(){rej(rq.error);};});});}
+function docDelBlob(id){return docDb().then(function(db){return new Promise(function(res,rej){
+  var tx=db.transaction('files','readwrite');tx.objectStore('files').delete(id);
+  tx.oncomplete=function(){res();};tx.onerror=function(){rej(tx.error);};});});}
+
 function renderDocsLocal(){
   var el=document.getElementById('docList');if(!el)return;
   var arr=DB.docs||[];
   var injected=DOCS||[];
   var all=arr.concat(injected.map(function(d){return {name:d.name,url:d.url,date:d.date,local:false};}));
-  if(!all.length){el.innerHTML='<div class="empty">暂无文档,上传一个</div>';return;}
+  if(!all.length){el.innerHTML='<div class="empty">暂无文档,点下面上传</div>';return;}
   el.innerHTML=all.map(function(d){
-    return '<div class="doc-item"><span class="ic">📄</span>'+(d.url?'<a href="'+d.url+'" target="_blank">':'<span style="flex:1">')+
-      esc(d.name)+'<span class="dt">'+esc(d.date||'')+'</span>'+(d.url?'</a>':'</span>')+'</div>';
+    if(d.local){
+      return '<div class="doc-item"><span class="ic">📄</span><a href="javascript:App.openDoc(\''+d.id+'\')">'+esc(d.name)+'</a><span class="dt">'+esc(d.date||'')+'</span><button class="perm-del" title="删除" onclick="App.delDoc(\''+d.id+'\')">×</button></div>';
+    }
+    return '<div class="doc-item"><span class="ic">📄</span><a href="'+d.url+'" target="_blank">'+esc(d.name)+'</a><span class="dt">'+esc(d.date||'')+'</span></div>';
   }).join('');
+}
+
+/* 图片内联预览(全屏遮罩,点任意处关) */
+function showImgViewer(url,name){
+  var ov=document.createElement('div');
+  ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px';
+  ov.onclick=function(){try{URL.revokeObjectURL(url);}catch(e){}ov.remove();};
+  ov.innerHTML='<img src="'+url+'" style="max-width:100%;max-height:82%;object-fit:contain;border-radius:8px"><div style="color:#fff;font-size:12px;margin-top:10px;opacity:.7">'+esc(name||'')+' · 点任意处关闭</div>';
+  document.body.appendChild(ov);
 }
 
 /* ================= 朗读(百度发音mp3直播,浏览器语音合成兜底) ================= */
@@ -1548,7 +1590,7 @@ function renderFun(){
   var arr=(DB.funItems||[]).filter(function(x){return !x.done;});
   if(!arr.length){el.innerHTML='<div class="empty">还没有记录,下面加一条</div>';return;}
   el.innerHTML=arr.map(function(x){
-    var ci=FUN_CATS.indexOf(x.cat||'其他');if(ci<0)ci=5;
+    var ci=FUN_CATS.indexOf(x.cat||'其他');if(ci<0)ci=FUN_CATS.length-1;
     return '<div class="item"><div class="cb" onclick="App.togFun(\''+x.id+'\')"></div><div class="body" onclick="App.itemDetail(\'fun\',\''+x.id+'\')"><div class="t">'+esc(x.t)+'</div>'+(x.due?'<div class="s">'+x.due+'</div>':'')+'</div><span class="fun-tag" style="background:'+FUN_CAT_BG[ci]+'">'+esc(x.cat||'其他')+'</span>'+(x.due?(x.due?'<input type="date" class="due-chip-input" value="'+x.due+'" onchange="App.setDue(\'fun\',\''+x.id+'\',this.value)">':''):'')+'<button class="del" onclick="App.delFun(\''+x.id+'\')">×</button></div>';
   }).join('');
 }
@@ -1568,16 +1610,25 @@ function renderGrowth(){
   _renderGrowthList('videos','videoList',['待拍','拍摄中','已发布']);
   renderAIBoard();
 }
-/* ===== AI 任务看板(三列,点卡片流转到下一列) ===== */
-var AI_STATUS=['待办','进行中','完成'];
+/* ===== AI 任务看板(单栏三组:进行中/待办/归档;上方为通道抓取,下方本地可点) ===== */
+var AI_STATUS=['进行中','待办','归档'];
+var AI_KEY={'进行中':'doing','待办':'todo','归档':'done'};
+var AI_SRC={zhaoxi:'朝夕',yushang:'羽商',zhaojiu:'朝九',chaosheng:'潮生',zelda:'微信'};
 function renderAIBoard(){
   var el=document.getElementById('aiBoard');if(!el)return;
   el.innerHTML=AI_STATUS.map(function(s){
-    var arr=(DB.aiSkills||[]).filter(function(x){return (x.status||'待办')===s;});
-    return '<div class="kb-col"><div class="kb-col-h">'+s+' '+arr.length+'</div>'+
-      (arr.length?arr.map(function(x){
-        return '<div class="kb-card" onclick="App.cycleGrowth(\'aiSkills\',\''+x.id+'\')"><div class="t">'+esc(x.t)+'</div><button class="del" onclick="event.stopPropagation();App.delGrowth(\'aiSkills\',\''+x.id+'\')">×</button></div>';
-      }).join(''):'<div class="kb-empty">·</div>')+'</div>';
+    var key=AI_KEY[s];
+    var ch=(typeof AITASKS!=='undefined'&&AITASKS&&AITASKS[key])||[];
+    var local=(DB.aiSkills||[]).filter(function(x){return (x.status||'待办')===s;});
+    var n=ch.length+local.length;
+    var body=ch.map(function(x){
+      return '<div class="kb-card kb-ch"><div class="t">'+esc(x.t)+'</div><span class="kb-src">'+esc(AI_SRC[x.src]||x.src||'通道')+(x.d?' · '+esc(x.d):'')+'</span></div>';
+    }).join('');
+    body+=local.map(function(x){
+      return '<div class="kb-card" onclick="App.cycleGrowth(\'aiSkills\',\''+x.id+'\')"><div class="t">'+esc(x.t)+'</div><button class="del" onclick="event.stopPropagation();App.delGrowth(\'aiSkills\',\''+x.id+'\')">×</button></div>';
+    }).join('');
+    if(!n)body='<div class="kb-empty">·</div>';
+    return '<div class="kb-col"><div class="kb-col-h kb-'+key+'">'+s+' '+n+'</div>'+body+'</div>';
   }).join('');
 }
 
@@ -1603,6 +1654,9 @@ var WXKEYS=["2026-8-13", "2026-8-14", "2026-8-15", "2026-8-16", "2026-8-17", "20
 <!--@BOTASKS-->
 var BOTASKS={"zhaoxi": [], "yushang": [], "zhaojiu": ["视频加歌词任务：大张要\"把大海小城歌词按时间戳加进 1:1 演出视频用于户外大屏\"，但视频以 media 类型发来（桥不"], "chaosheng": []};
 <!--@BOTASKS-END-->
+<!--@AITASKS-->
+var AITASKS={"doing": [], "todo": [], "done": [{"t": "源远的「希望峰学园」学习App v1.0 于 2026-08-16 上线,GitHub Page", "src": "zelda", "d": "2026-08-16"}, {"t": "源远「希望峰学园」学习App v1.0 于 2026-08-16 上线：手搓全流程交付。GitH", "src": "zelda", "d": "2026-08-16"}, {"t": "微信-Codex 桥 (wechat-codex-bridge) 驱动 Codex 跑语儿App", "src": "zelda", "d": "2026-08-15"}, {"t": "大张工作台 App 英语学习朗读功能在 v1.1 版本修复（2026-08-15）：根因为三级兜", "src": "zelda", "d": "2026-08-15"}, {"t": "语儿App「小天地」交付完成：Claude接手Codex烂尾任务，在原index.html+st", "src": "zelda", "d": "2026-08-15"}, {"t": "App采用商务蓝主题，11 个导航与板块图标硬编码进 dazhang-single.html 源", "src": "zelda", "d": "2026-08-15"}]};
+<!--@AITASKS-END-->
 <!--@DOCS-->
 var DOCS=[];
 <!--@DOCS-END-->
@@ -1613,10 +1667,10 @@ var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';
 <!--@GHTOKEN-END-->
 <!--@VER-->
-var APP_VER='202608160957';
+var APP_VER='202608162241';
 <!--@VER-END-->
 <!--@DIDA-->
-var DIDA={"todo": [{"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查（贫血+甲状腺+乳腺+心脏）", "due": "2026-08-16"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-16"}, {"id": "6a80c2102099c08f282fb4d7", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a60b8d3e4b0f67952d3dad3", "pri": "高", "title": "周日10:00装牙冠", "due": "2026-08-16"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17"}, {"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查（贫血+甲状腺+乳腺+心脏）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a80c2102099c08f282fb4d7", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b8d3e4b0f67952d3dad3", "pri": "高", "title": "周日10:00装牙冠", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18", "project": "69f1999221fab4f52de43863"}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
+var DIDA={"todo": [{"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a80c2102099c08f282fb4d7", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17"}, {"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a80c2102099c08f282fb4d7", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18", "project": "69f1999221fab4f52de43863"}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
 <!--@DIDA-END-->
 
 /* ================= 五行穿搭(翻页) ================= */
@@ -2036,12 +2090,43 @@ window.App={
   },
   delGrowth:function(listKey,id){var i=-1;for(var k=0;k<(DB[listKey]||[]).length;k++){if(DB[listKey][k].id===id){i=k;break;}}if(i<0)return;trashItem(listKey,DB[listKey][k],'deleted');DB[listKey].splice(i,1);save();renderGrowth();},
   uploadDoc:function(){
-    var f=document.getElementById('docFile').files[0];if(!f)return;
-    var name=f.name;var date=todayStr();
-    DB.docs.unshift({id:uid(),name:name,url:'',date:date,local:true});
-    save();renderDocsLocal();
-    document.getElementById('docFile').value='';
-    // 注: 2026-08-06 移除 COS 直传(原 Bearer SID 鉴权方式无效从未成功;密钥不再内嵌页面)
+    var inp=document.getElementById('docFile');var f=inp.files&&inp.files[0];if(!f)return;
+    var id=uid();var name=f.name;
+    // 真存文件内容到 IndexedDB(本机);元数据进 DB.docs 同步云端
+    docPutBlob(id,f).then(function(){
+      DB.docs.unshift({id:id,name:name,date:todayStr(),type:f.type||'',size:f.size||0,local:true});
+      save();renderDocsLocal();inp.value='';toastMsg('已上传');
+    }).catch(function(e){toastMsg('上传失败:'+(e||'存储不可用'));});
+  },
+  openDoc:function(id){
+    var meta=(DB.docs||[]).find(function(x){return x.id===id;})||{};
+    docGetBlob(id).then(function(blob){
+      if(!blob){toastMsg('该文档内容不在本机(修复前上传的只存了文件名)');return;}
+      var type=blob.type||meta.type||'';
+      var url=URL.createObjectURL(blob);
+      if(type.indexOf('image/')===0){showImgViewer(url,meta.name);return;}
+      // 非图片:APK 内走原生桥直接调系统打开;浏览器走下载
+      if(window.AndroidDoc&&AndroidDoc.open){
+        var rd=new FileReader();
+        rd.onload=function(){
+          var b64=String(rd.result).split(',')[1]||'';
+          try{AndroidDoc.open(b64,meta.name||'文档',type||'application/octet-stream');}catch(e){toastMsg('打开失败');}
+          setTimeout(function(){URL.revokeObjectURL(url);},4000);
+        };
+        rd.readAsDataURL(blob);
+      }else{
+        var a=document.createElement('a');a.href=url;a.download=meta.name||'文档';
+        document.body.appendChild(a);a.click();
+        setTimeout(function(){URL.revokeObjectURL(url);a.remove();},4000);
+        toastMsg('已交给系统打开/下载');
+      }
+    }).catch(function(){toastMsg('打开失败');});
+  },
+  delDoc:function(id){
+    if(!confirm('删除这个文档?'))return;
+    docDelBlob(id).catch(function(){});
+    var i=-1;for(var k=0;k<(DB.docs||[]).length;k++){if(DB.docs[k].id===id){i=k;break;}}
+    if(i>=0){DB.docs.splice(i,1);save();renderDocsLocal();}
   }
 };
 // 回车快捷添加
