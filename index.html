@@ -268,8 +268,8 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .anni-future .t{color:var(--ink)}
 .anni-past .t{color:var(--faint)}
 /* ===== 记账 ===== */
-.acc-overview{display:flex;gap:8px}
-.acc-ov-item{flex:1;text-align:center;background:var(--field);border-radius:10px;padding:8px 4px}
+.acc-overview{display:flex;flex-wrap:wrap;gap:8px}
+.acc-ov-item{flex:1 1 22%;min-width:0;text-align:center;background:var(--field);border-radius:10px;padding:8px 4px}
 .acc-ov-item span:first-child{display:block;font-size:10px;color:var(--mist)}
 .acc-ov-item span:last-child{font-size:15px;font-weight:700}
 .acc-cats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}
@@ -702,6 +702,9 @@ body{background:var(--paper)}
       <div class="acc-ov-item"><span class="muted">本月结余</span><span id="accMonthLeft">¥0</span></div>
       <div class="acc-ov-item"><span class="muted">今日支出</span><span class="acc-red" id="accToday">¥0</span></div>
       <div class="acc-ov-item"><span class="muted">本周支出</span><span class="acc-red" id="accWeekOut">¥0</span></div>
+      <div class="acc-ov-item"><span class="muted">今年支出</span><span class="acc-red" id="accYearOut">¥0</span></div>
+      <div class="acc-ov-item"><span class="muted">今年收入</span><span class="acc-green" id="accYearIn">¥0</span></div>
+      <div class="acc-ov-item"><span class="muted">今年结余</span><span id="accYearLeft">¥0</span></div>
     </div>
 
     <div class="sec-title">🧾 记一笔</div>
@@ -1642,22 +1645,27 @@ function renderAnni(){
 function accCatSub(x){return esc(x.cat||'其他')+(x.sub?' - '+esc(x.sub):'');}
 function parseDay(s){var p=String(s||'').slice(0,10).split('-');if(p.length!==3||!p[0])return NaN;return new Date(+p[0],+p[1]-1,+p[2]).getTime();}
 function renderAccount(){
-  var t=todayStr(),m=t.slice(0,7);
+  var t=todayStr(),m=t.slice(0,7),y=String(new Date().getFullYear());
   var wd=new Date();wd.setHours(0,0,0,0);wd.setDate(wd.getDate()-wd.getDay()); // 钱迹式周日起
   var wEnd=wd.getTime()+6*86400000;
-  var mOut=0,mIn=0,tOut=0,wOut=0;
+  var mOut=0,mIn=0,tOut=0,wOut=0,yOut=0,yIn=0;
   (DB.money||[]).forEach(function(x){
     if((x.d||'').slice(0,7)===m){if(x.type==='out')mOut+=+x.amt;else mIn+=+x.amt;}
+    if((x.d||'').slice(0,4)===y){if(x.type==='out')yOut+=+x.amt;else yIn+=+x.amt;}
     if(x.d===t&&x.type==='out')tOut+=+x.amt;
     var dt=parseDay(x.d);
     if(x.type==='out'&&!isNaN(dt)&&dt>=wd.getTime()&&dt<=wEnd)wOut+=+x.amt;
   });
   function fmtY(v){return '¥'+(+v).toFixed(2).replace(/\.00$/,'');}
   var e1=document.getElementById('accMonthOut'),e2=document.getElementById('accMonthIn'),e3=document.getElementById('accToday'),e4=document.getElementById('accMonthLeft'),e5=document.getElementById('accWeekOut');
+  var y1=document.getElementById('accYearOut'),y2=document.getElementById('accYearIn'),y3=document.getElementById('accYearLeft');
   if(e1)e1.textContent=fmtY(mOut);
   if(e2)e2.textContent=fmtY(mIn);
   if(e3)e3.textContent=fmtY(tOut);
   if(e5)e5.textContent=fmtY(wOut);
+  if(y1)y1.textContent=fmtY(yOut);
+  if(y2)y2.textContent=fmtY(yIn);
+  if(y3){var yl=yIn-yOut;y3.textContent=(yl>=0?'¥':'-¥')+Math.abs(yl).toFixed(2).replace(/\.00$/,'');y3.style.color=yl>=0?'#1fa84a':'#ff453a';}
   if(e4){var left=mIn-mOut;e4.textContent=(left>=0?'¥':'-¥')+Math.abs(left).toFixed(2).replace(/\.00$/,'');e4.style.color=left>=0?'#1fa84a':'#ff453a';}
   // 分类(两级):一级网格+二级行;旧分类不在新表里时归位第一项
   var cats=_accType==='out'?ACC_CATS_OUT:ACC_CATS_IN;
@@ -1931,7 +1939,7 @@ var HUANGLI={"2026-8-14": {"lunar": "七月初二", "yi": "造畜稠 纳财 纳�
 var BOTASKS={"zhaoxi": [], "yushang": [], "zhaojiu": ["视频加歌词任务：大张要\"把大海小城歌词按时间戳加进 1:1 演出视频用于户外大屏\"，但视频以 media 类型发来（桥不"], "chaosheng": []};
 <!--@BOTASKS-END-->
 <!--@AITASKS-->
-var AITASKS={"doing": [{"t": "大张工作台v202608162241六项改版已上线：删回顶箭头；AI看板改单栏三组（进行中/待办", "src": "zelda", "d": "2026-08-16"}], "todo": [], "done": [{"t": "十项修改内容:返回首页按钮右置、会晤人名改为非粗体、天气显示中文(WEATHER_ZH 映射,w", "src": "zelda", "d": "2026-08-17"}, {"t": "大张工作台 App 2026-08-17 17:16 上线的十项修改内容：返回首页按钮右置；会晤", "src": "zelda", "d": "2026-08-17"}, {"t": "大张工作台 App 十项修改+黄历中文化于 2026-08-17 下午上线,版本号 ver=20", "src": "zelda", "d": "2026-08-17"}, {"t": "实测验证:8-19 七夕、8-22 处暑、8-27 中元,14 天宜忌零空缺,线上真渲染验证通过", "src": "zelda", "d": "2026-08-17"}, {"t": "本次会话两次被 400 中断重开(微信图片入上下文+上游 reasoning_effort 报错", "src": "zelda", "d": "2026-08-17"}, {"t": "黄历数据链实现:update_wuxing.py 注入 HUANGLI 标记,parse_wuh", "src": "zelda", "d": "2026-08-17"}]};
+var AITASKS={"doing": [{"t": "大张工作台v202608162241六项改版已上线：删回顶箭头；AI看板改单栏三组（进行中/待办", "src": "zelda", "d": "2026-08-16"}], "todo": [], "done": [{"t": "十项修改内容:返回首页按钮右置、会晤人名改为非粗体、天气显示中文(WEATHER_ZH 映射,w", "src": "zelda", "d": "2026-08-17"}, {"t": "大张工作台 App 2026-08-17 17:16 上线的十项修改内容：返回首页按钮右置；会晤", "src": "zelda", "d": "2026-08-17"}, {"t": "大张工作台 App 十项修改+黄历中文化于 2026-08-17 下午上线,版本号 ver=20", "src": "zelda", "d": "2026-08-17"}, {"t": "大张工作台记账板块按钱迹App数据结构重设计于2026-08-17 18:48上线(ver 20", "src": "zelda", "d": "2026-08-17"}, {"t": "实测验证:8-19 七夕、8-22 处暑、8-27 中元,14 天宜忌零空缺,线上真渲染验证通过", "src": "zelda", "d": "2026-08-17"}, {"t": "本次会话两次被 400 中断重开(微信图片入上下文+上游 reasoning_effort 报错", "src": "zelda", "d": "2026-08-17"}]};
 <!--@AITASKS-END-->
 <!--@DOCS-->
 var DOCS=[];
@@ -1943,7 +1951,7 @@ var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';
 <!--@GHTOKEN-END-->
 <!--@VER-->
-var APP_VER='202608171848';
+var APP_VER='202608171857';
 <!--@VER-END-->
 <!--@DIDA-->
 var DIDA={"todo": [{"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17"}, {"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18", "project": "69f1999221fab4f52de43863"}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
