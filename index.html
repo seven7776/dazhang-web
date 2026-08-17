@@ -775,8 +775,6 @@ body{background:var(--paper)}
         <button class="add-btn" onclick="App.addVideo()">＋</button>
       </div>
     </div>
-  </div>
-  
 
     <div class="sec-title" id="growth-health">🏃 运动健康</div>
     <div class="card tight">
@@ -835,8 +833,8 @@ body{background:var(--paper)}
       <div id="wordList"></div>
       <div class="muted" style="text-align:center;font-size:12px;padding:4px" id="wordEmpty"></div>
     </div>
-
-    <!-- /page-growth -->
+  </div>
+  <!-- /page-growth -->
 
   <!-- ========== 娱乐休闲 page-fun ========== -->
   <div class="page" id="page-fun" hidden>
@@ -1364,21 +1362,20 @@ function weatherZh(desc){
   for(var e in WEATHER_ZH){if(k.indexOf(e)>=0)return WEATHER_ZH[e];}
   return String(desc||'').trim();
 }
+var WEATHER_CODE_ZH={0:['☀️','晴'],1:['🌤','晴'],2:['⛅','多云'],3:['☁️','阴'],45:['🌫','雾'],48:['🌫','雾'],51:['🌦','毛毛雨'],53:['🌦','毛毛雨'],55:['🌦','毛毛雨'],56:['🌧','冻雨'],57:['🌧','冻雨'],61:['🌧','小雨'],63:['🌧','中雨'],65:['🌧','大雨'],66:['🌧','冻雨'],67:['🌧','冻雨'],71:['🌨','小雪'],73:['🌨','中雪'],75:['🌨','大雪'],77:['🌨','小雪'],80:['🌧','小阵雨'],81:['🌧','阵雨'],82:['🌧','强阵雨'],85:['🌨','阵雪'],86:['🌨','阵雪'],95:['⛈','雷雨'],96:['⛈','雷雨冰雹'],99:['⛈','雷雨冰雹']};
 function loadWeather(){
   var box=document.getElementById('weatherBox');if(!box)return;
   document.getElementById('wIcon').textContent='⏳';
   try{
-    fetch('https://wttr.in/Rudong?format=j1&lang=zh',{cache:'no-store'})
+    // Open-Meteo(如东坐标,免key/HTTPS/CORS;wttr.in 本地温度实测严重失准已弃用)
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=32.31&longitude=121.19&current_weather=true&timezone=Asia%2FShanghai',{cache:'no-store'})
       .then(function(r){return r.json();})
       .then(function(d){
-        var cur=d.current_condition[0];
-        var code=cur.weatherCode;
-        var icon=weatherIcon(code);
-        var temp=cur.temp_C;
-        var desc=weatherZh(cur.weatherDesc[0].value);
-        document.getElementById('wIcon').textContent=icon;
-        document.getElementById('wTemp').textContent=temp+'°';
-        document.getElementById('wDesc').textContent=desc;
+        var cw=d.current_weather;if(!cw)throw new Error('no cw');
+        var z=WEATHER_CODE_ZH[cw.weathercode]||['🌤','多云'];
+        document.getElementById('wIcon').textContent=z[0];
+        document.getElementById('wTemp').textContent=Math.round(cw.temperature)+'°';
+        document.getElementById('wDesc').textContent=z[1];
       })
       .catch(function(){document.getElementById('wIcon').textContent='🌤';document.getElementById('wTemp').textContent='--';document.getElementById('wDesc').textContent='获取失败';});
   }catch(e){document.getElementById('wIcon').textContent='🌤';}
@@ -1951,7 +1948,7 @@ var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';
 <!--@GHTOKEN-END-->
 <!--@VER-->
-var APP_VER='202608171903';
+var APP_VER='202608171919';
 <!--@VER-END-->
 <!--@DIDA-->
 var DIDA={"todo": [{"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17"}, {"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18", "project": "69f1999221fab4f52de43863"}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
