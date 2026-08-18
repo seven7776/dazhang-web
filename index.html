@@ -148,7 +148,7 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .todo-cols{display:grid;grid-template-columns:1fr;gap:0 8px}
 .todo-scroll{max-height:175px;overflow-y:auto;-webkit-overflow-scrolling:touch;margin-bottom:4px}
 .todo-scroll .empty{padding:16px 0}
-.todo-cols .item{padding:4px 0;gap:7px;min-width:0}
+.todo-cols .item{padding:2px 0;gap:6px;min-width:0}
 .todo-cols .item .t{font-size:12px;line-height:1.3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .bell{width:22px;height:22px;border:none;background:transparent;font-size:13px;cursor:pointer;flex:none;opacity:.4;padding:0}
 .bell:active{opacity:1;transform:scale(1.15)}
@@ -168,9 +168,14 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .page-top{display:flex;align-items:center;justify-content:space-between;margin:14px 4px 8px}
 .page-top .big-sec{margin:0}
 .back-home{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-size:13px;font-weight:600;margin:0;padding:6px 0;opacity:.75;flex:none}
+.big-sec .em{display:none}
+.page-top .big-sec{padding-left:8px;border-left:3px solid var(--accent-tint2);line-height:1.15}
+.mid-sec{font-size:16px;font-weight:700;color:var(--ink);margin:16px 4px 8px;padding-left:8px;border-left:3px solid var(--accent-tint2);letter-spacing:.4px}
+.mid-sec .em{display:none}
 
 
 
+.todo-scroll .item{padding:3px 0}
 .todo-scroll .item .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
 .todo-scroll .item .body{min-width:0}
 
@@ -216,8 +221,8 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .hero-weather .w-temp{font-size:18px;font-weight:700;letter-spacing:.5px;color:var(--accent-deep)}
 .hero-weather .w-desc{font-size:11px;opacity:.55;letter-spacing:1px}
 /* 首屏右上:⋯菜单钮 + 五行穿搭淡色圆角边框块(大吉/次吉/不宜左对齐) */
-.hero-dots{margin-bottom:5px}
-.dots-btn{border:none;background:rgba(255,255,255,.5);color:var(--ink);width:30px;height:30px;border-radius:50%;font-size:17px;line-height:1;cursor:pointer;padding:0 0 3px;transition:transform .12s}
+.hero-dots{margin-bottom:5px;align-self:flex-end}
+.dots-btn{border:none;background:transparent;color:var(--ink);width:22px;height:28px;border-radius:0;font-size:16px;line-height:1;letter-spacing:0;writing-mode:vertical-rl;text-orientation:mixed;cursor:pointer;padding:0;transition:transform .12s;opacity:.7}
 .dots-btn:active{transform:scale(.88)}
 .hero-wx{text-align:left;border:1px solid var(--accent-tint);border-radius:14px;padding:7px 10px;background:rgba(255,255,255,.38)}
 .hwx-nav{display:flex;align-items:center;justify-content:flex-start;gap:6px;margin-bottom:3px}
@@ -269,8 +274,11 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .anni-future .t{color:var(--ink)}
 .anni-past .t{color:var(--faint)}
 /* ===== 记账 ===== */
-.acc-overview{display:flex;flex-wrap:wrap;gap:8px}
+.acc-overview{display:flex;flex-wrap:wrap;gap:8px;position:relative}
 .acc-ov-item{flex:1 1 22%;min-width:0;text-align:center;background:var(--field);border-radius:10px;padding:8px 4px}
+.acc-ov-more{display:none}
+.acc-overview.acc-more-on .acc-ov-more{display:flex}
+.acc-more-btn{position:absolute;right:2px;bottom:2px;border:none;background:transparent;color:var(--mist);font-size:12px;padding:4px 6px;cursor:pointer;line-height:1}
 .acc-ov-item span:first-child{display:block;font-size:10px;color:var(--mist)}
 .acc-ov-item span:last-child{font-size:15px;font-weight:700}
 .acc-cats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:8px 0}
@@ -280,7 +288,7 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .acc-subs:empty{margin:0}
 .acc-sub-btn{border:1px solid var(--line);background:var(--field);border-radius:12px;padding:3px 10px;font-size:11px;color:var(--mist);cursor:pointer}
 .acc-sub-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
-.acc-again{background:var(--field);color:var(--ink);border:1px solid var(--line);font-weight:500;flex:0 0 72px}
+.acc-again{background:var(--accent);color:#fff;border:1px solid var(--accent);font-weight:500;flex:0 0 72px}
 .acc-chart{padding:4px 0}
 .acc-bar-row{display:flex;align-items:center;gap:6px;padding:4px 0}
 .acc-bar-lbl{width:48px;font-size:12px;color:var(--mist);flex:none}
@@ -312,8 +320,12 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .fun-sel{flex:0 0 auto;border:1px solid var(--line);border-radius:10px;padding:7px 4px;font-size:13px;background:var(--field);color:var(--ink)}
 /* ===== 个人提升状态药丸 ===== */
 .status-pill{flex:none;border:1px solid var(--line);background:var(--field);border-radius:12px;padding:3px 10px;font-size:11px;color:var(--mist);cursor:pointer}
-/* ===== AI 任务看板(单栏三组:进行中/待办/归档) ===== */
-.kb-board{display:flex;flex-direction:column;gap:8px}
+/* ===== AI 任务看板(进行中/待办左右两栏,归档按钮在标题右上) ===== */
+.kb-board{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kb-board .kb-done-wrap{display:none}
+.kb-board.kb-show-done{grid-template-columns:1fr}
+.kb-board.kb-show-done .kb-live{display:none}
+.kb-board.kb-show-done .kb-done-wrap{display:block}
 .kb-col{background:var(--field);border-radius:10px;padding:8px}
 .kb-col-h{font-size:12px;font-weight:700;color:var(--mist);padding-bottom:5px;border-bottom:1px dashed #D8D8DE;margin-bottom:6px;letter-spacing:2px}
 .kb-col-h.kb-doing{color:var(--accent-deep)}
@@ -347,6 +359,26 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .trash-ic{flex:none;width:20px;height:20px;border-radius:5px;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
 .trash-ic.done{background:#E8F2FF;color:var(--accent)}
 .trash-ic.deleted{background:#FFF0F0;color:#ff453a}
+.date-tap{cursor:pointer}
+.calc-pad{display:none;margin:8px 0 4px}
+.calc-pad.on{display:block}
+.calc-screen{background:var(--field);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:18px;font-weight:700;text-align:right;letter-spacing:.5px;min-height:36px}
+.calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.calc-grid button{border:1px solid var(--line);background:var(--field);border-radius:10px;padding:10px 0;font-size:16px;font-weight:600;color:var(--ink);cursor:pointer}
+.calc-grid button.op{background:var(--accent-tint);color:var(--accent-deep)}
+.calc-grid button.eq{background:var(--accent);color:#fff}
+.calc-grid button.ok{grid-column:span 2;background:var(--accent);color:#fff}
+.yj-modal .dm-t{font-size:15px}
+.yj-block{margin-top:10px}
+.yj-h{font-size:12px;font-weight:700;margin-bottom:4px}
+.yj-h.yi{color:#3D7A57}
+.yj-h.ji{color:#A94438}
+.yj-item{font-size:13px;color:var(--ink);padding:3px 0;border-bottom:.5px solid #F1F1F4;line-height:1.45}
+.yj-item span{color:var(--mist);font-size:12px}
+.sec-title .ai-done-btn{margin-left:auto;border:none;background:var(--field);color:var(--mist);border-radius:8px;padding:3px 8px;font-size:11px;font-weight:600;cursor:pointer}
+.home-only{display:block}
+body.subpage .hero{display:none}
+body.subpage{padding-top:8px}
 .trash-restore{flex:none;border:none;background:#E8F2FF;color:var(--accent);font-size:12px;font-weight:600;border-radius:8px;padding:4px 12px;cursor:pointer}
 .perm-del{flex:none;width:24px;height:24px;border-radius:50%;background:#FFF0F0;color:#ff453a;font-size:15px;font-weight:700;border:none;cursor:pointer}
 /* ===== 二级板块标题(合并板块内的子板块:七弦文化/单位工作等) ===== */
@@ -399,12 +431,12 @@ body{background:var(--paper)}
 .hero .quote{color:var(--mist);opacity:.95;border-left:2px solid var(--amber);letter-spacing:1.5px}
 .hero-right{color:var(--ink)}.hero .w-temp{color:var(--accent-deep)}.hero .w-desc{color:var(--mist)}
 .lunar-line{font-size:10px;color:var(--mist);letter-spacing:1px;margin-top:2px;line-height:1.4}
-.yi-ji{margin-top:5px;font-size:10px;line-height:1.5;letter-spacing:.5px}
-.yi-ji .yj-row{display:flex;align-items:baseline;gap:5px}
-.yi-ji .yj-tag{font-weight:600;flex:none}
+.yi-ji{margin-top:5px;font-size:10px;line-height:1.55;letter-spacing:.5px;cursor:pointer}
+.yi-ji .yj-row{display:flex;align-items:flex-start;gap:5px;margin-top:2px}
+.yi-ji .yj-tag{font-weight:600;flex:none;line-height:1;padding:1px 4px;border-radius:999px;border:1px solid currentColor;font-size:9px;margin-top:2px}
 .yi-ji .yj-yi{color:#3D7A57}
 .yi-ji .yj-ji{color:#A94438}
-.yi-ji .yj-txt{color:var(--mist);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.yi-ji .yj-txt{color:var(--mist);white-space:normal;overflow:visible;text-overflow:clip;flex:1;min-width:0}
 .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:16px;pointer-events:none;
   background:repeating-linear-gradient(to bottom, rgba(31,68,104,.20) 0 1px, transparent 1px 6px);opacity:.6}
 .sec-title{color:var(--mist);letter-spacing:2.5px;font-weight:700}
@@ -439,7 +471,7 @@ body{background:var(--paper)}
 
 <div class="hero">
   <div class="hero-left">
-    <div class="date" id="todayLine">加载中…</div>
+    <div class="date date-tap" id="todayLine" onclick="App.openSysCal()">加载中…</div>
     <div class="lunar-line" id="lunarLine"></div>
     <h1 id="greet">你好,大张</h1>
     <div class="hero-weather" id="weatherBox" onclick="loadWeather()">
@@ -447,13 +479,13 @@ body{background:var(--paper)}
       <span class="w-temp" id="wTemp">--</span>
       <span class="w-desc" id="wDesc">天气</span>
     </div>
-    <div id="yiJiBox" class="yi-ji">
+    <div id="yiJiBox" class="yi-ji" onclick="App.openYiJi()">
       <div class="yj-row"><span class="yj-tag yj-yi">宜</span><span class="yj-txt" id="yiTxt"></span></div>
       <div class="yj-row"><span class="yj-tag yj-ji">忌</span><span class="yj-txt" id="jiTxt"></span></div>
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-dots"><button class="dots-btn" onclick="App.toggleMenu(event)" aria-label="更多板块">⋯</button></div>
+    <div class="hero-dots"><button class="dots-btn" onclick="App.toggleMenu(event)" aria-label="更多板块">⋮</button></div>
     <div class="hero-wx">
       <div class="hwx-nav">
         <button id="wxPrev" onclick="App.wxNav(-1)" aria-label="前一天">‹</button>
@@ -474,6 +506,7 @@ body{background:var(--paper)}
     <div class="card">
       <div class="todo-scroll" id="todoAll"></div>
       <div class="add-row">
+        <label class="alm-lbl"><input type="checkbox" id="todoAlm">闹钟</label>
         <input id="todoIn" placeholder="事项">
         <input id="todoDate" type="date" class="date">
         <input id="todoTime" type="time" class="time" style="display:none">
@@ -484,7 +517,7 @@ body{background:var(--paper)}
     <!-- 五行穿搭已并入首屏 hero 右侧(见 .hero-wx) -->
 
     <!-- 🤖 AI 任务看板(从个人提升挪到首页;单栏三组:进行中/待办/归档) -->
-    <div class="sec-title">🤖 AI 任务看板</div>
+    <div class="sec-title">🤖 AI 任务看板<button class="ai-done-btn" id="aiDoneBtn" onclick="App.toggleAiDone()">显示归档</button></div>
     <div class="card tight">
       <div class="kb-board" id="aiBoard"></div>
       <div class="add-row">
@@ -496,13 +529,19 @@ body{background:var(--paper)}
     <!-- 三餐饮食(从家庭生活挪到首页) -->
     <div class="sec-title">🍚 三餐饮食</div>
     <div class="card tight">
-      <div id="mealPlan"></div>
-      <div class="divider"></div>
-      <div class="col-h">食材清单</div>
-      <div id="foodList"></div>
-      <div class="add-row">
-        <input id="foodIn" placeholder="现有食材">
-        <button class="add-btn" onclick="App.addFood()">＋</button>
+      <div class="grid2">
+        <div>
+          <div class="col-h">三餐建议</div>
+          <div id="mealPlan"></div>
+        </div>
+        <div>
+          <div class="col-h">食材清单</div>
+          <div id="foodList"></div>
+          <div class="add-row">
+            <input id="foodIn" placeholder="现有食材">
+            <button class="add-btn" onclick="App.addFood()">＋</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -518,11 +557,18 @@ body{background:var(--paper)}
 
     <!-- 每日英语(每日零点更新一句) -->
     <div class="sec-title">📖 每日英语</div>
-    <div class="card en-card" style="position:relative">
-      <button class="en-tts" style="position:absolute;top:8px;right:8px;padding:3px 8px" onclick="App.speakEn()">🔊</button>
-      <div class="en-sentence" id="enSentence"></div>
-      <div class="en-trans" id="enTrans"></div>
-      <div class="en-foot"><span class="muted" id="enDay"></span></div>
+    <div class="grid2">
+      <div class="card tight">
+        <div class="col-h">单词</div>
+        <div id="enWordHome" onclick="App.speakWord()"></div>
+      </div>
+      <div class="card en-card" style="position:relative">
+        <div class="col-h">句子</div>
+        <button class="en-tts" style="position:absolute;top:8px;right:8px;padding:3px 8px" onclick="App.speakEn()">🔊</button>
+        <div class="en-sentence" id="enSentence"></div>
+        <div class="en-trans" id="enTrans"></div>
+        <div class="en-foot"><span class="muted" id="enDay"></span></div>
+      </div>
     </div>
 
     <!-- 每日热点(抖音/微博切换) -->
@@ -535,7 +581,7 @@ body{background:var(--paper)}
 
   <!-- ========== 家庭生活 page-family ========== -->
   <div class="page" id="page-family" hidden>
-        <div class="page-top"><div class="big-sec" id="life-health"><span class="em">🧡</span>家庭生活</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
+        <div class="page-top"><div class="big-sec" id="life-health">家庭生活</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
 
     <!-- 运动健康已移到「个人提升」页最上面 -->
 
@@ -543,7 +589,6 @@ body{background:var(--paper)}
     <div class="card tight">
       <div class="task-scroll" id="famAll"></div>
       <div class="divider"></div>
-      <div class="col-h">朝夕 · 近一周待办</div>
       <div id="famBot"></div>
       <div class="add-row">
         <label class="alm-lbl"><input type="checkbox" id="famAlm">闹钟</label>
@@ -578,7 +623,7 @@ body{background:var(--paper)}
 
   <!-- ========== 七弦文化 page-qixian(七彩和弦童声学院+七弦录音棚+公司事务) ========== -->
   <div class="page" id="page-qixian" hidden>
-        <div class="page-top"><div class="big-sec"><span class="em">🎶</span>七弦文化</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
+        <div class="page-top"><div class="big-sec">七弦文化</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
 
     <div class="sec-title">📅 今日课表</div>
     <div class="card tight">
@@ -594,7 +639,6 @@ body{background:var(--paper)}
     <div class="card tight">
       <div class="task-scroll" id="qicaiAll"></div>
       <div class="divider"></div>
-      <div class="col-h">羽商 · 近一周待办</div>
       <div id="orgBot"></div>
       <div class="add-row">
         <label class="alm-lbl"><input type="checkbox" id="orgAlm">闹钟</label>
@@ -608,7 +652,6 @@ body{background:var(--paper)}
     <div class="card tight">
       <div class="task-scroll" id="studioAll"></div>
       <div class="divider"></div>
-      <div class="col-h">潮生 · 近一周待办</div>
       <div id="studioBot"></div>
       <div class="add-row">
         <label class="alm-lbl"><input type="checkbox" id="bookAlm">闹钟</label>
@@ -644,13 +687,12 @@ body{background:var(--paper)}
 
   <!-- ========== 单位工作 page-work(文艺科在上+社会事务在下) ========== -->
   <div class="page" id="page-work" hidden>
-        <div class="page-top"><div class="big-sec"><span class="em">🏛️</span>单位工作</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
+        <div class="page-top"><div class="big-sec">单位工作</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
 
     <div class="sec-title">📋 文艺科工作</div>
     <div class="card tight">
       <div class="task-scroll" id="wenyiAll"></div>
       <div class="divider"></div>
-      <div class="col-h">朝九 · 近一周待办</div>
       <div id="wenyiBot"></div>
       <div class="add-row">
         <label class="alm-lbl"><input type="checkbox" id="workAlm">闹钟</label>
@@ -695,17 +737,20 @@ body{background:var(--paper)}
 
   <!-- ========== 记账 page-account(对齐钱迹:导出模板V10格式) ========== -->
   <div class="page" id="page-account" hidden>
-        <div class="page-top"><div class="big-sec"><span class="em">💰</span>记账</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
+        <div class="page-top"><div class="big-sec">记账</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
 
-    <div class="card acc-overview">
+    <div class="card acc-overview" id="accOverview">
       <div class="acc-ov-item"><span class="muted">本月支出</span><span class="acc-red" id="accMonthOut">¥0</span></div>
       <div class="acc-ov-item"><span class="muted">本月收入</span><span class="acc-green" id="accMonthIn">¥0</span></div>
       <div class="acc-ov-item"><span class="muted">本月结余</span><span id="accMonthLeft">¥0</span></div>
       <div class="acc-ov-item"><span class="muted">今日支出</span><span class="acc-red" id="accToday">¥0</span></div>
-      <div class="acc-ov-item"><span class="muted">本周支出</span><span class="acc-red" id="accWeekOut">¥0</span></div>
-      <div class="acc-ov-item"><span class="muted">今年支出</span><span class="acc-red" id="accYearOut">¥0</span></div>
-      <div class="acc-ov-item"><span class="muted">今年收入</span><span class="acc-green" id="accYearIn">¥0</span></div>
-      <div class="acc-ov-item"><span class="muted">今年结余</span><span id="accYearLeft">¥0</span></div>
+      <div class="acc-ov-more" style="flex:1 1 100%;gap:8px;flex-wrap:wrap">
+        <div class="acc-ov-item"><span class="muted">本周支出</span><span class="acc-red" id="accWeekOut">¥0</span></div>
+        <div class="acc-ov-item"><span class="muted">今年支出</span><span class="acc-red" id="accYearOut">¥0</span></div>
+        <div class="acc-ov-item"><span class="muted">今年收入</span><span class="acc-green" id="accYearIn">¥0</span></div>
+        <div class="acc-ov-item"><span class="muted">今年结余</span><span id="accYearLeft">¥0</span></div>
+      </div>
+      <button class="acc-more-btn" id="accMoreBtn" onclick="App.toggleAccMore()" aria-label="展开更多">▽</button>
     </div>
 
     <div class="sec-title">🧾 记一笔</div>
@@ -714,14 +759,38 @@ body{background:var(--paper)}
         <button id="accSegOut" class="on" onclick="App.accSeg('out')">支出</button>
         <button id="accSegIn" onclick="App.accSeg('in')">收入</button>
       </div>
+      <div class="add-row">
+        <input id="accAmt" type="text" inputmode="decimal" readonly placeholder="金额" style="flex:0 0 110px" onclick="App.openCalc()">
+        <input id="accNote" placeholder="备注(可选)">
+        <input id="accDate" type="date" class="date">
+      </div>
+      <div class="calc-pad" id="calcPad">
+        <div class="calc-screen" id="calcScreen">0</div>
+        <div class="calc-grid">
+          <button onclick="App.calcKey('C')">C</button>
+          <button class="op" onclick="App.calcKey('/')">÷</button>
+          <button class="op" onclick="App.calcKey('*')">×</button>
+          <button class="op" onclick="App.calcKey('B')">⌫</button>
+          <button onclick="App.calcKey('7')">7</button>
+          <button onclick="App.calcKey('8')">8</button>
+          <button onclick="App.calcKey('9')">9</button>
+          <button class="op" onclick="App.calcKey('-')">−</button>
+          <button onclick="App.calcKey('4')">4</button>
+          <button onclick="App.calcKey('5')">5</button>
+          <button onclick="App.calcKey('6')">6</button>
+          <button class="op" onclick="App.calcKey('+')">+</button>
+          <button onclick="App.calcKey('1')">1</button>
+          <button onclick="App.calcKey('2')">2</button>
+          <button onclick="App.calcKey('3')">3</button>
+          <button class="eq" onclick="App.calcKey('=')">=</button>
+          <button onclick="App.calcKey('0')">0</button>
+          <button onclick="App.calcKey('.')">.</button>
+          <button class="ok" onclick="App.calcOk()">完成</button>
+        </div>
+      </div>
       <div class="acc-cats" id="accCats"></div>
       <div class="acc-subs" id="accSubs"></div>
-      <div class="add-row">
-        <input id="accAmt" type="number" inputmode="decimal" placeholder="金额" style="flex:0 0 84px">
-        <input id="accNote" placeholder="备注(可选)">
-      </div>
       <div class="add-row" style="margin-top:5px">
-        <input id="accDate" type="date" class="date">
         <input id="accTime" type="time" class="time">
         <select id="accAcc" class="fun-sel" style="flex:1">
           <option value="">账户(可选)</option>
@@ -754,26 +823,29 @@ body{background:var(--paper)}
 
   <!-- ========== 个人提升 page-growth(运动健康置顶 + 英语学习并入) ========== -->
   <div class="page" id="page-growth" hidden>
-        <div class="page-top"><div class="big-sec"><span class="em">💪</span>个人提升</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
+        <div class="page-top"><div class="big-sec">个人提升</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
 
-<div class="sec-title">🎵 学唱歌单</div>
-    <div class="card tight">
-      <div id="songList"></div>
-      <div class="add-row">
-        <input id="songName" placeholder="歌曲名">
-        <button class="add-btn" onclick="App.addSong()">＋</button>
+<div class="grid2">
+      <div>
+        <div class="sec-title">学唱歌单</div>
+        <div class="card tight">
+          <div id="songList"></div>
+          <div class="add-row">
+            <input id="songName" placeholder="歌曲名">
+            <button class="add-btn" onclick="App.addSong()">＋</button>
+          </div>
+        </div>
       </div>
-    </div>
-
-    
-
-<div class="sec-title">📹 视频周更</div>
-    <div class="card tight">
-      <div id="videoList"></div>
-      <div class="add-row">
-        <input id="videoTopic" placeholder="本周视频主题">
-        <input id="videoDue" type="date" class="date">
-        <button class="add-btn" onclick="App.addVideo()">＋</button>
+      <div>
+        <div class="sec-title">视频周更</div>
+        <div class="card tight">
+          <div id="videoList"></div>
+          <div class="add-row">
+            <input id="videoTopic" placeholder="本周视频主题">
+            <input id="videoDue" type="date" class="date">
+            <button class="add-btn" onclick="App.addVideo()">＋</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -802,7 +874,7 @@ body{background:var(--paper)}
       <div id="healthList"></div>
     </div>
 
-    <div class="mid-sec"><span class="em">🔤</span>英语学习</div>
+    <div class="mid-sec">英语学习</div>
 
     <div class="sec-title">📖 每日一句</div>
     <div class="card en-card" style="position:relative">
@@ -839,7 +911,7 @@ body{background:var(--paper)}
 
   <!-- ========== 娱乐休闲 page-fun ========== -->
   <div class="page" id="page-fun" hidden>
-        <div class="page-top"><div class="big-sec"><span class="em">🍿</span>娱乐休闲</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
+        <div class="page-top"><div class="big-sec">娱乐休闲</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
 
     <div class="sec-title">🎬 娱乐清单</div>
     <div class="card tight">
@@ -867,7 +939,7 @@ body{background:var(--paper)}
 
   <!-- ========== 回收站 page-trash ========== -->
   <div class="page" id="page-trash" hidden>
-        <div class="page-top"><div class="big-sec"><span class="em">🗑️</span>回收站</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
+        <div class="page-top"><div class="big-sec">回收站</div><a class="back-home" href="javascript:App.go('home')">返回首页 ›</a></div>
     <div class="card tight">
       <div id="trashListPage"></div>
       <div class="muted" style="text-align:center;font-size:12px;padding:6px">勾选完成和删除的事项都收集在这里,可恢复</div>
@@ -1591,6 +1663,11 @@ function renderEnglish(){
   var set=function(id1,id2){var e1=document.getElementById(id1),e2=document.getElementById(id2);if(e1)e1.textContent=s.en;if(e2)e2.textContent=s.zh;};
   set('enSentence','enTrans');set('enSentence2','enTrans2');
   var ed=document.getElementById('enDay');if(ed)ed.textContent='Day '+((Math.floor((new Date()-new Date(new Date().getFullYear(),0,0))/86400000))%EN_SENTENCES.length+1)+'/'+EN_SENTENCES.length;
+  var wh=document.getElementById('enWordHome');
+  if(wh && typeof WORD_CARDS!=='undefined' && WORD_CARDS.length){
+    var w=WORD_CARDS[_fcIdx]||WORD_CARDS[0];
+    wh.innerHTML='<div class="fc-word" style="font-size:20px">'+esc(w.en)+'</div><div class="fc-zh">'+esc(w.zh)+'</div>';
+  }
 }
 
 /* ================= 每日热点 ================= */
@@ -1608,7 +1685,7 @@ function renderHot(){
   el.innerHTML=arr.map(function(t,i){
     var rank=i<3?'rank-top':'';
     var val='';
-    if(isAi && t.source) val='<span class="hot-val">'+esc(t.source)+'</span>';
+    if(isAi) val='';
     else if(t.hot) val='<span class="hot-val">'+(t.hot>10000?(t.hot/10000).toFixed(1)+'万':t.hot)+'</span>';
     return '<a class="hot-item '+rank+'" href="'+esc(t.url||'#')+'" target="_blank">'+
       '<span class="hot-rank">'+(i+1)+'</span>'+
@@ -1806,28 +1883,174 @@ var AI_STATUS=['进行中','待办','归档'];
 var AI_KEY={'进行中':'doing','待办':'todo','归档':'done'};
 var AI_SRC={zhaoxi:'朝夕',yushang:'羽商',zhaojiu:'朝九',chaosheng:'潮生',zelda:'微信'};
 var _aiDoneOpen=false; /* 归档默认折叠 */
+var _calcExpr='0',_calcJustEq=false;
+var YJ_MEAN={
+  '祭祀':'祭拜祖先或神明，也可理解为静心、感恩',
+  '祈福':'求平安顺利，适合许愿、做善事',
+  '求子':'求子嗣，也可理解为关注家庭传承',
+  '开光':'为新物赋予寓意，开张、启用新物件',
+  '塑绘':'雕塑绘画，适合动手创作',
+  '齐醮':'设坛祭神，传统法事',
+  '斋醮':'设坛祭神，传统法事',
+  '订盟':'订立盟约，签意向、达成合作',
+  '纳采':'提亲下聘，谈婚论嫁',
+  '问名':'问女方姓名生辰，议婚第一步',
+  '纳婿':'男方入赘',
+  '归宁':'回娘家省亲',
+  '裁衣':'做新衣、买衣服',
+  '合帐':'准备婚嫁用品',
+  '冠笄':'成人礼',
+  '嫁娶':'结婚、领证、办婚礼',
+  '结婚':'举行婚礼或登记结婚',
+  '领证':'办理结婚登记',
+  '会亲友':'走亲访友、聚会',
+  '进人口':'接纳新人入户，收养也可',
+  '收养子女':'办理收养或接纳新成员',
+  '出行':'出门远行、出差、旅游',
+  '旅游':'外出游玩',
+  '移徙':'搬家、迁居',
+  '搬家':'搬到新住处',
+  '搬新房':'迁入新居',
+  '入宅':'正式入住新房',
+  '安香':'安放香位、安家神',
+  '出火':'迁移香火灶火',
+  '分居':'分家另过',
+  '安床':'安置新床，新婚或新房常用',
+  '作灶':'砌灶、装厨房、换燃气灶',
+  '开市':'开业、开张做生意',
+  '开业':'店铺或项目正式开张',
+  '开张':'店铺开门营业',
+  '立券':'签合同、立字据',
+  '交易':'买卖成交、签单',
+  '纳财':'进财、收款、理财',
+  '开仓':'开仓放粮，今可理解为动用存货、开仓进货',
+  '出货':'发货、出库',
+  '栽种':'种花种菜、栽树',
+  '纳畜':'买宠物或家畜',
+  '牧养':'饲养、照顾动物',
+  '破土':'动工挖土、破土动工',
+  '动土':'破土施工、装修动工',
+  '修造':'修房建房、大修',
+  '起基':'打地基',
+  '上梁':'房屋上梁，工程关键节点',
+  '竖柱':'立柱，工程进行中',
+  '盖屋':'建房盖顶',
+  '合嵴':'屋脊合拢，封顶',
+  '开柱眼':'木工开孔',
+  '穿屏扇架':'做门窗隔扇',
+  '安门':'安装大门',
+  '作梁':'制作房梁',
+  '伐木':'砍伐树木',
+  '开渠':'挖沟开渠、通下水道',
+  '掘井':'打井、挖深坑',
+  '开池':'挖池塘、做水景',
+  '扫舍':'大扫除、收拾屋子',
+  '打扫':'清洁卫生',
+  '修饰垣墙':'粉刷修墙',
+  '平治道涂':'修路、平整地面',
+  '破屋':'拆除旧屋',
+  '坏垣':'拆墙',
+  '拆卸':'拆除旧物',
+  '装修':'室内装修',
+  '补垣':'修补围墙裂缝',
+  '塞穴':'填塞洞穴、堵漏洞',
+  '结网':'织网，今可理解为布局、组网',
+  '田猎':'打猎，今可理解为户外活动',
+  '捕猎':'打猎',
+  '取渔':'捕鱼',
+  '乘船':'坐船出行',
+  '渡水':'过河渡江',
+  '栽种':'种植花木',
+  '经络':'舒筋活络、按摩理疗',
+  '酝酿':'酿酒、发酵类制作',
+  '开生坟':'预造寿坟',
+  '合寿木':'做棺材，今可理解为预备后事',
+  '入殓':'入棺',
+  '移柩':'移动灵柩',
+  '安葬':'下葬',
+  '破土':'破土动工或破土下葬',
+  '启攒':'迁坟、拾骨',
+  '除服':'脱去丧服',
+  '成服':'穿上丧服',
+  '词讼':'打官司、诉讼',
+  '诉讼':'打官司',
+  '探病':'探望病人',
+  '见贵':'拜见贵人、见领导',
+  '上官':'上任就职',
+  '赴任':'去新岗位报到',
+  '临政':'处理公务',
+  '习艺':'学手艺、学技能',
+  '入学':'开学、报名学习',
+  '酝酿':'酝酿计划、发酵制作',
+  '捕捉':'抓捕、收网',
+  '畋猎':'打猎郊游',
+  '教牛马':'驯养牲畜，今可理解为训练',
+  '会友':'会见朋友',
+  '求医':'看病就医',
+  '治病':'看病、治疗',
+  '针灸':'针灸理疗',
+  '整手足甲':'修剪指甲',
+  '整手足':'修剪手足',
+  '沐浴':'洗澡、清洁身体',
+  '剃头':'理发',
+  '整容':'美容、修面',
+  '整手足甲':'剪指甲',
+  '修饰垣墙':'修墙刷墙',
+  '平治道涂':'修路填坑',
+  '余事勿取':'今天宜少做杂事，专做所列事项',
+  '馀事勿取':'今天宜少做杂事，专做所列事项',
+  '诸事不宜':'今天大事缓办，宜休息',
+  '开光':'开光祈福或启用新物',
+  '安机械':'安装机器设备、家电',
+  '买车':'购置车辆',
+  '提车':'提取新车',
+  '买房':'买房子',
+  '买衣服':'添置衣物',
+  '成人礼':'举行成人仪式',
+  '普渡':'超度祭祀',
+  '天刑':'刑克之日，宜谨慎',
+  '天牢':'牢狱星值日，宜守不宜攻',
+  '朱雀':'口舌星，防争执',
+  '白虎':'凶煞，忌动土安葬',
+  '玄武':'盗贼星，防失窃',
+  '勾陈':'纠缠星，忌词讼动土',
+  '除虫':'灭虫除害',
+  '理发':'剪头发',
+  '开池':'挖池做水景',
+  '造船':'修造船只',
+  '作灶':'砌灶改厨房',
+  '行丧':'办丧事',
+  '谢土':'工程完工后谢土神',
+  '纳畜':'购入禽畜宠物',
+  '签订合同':'签协议、立合同',
+  '乔迁':'搬家庆贺',
+  '合婚订婚':'订婚、谈婚',
+  '开工':'项目或工程开工',
+  '开市':'开张做生意',
+  '放水':'池塘放水、通水',
+  '造畜稠':'建牲口圈',
+  '造桥':'修桥动大工'
+};
 function renderAIBoard(){
   var el=document.getElementById('aiBoard');if(!el)return;
-  el.innerHTML=AI_STATUS.map(function(s){
+  function colHtml(s, extraCls){
     var key=AI_KEY[s];
     var ch=(typeof AITASKS!=='undefined'&&AITASKS&&AITASKS[key])||[];
     var local=(DB.aiSkills||[]).filter(function(x){return (x.status||'待办')===s;});
     var n=ch.length+local.length;
     var body=ch.map(function(x){
-      return '<div class="kb-card kb-ch"><div class="t">'+esc(x.t)+'</div><span class="kb-src">'+esc(AI_SRC[x.src]||x.src||'通道')+(x.d?' · '+esc(fmtDue(x.d)):'')+'</span></div>';
+      return '<div class="kb-card kb-ch"><div class="t">'+esc(x.t)+'</div></div>';
     }).join('');
     body+=local.map(function(x){
       return '<div class="kb-card" onclick="App.cycleGrowth(\'aiSkills\',\''+x.id+'\')"><div class="t">'+esc(x.t)+'</div><button class="del" onclick="event.stopPropagation();App.delGrowth(\'aiSkills\',\''+x.id+'\')">×</button></div>';
     }).join('');
-    if(key==='done'){
-      if(!n)body='<div class="kb-empty">·</div>';
-      var head='<div class="kb-col-h kb-done kb-done-toggle" onclick="App.toggleAiDone()">'+
-        (_aiDoneOpen?'收起归档':'显示归档')+' <span class="kb-done-n">'+n+'</span> <span class="kb-done-arrow">'+(_aiDoneOpen?'▴':'▾')+'</span></div>';
-      return '<div class="kb-col">'+head+'<div class="kb-scroll" style="'+(_aiDoneOpen?'':'display:none')+'">'+body+'</div></div>';
-    }
     if(!n)body='<div class="kb-empty">·</div>';
-    return '<div class="kb-col"><div class="kb-col-h kb-'+key+'">'+s+' '+n+'</div><div class="kb-scroll">'+body+'</div></div>';
-  }).join('');
+    return '<div class="kb-col '+(extraCls||'')+'"><div class="kb-col-h kb-'+key+'">'+s+' '+n+'</div><div class="kb-scroll">'+body+'</div></div>';
+  }
+  el.className='kb-board'+(_aiDoneOpen?' kb-show-done':'');
+  el.innerHTML=colHtml('进行中','kb-live')+colHtml('待办','kb-live')+colHtml('归档','kb-done-wrap');
+  var b=document.getElementById('aiDoneBtn');
+  if(b)b.textContent=_aiDoneOpen?'收起归档':'显示归档';
 }
 
 /* ================= 公司事务(七弦文化:事项+时间可改,可定系统闹钟) ================= */
@@ -1952,7 +2175,7 @@ var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';
 <!--@GHTOKEN-END-->
 <!--@VER-->
-var APP_VER='202608181130';
+var APP_VER='202608181720';
 <!--@VER-END-->
 <!--@DIDA-->
 var DIDA={"todo": [{"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17"}, {"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18", "project": "69f1999221fab4f52de43863"}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
@@ -2029,8 +2252,9 @@ function renderTodoAll(){
     var cb='<div class="cb" onclick="App.'+fn+'(\''+t.id+'\')"></div>';
     var body='<div class="body" onclick="App.editText(\'todo\',\''+t.id+'\')"><div class="t">'+esc(t.title)+'</div></div>';
     var due=dueChipHtml(t.due,"App.setDue('todo','"+t.id+"',this.value)");
+    var bell='<button class="bell" title="加到系统日历闹钟" onclick="App.todoBell(\''+t.id+'\')">🔔</button>';
     var del=t.dida?'':'<button class="del" onclick="App.del(\'todo\',\''+t.id+'\')">×</button>';
-    return '<div class="item'+(t.done?' done':'')+'">'+cb+body+due+del+'</div>';
+    return '<div class="item'+(t.done?' done':'')+'">'+cb+body+due+bell+del+'</div>';
   }).join('');
 }
 
@@ -2149,7 +2373,7 @@ function renderAllDida(){
 (function(){
   var d=new Date();
   var wk=['周日','周一','周二','周三','周四','周五','周六'][d.getDay()];
-  document.getElementById('todayLine').textContent=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日 · '+wk;
+  document.getElementById('todayLine').textContent=d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日  '+wk;
   var hg=(typeof HUANGLI!=='undefined'&&HUANGLI)?HUANGLI[todayKey()]:null;
   var ll=document.getElementById('lunarLine');
   if(ll){
@@ -2160,10 +2384,10 @@ function renderAllDida(){
       ll.textContent=parts.join(' · ');
     }else{ll.style.display='none';}
   }
-  function top4(s){var a=(s||'').trim().split(/\s+/).filter(Boolean);if(!a.length)return '—';return a.slice(0,4).join(' ')+(a.length>4?' …':'');}
+  function allTxt(s){var a=(s||'').trim().split(/\s+/).filter(Boolean);return a.length?a.join(' '):'—';}
   var yt=document.getElementById('yiTxt'),jt=document.getElementById('jiTxt');
-  if(yt)yt.textContent=hg?top4(hg.yi):'';
-  if(jt)jt.textContent=hg?top4(hg.ji):'';
+  if(yt)yt.textContent=hg?allTxt(hg.yi):'';
+  if(jt)jt.textContent=hg?allTxt(hg.ji):'';
   var yj=document.getElementById('yiJiBox');
   if(yj&&!hg){yj.style.display='none';}
   var h=d.getHours();var g=h<6?'夜深了':h<12?'早安':h<14?'午安':h<18?'下午好':'晚上好';
@@ -2177,6 +2401,7 @@ window.App={
     document.querySelectorAll('.page').forEach(function(el){
       if(el.id==='page-'+page){el.removeAttribute('hidden');}else{el.setAttribute('hidden','');}
     });
+    document.body.classList.toggle('subpage', page!=='home');
     window.scrollTo(0,0);
     // 更新底部标签导航高亮,并把当前标签滚进可视区
     document.querySelectorAll('#tabbar .b-tab').forEach(function(a){
@@ -2200,7 +2425,7 @@ window.App={
   },
   toggleMenu:function(e){if(e&&e.stopPropagation)e.stopPropagation();var m=document.getElementById('homeMenu');if(!m)return;m.style.display=(m.style.display==='block')?'none':'block';},
   menuGo:function(p){var m=document.getElementById('homeMenu');if(m)m.style.display='none';App.go(p);},
-  addTodo:function(){var v=document.getElementById('todoIn').value.trim();if(!v)return;var d=document.getElementById('todoDate').value;addTo('todo',{t:v,done:false,due:d||''});pushTodo(v);document.getElementById('todoIn').value='';},
+  addTodo:function(){var v=document.getElementById('todoIn').value.trim();if(!v)return;var d=document.getElementById('todoDate').value;var a=document.getElementById('todoAlm')&&document.getElementById('todoAlm').checked;addTo('todo',{t:v,done:false,due:d||''});pushTodo(v);document.getElementById('todoIn').value='';if(document.getElementById('todoAlm'))document.getElementById('todoAlm').checked=false;if(a){if(d)dlIcsAt(v,d,'09:00');else dlIcs(v);}},
   addShop:function(){var v=document.getElementById('shopIn').value.trim();if(!v)return;var d=document.getElementById('shopDate').value;var a=document.getElementById('shopAlm').checked;var it={id:uid(),t:v,done:false,due:d||''};DB.shop.unshift(it);save();renderAllBoards();document.getElementById('shopIn').value='';document.getElementById('shopDate').value='';document.getElementById('shopAlm').checked=false;didaCreateTask('shop',v,d);if(a)dlIcs(v);},
   addFam:function(){var v=document.getElementById('famIn').value.trim();if(!v)return;var d=document.getElementById('famDate').value;var a=document.getElementById('famAlm').checked;var it={id:uid(),t:v,due:d||''};DB.fam.unshift(it);save();renderAllBoards();document.getElementById('famIn').value='';document.getElementById('famDate').value='';document.getElementById('famAlm').checked=false;didaCreateTask('fam',v,d);if(a)dlIcs(v);},
   addClass:function(){var tm=document.getElementById('classTime').value,n=document.getElementById('className').value.trim();if(!n)return;addTo('classes',{t:n,sub:tm||''});document.getElementById('className').value='';},
@@ -2221,10 +2446,84 @@ window.App={
   ckMoxa:function(){var t=todayStr();var h=DB.health[t]||{};h.moxa=(h.moxa||0)+1;DB.health[t]=h;save();renderAll();App.go("growth");setTimeout(function(){var el=document.getElementById("growth-health");if(el)el.scrollIntoView({behavior:"smooth",block:"center"});},100);},
   qkMoney:function(){App.go("account");},
   qkTodo:function(){App.go("home");setTimeout(function(){var el=document.getElementById("home-todo");if(el)el.scrollIntoView({behavior:"smooth",block:"center"});},100);},
-  todoBell:function(id){var o=DB.todo.find(function(x){return x.id===id;});if(o)dlIcs(o.t);},
+  todoBell:function(id){
+    var o=(DB.todo||[]).find(function(x){return x.id===id;});
+    if(o){if(o.due)dlIcsAt(o.t,o.due,'09:00');else dlIcs(o.t);return;}
+    var arr=((DIDA&&DIDA.todo)||[]);
+    for(var i=0;i<arr.length;i++){if(arr[i].id===id){var due=(DB.didaDue&&DB.didaDue[id])||arr[i].due||'';if(due)dlIcsAt(arr[i].title,due,'09:00');else dlIcs(arr[i].title);return;}}
+  },
   wxNav:function(dir){renderWx(wxIdx+dir);},
   openChipPicker:function(span){var inp=span.nextElementSibling;if(!inp)return;try{if(inp.showPicker){inp.showPicker();return;}}catch(e){}inp.focus();try{inp.click();}catch(e){}},
-  toggleAiDone:function(){_aiDoneOpen=!_aiDoneOpen;renderAIBoard();},
+  toggleAiDone:function(){
+    _aiDoneOpen=!_aiDoneOpen;
+    var b=document.getElementById('aiDoneBtn');
+    if(b)b.textContent=_aiDoneOpen?'收起归档':'显示归档';
+    renderAIBoard();
+  },
+  openSysCal:function(){
+    var inp=document.getElementById('_sysCal');
+    if(!inp){inp=document.createElement('input');inp.type='date';inp.id='_sysCal';inp.style.cssText='position:fixed;left:-9999px;opacity:0;width:1px;height:1px';document.body.appendChild(inp);}
+    var n=new Date();inp.value=n.getFullYear()+'-'+('0'+(n.getMonth()+1)).slice(-2)+'-'+('0'+n.getDate()).slice(-2);
+    try{if(inp.showPicker){inp.showPicker();return;}}catch(e){}
+    inp.focus();try{inp.click();}catch(e){}
+  },
+  openYiJi:function(){
+    var hg=(typeof HUANGLI!=='undefined'&&HUANGLI)?HUANGLI[todayKey()]:null;
+    if(!hg){toastMsg('今日黄历暂无');return;}
+    var ov=document.getElementById('yjOverlay');
+    if(!ov){
+      ov=document.createElement('div');ov.id='yjOverlay';ov.className='dm-overlay';ov.style.display='flex';
+      ov.onclick=function(e){if(e.target===ov)ov.style.display='none';};
+      document.body.appendChild(ov);
+    }
+    function block(title,cls,raw){
+      var arr=(raw||'').trim().split(/\s+/).filter(Boolean);
+      if(!arr.length)return '';
+      return '<div class="yj-block"><div class="yj-h '+cls+'">'+title+'</div>'+arr.map(function(w){
+        var m=YJ_MEAN[w];
+        return '<div class="yj-item">'+esc(w)+(m?' <span> · '+esc(m)+'</span>':'')+'</div>';
+      }).join('')+'</div>';
+    }
+    ov.innerHTML='<div class="dm-card yj-modal" onclick="event.stopPropagation()"><div class="dm-t">今日宜忌</div><div class="dm-d">'+(hg.lunar?('农历'+hg.lunar):'')+(hg.fest?' · '+hg.fest:'')+(hg.term?' · '+hg.term:'')+'</div>'+block('宜','yi',hg.yi)+block('忌','ji',hg.ji)+'<div class="dm-actions"><button class="dm-btn dm-close" onclick="document.getElementById(\'yjOverlay\').style.display=\'none\'">关闭</button></div></div>';
+    ov.style.display='flex';
+  },
+  toggleAccMore:function(){
+    var box=document.getElementById('accOverview'),btn=document.getElementById('accMoreBtn');
+    if(!box)return;
+    var on=box.classList.toggle('acc-more-on');
+    if(btn)btn.textContent=on?'△':'▽';
+  },
+  openCalc:function(){
+    var p=document.getElementById('calcPad');if(!p)return;
+    p.classList.add('on');
+    var cur=document.getElementById('accAmt').value||'0';
+    _calcExpr=String(cur);_calcJustEq=false;
+    document.getElementById('calcScreen').textContent=_calcExpr;
+  },
+  calcKey:function(k){
+    var sc=document.getElementById('calcScreen');if(!sc)return;
+    if(k==='C'){_calcExpr='0';_calcJustEq=false;}
+    else if(k==='B'){_calcExpr=_calcExpr.length>1?_calcExpr.slice(0,-1):'0';}
+    else if(k==='='){
+      try{var v=Function('"use strict";return ('+_calcExpr.replace(/×/g,'*').replace(/÷/g,'/')+')')();
+        if(typeof v==='number'&&isFinite(v)){_calcExpr=String(Math.round(v*100)/100);_calcJustEq=true;}
+      }catch(e){toastMsg('算式有误');}
+    }else{
+      if(_calcJustEq && /[0-9.]/.test(k)){_calcExpr=k;_calcJustEq=false;}
+      else{
+        if(_calcExpr==='0'&&/[0-9]/.test(k))_calcExpr=k;
+        else _calcExpr+=k;
+        _calcJustEq=false;
+      }
+    }
+    sc.textContent=_calcExpr;
+  },
+  calcOk:function(){
+    App.calcKey('=');
+    var n=parseFloat(_calcExpr);
+    if(!isNaN(n)&&n>0)document.getElementById('accAmt').value=String(n);
+    var p=document.getElementById('calcPad');if(p)p.classList.remove('on');
+  },
   ckLocalTodo:function(id){
     var i=-1;for(var k=0;k<DB.todo.length;k++){if(DB.todo[k].id===id){i=k;break;}}
     if(i<0)return;trashItem('todo',DB.todo[i],'done');DB.todo.splice(i,1);save();renderAll();renderAllBoards();
@@ -2583,7 +2882,7 @@ maybeSeed();
     <button class="b-tab" data-page="work" onclick="App.go('work')"><span class="bt-ico"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span class="bt-lbl">单位工作</span></button>
     <button class="b-tab" data-page="family" onclick="App.go('family')"><span class="bt-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span class="bt-lbl">家庭生活</span></button>
     <button class="b-tab" data-page="account" onclick="App.go('account')"><span class="bt-ico"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span><span class="bt-lbl">记账</span></button>
-    <button class="b-tab" data-page="growth" onclick="App.go('growth')"><span class="bt-ico"><svg viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><polyline points="18 14 12 8 6 14"/></svg></span><span class="bt-lbl">个人提升</span></button>
+    <button class="b-tab" data-page="growth" onclick="App.go('growth')"><span class="bt-ico"><svg viewBox="0 0 24 24"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg></span><span class="bt-lbl">个人提升</span></button>
     <button class="b-tab" data-page="fun" onclick="App.go('fun')"><span class="bt-ico"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span><span class="bt-lbl">娱乐休闲</span></button>
   </div>
 </nav>
