@@ -1144,10 +1144,10 @@ var _fcIdx=0;
 
 /* ================= 记账分类(对齐钱迹两级分类) ================= */
 var ACC_CATS_OUT=[
- {k:'衣裤鞋袜',ic:'👕'},
- {k:'电子数码',ic:'📱'},
- {k:'餐饮零食',ic:'🍽️',sub:['三餐','米面油调','纯净水','买菜买食材','烟酒饮料','水果零食']},
- {k:'日常居家',ic:'🏠',sub:['电费','水燃气费','物业费','家居用品','日用品']},
+ {k:'衣物',ic:'👕'},
+ {k:'数码',ic:'📱'},
+ {k:'餐饮',ic:'🍽️',sub:['三餐','米面油调','纯净水','买菜买食材','烟酒饮料','水果零食']},
+ {k:'日用',ic:'🏠',sub:['电费','水燃气费','物业费','家居用品','日用品']},
  {k:'交通出行',ic:'🚗',sub:['充电','加油','公共交通','打车','停车费']},
  {k:'汽车维养',ic:'🚙',sub:['保养','洗车','年检','车险']},
  {k:'洗护美容',ic:'💆'},
@@ -1161,7 +1161,8 @@ var ACC_CATS_OUT=[
  {k:'学习培训',ic:'📚',sub:['学费','书籍资料']},
  {k:'其他',ic:'📌'}
 ];
-var ACC_CATS_IN=[
+var ACC_CAT_ALIAS={'衣裤鞋袜':'衣物','电子数码':'数码','餐饮零食':'餐饮','日常居家':'日用'};
+function accNormCat(c){return ACC_CAT_ALIAS[c]||c;}
  {k:'专业收入',ic:'💼',sub:['每月工资','绩效工资','公积金','数字人民币','分红提成','其它']},
  {k:'红包',ic:'🧧'},
  {k:'工资',ic:'💰',sub:['每月工资','绩效工资','公积金','数字人民币','分红提成','其它']},
@@ -1750,7 +1751,7 @@ function renderAnni(){
 }
 
 /* ================= 记账(对齐钱迹:概览/两级分类/记一笔/按日流水/全字段编辑/导出模板V10) ================= */
-function accCatSub(x){return esc(x.cat||'其他')+(x.sub?' - '+esc(x.sub):'');}
+function accCatSub(x){return esc(accNormCat(x.cat)||'其他')+(x.sub?' - '+esc(x.sub):'');}
 function parseDay(s){var p=String(s||'').slice(0,10).split('-');if(p.length!==3||!p[0])return NaN;return new Date(+p[0],+p[1]-1,+p[2]).getTime();}
 function renderAccount(){
   var t=todayStr(),m=t.slice(0,7),y=String(new Date().getFullYear());
@@ -1791,7 +1792,7 @@ function renderAccount(){
   }
   // 本月分类统计(按一级)
   var byCat={};
-  (DB.money||[]).forEach(function(x){if((x.d||'').slice(0,7)===m&&x.type==='out'){byCat[x.cat||'其他']=(byCat[x.cat||'其他']||0)+ +x.amt;}});
+  (DB.money||[]).forEach(function(x){if((x.d||'').slice(0,7)===m&&x.type==='out'){var ck=accNormCat(x.cat)||'其他';byCat[ck]=(byCat[ck]||0)+ +x.amt;}});
   var chart=document.getElementById('accChart');if(chart){
     var pairs=Object.keys(byCat).map(function(k){return [k,byCat[k]]}).sort(function(a,b){return b[1]-a[1];});
     if(!pairs.length){chart.innerHTML='<div class="empty">本月暂无支出</div>';}
@@ -1820,7 +1821,7 @@ function renderAccount(){
       html+=byDay[d].map(function(x){
         var col=x.type==='out'?'#ff453a':'#1fa84a';
         var sign=x.type==='out'?'-':'+';
-        var ci=(x.type==='out'?ACC_CATS_OUT:ACC_CATS_IN).filter(function(c){return c.k===x.cat;})[0];
+        var ci=(x.type==='out'?ACC_CATS_OUT:ACC_CATS_IN).filter(function(c){return c.k===accNormCat(x.cat);})[0];
         var ic=ci?ci.ic:'📌';
         var title=x.note?esc(x.note):accCatSub(x);
         return '<div class="item"><span class="acc-cat-ic">'+ic+'</span><div class="body" onclick="App.editMoney(&#39;'+x.id+'&#39;)"><div class="t">'+title+'</div><div class="s">'+accCatSub(x)+(x.acc?' · '+esc(x.acc):'')+(x.tm?' · '+x.tm:'')+'</div></div><span style="color:'+col+';font-weight:600;flex:none">'+sign+'¥'+(+x.amt).toFixed(2).replace(/\.00$/,'')+'</span><button class="del" onclick="App.delMoney(&#39;'+x.id+'&#39;)">×</button></div>';
@@ -2216,7 +2217,7 @@ var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';
 <!--@GHTOKEN-END-->
 <!--@VER-->
-var APP_VER='202608181830';
+var APP_VER='202608181850';
 <!--@VER-END-->
 <!--@DIDA-->
 var DIDA={"todo": [{"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17"}, {"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日2285", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-17", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-16", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "6a7e8469e4b07476d0afe1d4", "pri": "高", "title": "县政协第七期委员课堂", "due": "2026-08-18", "project": "69f1999221fab4f52de43863"}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
@@ -2666,15 +2667,16 @@ window.App={
   addAnni:function(){var n=document.getElementById('anniName').value.trim();var d=document.getElementById('anniDate').value;if(!n||!d)return;DB.anni.unshift({id:uid(),t:n,date:d});document.getElementById('anniName').value='';document.getElementById('anniDate').value='';save();renderAnni();},
   delAnni:function(id){var i=-1;for(var k=0;k<DB.anni.length;k++){if(DB.anni[k].id===id){i=k;break;}}if(i<0)return;trashItem('anni',DB.anni[k],'deleted');DB.anni.splice(i,1);save();renderAnni();},
   /* ===== 记账 ===== */
-  accSeg:function(t){_accType=t;DB.accCat=(t==='out'?'餐饮零食':'专业收入');DB.accSub='';document.getElementById('accSegOut').className=t==='out'?'on':'';document.getElementById('accSegIn').className=t==='in'?'on':'';save();renderAccount();},
+  accSeg:function(t){_accType=t;DB.accCat=(t==='out'?'餐饮':'专业收入');DB.accSub='';document.getElementById('accSegOut').className=t==='out'?'on':'';document.getElementById('accSegIn').className=t==='in'?'on':'';save();renderAccount();},
   accPickCat:function(c){DB.accCat=c;DB.accSub='';save();renderAccount();},
   accPickSub:function(s){DB.accSub=s||'';save();renderAccount();},
   addAcc:function(again){var a=parseFloat(document.getElementById('accAmt').value);if(!a||a<=0){toastMsg('先填金额');return;}var n=document.getElementById('accNote').value.trim();var d=document.getElementById('accDate').value||todayStr();var tm=document.getElementById('accTime').value;var ac=document.getElementById('accAcc').value;DB.money.unshift({id:uid(),type:_accType,amt:a,note:n,cat:DB.accCat,sub:DB.accSub||'',d:d,tm:tm||'',acc:ac||''});save();document.getElementById('accAmt').value='';document.getElementById('accNote').value='';document.getElementById('accTime').value='';if(!again){document.getElementById('accDate').value=todayStr();}renderAccount();if(again){document.getElementById('accAmt').focus();toastMsg('已记一笔,继续记');}},
   editMoney:function(id){
     var o=(DB.money||[]).find(function(x){return x.id===id;});if(!o)return;
     var cats=o.type==='out'?ACC_CATS_OUT:ACC_CATS_IN;
-    var catOpts=cats.map(function(c){return '<option value="'+esc(c.k)+'"'+(c.k===o.cat?' selected':'')+'>'+esc(c.k)+'</option>';}).join('');
-    var curC=cats.filter(function(c){return c.k===o.cat;})[0];
+    var catNow=accNormCat(o.cat);
+    var catOpts=cats.map(function(c){return '<option value="'+esc(c.k)+'"'+(c.k===catNow?' selected':'')+'>'+esc(c.k)+'</option>';}).join('');
+    var curC=cats.filter(function(c){return c.k===catNow;})[0];
     var subOpts='<option value="">不填二级</option>'+((curC&&curC.sub)||[]).map(function(s){return '<option value="'+esc(s)+'"'+(s===o.sub?' selected':'')+'>'+esc(s)+'</option>';}).join('');
     var accList=['微信','支付宝','现金','招行储蓄卡','建行卡','交行卡','工行卡'];
     var accOpts='<option value="">无账户</option>'+accList.map(function(a){return '<option value="'+a+'"'+((o.acc||'')===a?' selected':'')+'>'+a+'</option>';}).join('');
