@@ -172,7 +172,7 @@ textarea.diary:focus{border-color:#B9B9C2;background:#fff}
 .page-top{display:flex;align-items:center;justify-content:space-between;margin:22px 4px 16px;min-height:44px}
 .page-top .big-sec{margin:0;font-size:22px}
 .back-home{display:inline-flex;align-items:center;gap:4px;color:var(--accent);font-size:15px;font-weight:600;margin:0;padding:8px 0;flex:none}
-.back-home .bk{width:10px;height:18px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:.55;display:block}
+.back-home .bk{display:inline-block;font-size:20px;font-weight:400;line-height:1;opacity:.6;transform:translateY(-1px)}
 .big-sec .em{display:none}
 .page-top .big-sec{padding-left:8px;border-left:3px solid var(--accent-tint2);line-height:1.15}
 .mid-sec{font-size:16px;font-weight:700;color:var(--ink);margin:16px 4px 8px;padding-left:8px;border-left:3px solid var(--accent-tint2);letter-spacing:.4px}
@@ -614,7 +614,7 @@ body{background:var(--paper)}
 
   <!-- ========== 家庭生活 page-family ========== -->
   <div class="page" id="page-family" hidden>
-        <div class="page-top"><div class="big-sec" id="life-health">家庭生活</div><a class="back-home" href="javascript:App.go('home')"><svg class="bk" viewBox="0 0 10 18"><path d="M8 2 2 9l6 7"/></svg>返回</a></div>
+        <div class="page-top"><div class="big-sec" id="life-health">家庭生活</div><a class="back-home" href="javascript:App.go('home')"><span class="bk">‹</span>返回</a></div>
 
     <!-- 运动健康已移到「个人提升」页最上面 -->
 
@@ -659,7 +659,7 @@ body{background:var(--paper)}
 
   <!-- ========== 七弦文化 page-qixian(七彩和弦童声学院+七弦录音棚+公司事务) ========== -->
   <div class="page" id="page-qixian" hidden>
-        <div class="page-top"><div class="big-sec">七弦文化</div><a class="back-home" href="javascript:App.go('home')"><svg class="bk" viewBox="0 0 10 18"><path d="M8 2 2 9l6 7"/></svg>返回</a></div>
+        <div class="page-top"><div class="big-sec">七弦文化</div><a class="back-home" href="javascript:App.go('home')"><span class="bk">‹</span>返回</a></div>
 
     <div class="sec-title">📅 今日课表</div>
     <div class="card has-add tight">
@@ -728,7 +728,7 @@ body{background:var(--paper)}
 
   <!-- ========== 单位工作 page-work(文艺科在上+社会事务在下) ========== -->
   <div class="page" id="page-work" hidden>
-        <div class="page-top"><div class="big-sec">单位工作</div><a class="back-home" href="javascript:App.go('home')"><svg class="bk" viewBox="0 0 10 18"><path d="M8 2 2 9l6 7"/></svg>返回</a></div>
+        <div class="page-top"><div class="big-sec">单位工作</div><a class="back-home" href="javascript:App.go('home')"><span class="bk">‹</span>返回</a></div>
 
     <div class="sec-title">📋 文艺科工作</div>
     <div class="card has-add tight">
@@ -782,7 +782,7 @@ body{background:var(--paper)}
 
   <!-- ========== 记账 page-account(对齐钱迹:导出模板V10格式) ========== -->
   <div class="page" id="page-account" hidden>
-        <div class="page-top"><div class="big-sec">记账</div><a class="back-home" href="javascript:App.go('home')"><svg class="bk" viewBox="0 0 10 18"><path d="M8 2 2 9l6 7"/></svg>返回</a></div>
+        <div class="page-top"><div class="big-sec">记账</div><a class="back-home" href="javascript:App.go('home')"><span class="bk">‹</span>返回</a></div>
 
     <div class="card acc-overview" id="accOverview">
       <div class="acc-ov-item"><span class="muted">本月支出</span><span class="acc-red" id="accMonthOut">¥0</span></div>
@@ -868,7 +868,7 @@ body{background:var(--paper)}
 
   <!-- ========== 个人提升 page-growth(运动健康置顶 + 英语学习并入) ========== -->
   <div class="page" id="page-growth" hidden>
-        <div class="page-top"><div class="big-sec">个人提升</div><a class="back-home" href="javascript:App.go('home')"><svg class="bk" viewBox="0 0 10 18"><path d="M8 2 2 9l6 7"/></svg>返回</a></div>
+        <div class="page-top"><div class="big-sec">个人提升</div><a class="back-home" href="javascript:App.go('home')"><span class="bk">‹</span>返回</a></div>
 
 <div class="grid2">
       <div>
@@ -958,7 +958,7 @@ body{background:var(--paper)}
 
   <!-- ========== 娱乐休闲 page-fun ========== -->
   <div class="page" id="page-fun" hidden>
-        <div class="page-top"><div class="big-sec">娱乐休闲</div><a class="back-home" href="javascript:App.go('home')"><svg class="bk" viewBox="0 0 10 18"><path d="M8 2 2 9l6 7"/></svg>返回</a></div>
+        <div class="page-top"><div class="big-sec">娱乐休闲</div><a class="back-home" href="javascript:App.go('home')"><span class="bk">‹</span>返回</a></div>
 
     <div class="sec-title">🎬 娱乐清单</div>
     <div class="card has-add tight">
@@ -988,7 +988,7 @@ body{background:var(--paper)}
 
   <!-- ========== 回收站 page-trash ========== -->
   <div class="page" id="page-trash" hidden>
-        <div class="page-top"><div class="big-sec">回收站</div><a class="back-home" href="javascript:App.go('home')"><svg class="bk" viewBox="0 0 10 18"><path d="M8 2 2 9l6 7"/></svg>返回</a></div>
+        <div class="page-top"><div class="big-sec">回收站</div><a class="back-home" href="javascript:App.go('home')"><span class="bk">‹</span>返回</a></div>
     <div class="card tight">
       <div id="trashListPage"></div>
       <div class="muted" style="text-align:center;font-size:12px;padding:6px">勾选完成和删除的事项都收集在这里,可恢复</div>
@@ -998,7 +998,7 @@ body{background:var(--paper)}
 
   <!-- ========== AI任务 page-aiboard(6通道折叠 → 对话列表 → 详情) ========== -->
   <div class="page" id="page-aiboard" hidden>
-        <div class="page-top"><div class="big-sec">🤖 AI任务</div><a class="back-home" href="javascript:App.go('home')"><svg class="bk" viewBox="0 0 10 18"><path d="M8 2 2 9l6 7"/></svg>返回</a></div>
+        <div class="page-top"><div class="big-sec">🤖 AI任务</div><a class="back-home" href="javascript:App.go('home')"><span class="bk">‹</span>返回</a></div>
     <div class="muted" id="aibUpd" style="font-size:11px;color:var(--faint);padding:0 4px 8px">加载中…</div>
     <div id="aibList"><div class="aib-load">加载中…</div></div>
   </div>
@@ -2254,7 +2254,7 @@ var DIDATOKEN="68c8afb7-729a-4f62-b93a-a255e8356bca";
 var GHTOKEN='Z2hvX0I3OHBtTUdSNDJQSkQ0ME43'+'WklZTlRweVVpQWNmMzNuaExJMw==';
 <!--@GHTOKEN-END-->
 <!--@VER-->
-var APP_VER='202608201119';
+var APP_VER='202608201125';
 <!--@VER-END-->
 <!--@DIDA-->
 var DIDA={"todo": [{"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-19"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-19"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-19"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日", "due": "2026-09-07"}, {"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11"}, {"id": "69c0eb0a2ce549732e47892f", "pri": "高", "title": "花文峰的卡", "due": ""}, {"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": ""}, {"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": ""}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": ""}, {"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": ""}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": ""}], "fam": [{"id": "6a55e5212af75a0b23903310", "pri": "高", "title": "交行账单日", "due": "2026-09-11", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a02880fe4b02c74df02b2a8", "pri": "中", "title": "存9338到工行2903", "due": "2026-09-10", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e7632e86d9172f6f79df", "pri": "高", "title": "建行账单日", "due": "2026-09-07", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a55e55a20c879d321d5e1cb", "pri": "高", "title": "招行账单日", "due": "2026-09-06", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea596e4b0fe2f02f9e162", "pri": "高", "title": "TCT LSIL复查", "due": "2026-08-20", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c172e4b0b6824d0f1d13", "pri": "高", "title": "NMN 早 1 粒（空腹）", "due": "2026-08-19", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a6ea585e4b0f5d9e338e4a5", "pri": "高", "title": "内科检查", "due": "2026-08-19", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a59c17be4b0cb29013f04b9", "pri": "高", "title": "NMN 晚 1 粒（空腹）", "due": "2026-08-19", "project": "69c0cf59ebad3800000001bd"}, {"id": "69f08816e4b081670d135f8f", "pri": "无", "title": "医保开药", "due": "", "project": "69c0cf59ebad3800000001bd"}, {"id": "6a60b911e4b0f0082f6f8cef", "pri": "高", "title": "请刘建吃饭", "due": "", "project": "69c0cf59ebad3800000001bd"}], "shop": [{"id": "69f087c0e4b081670d135a0d", "pri": "无", "title": "美瞳", "due": "", "project": "69f081f8e4b00a29c8f261d3"}, {"id": "69fad766ebad380000000b3a", "pri": "低", "title": "62色号粉底液", "due": "", "project": "69f081f8e4b00a29c8f261d3"}], "qicai": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "studio": [{"id": "6a1556db2fcb3c4a2245376b", "pri": "高", "title": "录音拍摄定价", "due": "", "project": "69f178f6288a2d99229c7697"}], "wenyi": [{"id": "6960c814f9f4a9e28983d903", "pri": "高", "title": "💰彩虹的微笑票已开4600", "due": "", "project": "69c0cf16ebad38000000016c"}, {"id": "69fad71eebad380000000b06", "pri": "高", "title": "大海小城MV拍摄", "due": "", "project": "69c0cf16ebad38000000016c"}], "social": [{"id": "69f21142ebad3800000000c4", "pri": "高", "title": "长沙镇党建活动未报销", "due": "", "project": "69f1999221fab4f52de43863"}]};
