@@ -1,10 +1,29 @@
-<!doctype html><html lang=zh><head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=robots content=noindex,nofollow><title>大张工作台</title>
-<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
-font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#F4F5F2;color:#1B2530}
-.box{text-align:center;padding:32px}.t{font-size:18px;font-weight:600;margin-bottom:10px}
-.s{font-size:13px;color:#6E7A85;line-height:1.7}</style></head><body><div class=box>
-<div class=t>大张工作台已迁移到本地</div>
-<div class=s>请通过专用 APP 在连接 Tailscale 后使用<br>此公网页面仅作占位,不再提供数据</div>
-</div></body></html>
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大张工作台</title>
+<style>
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#1b2a4a;font-family:system-ui,sans-serif}
+.box{background:#fff;padding:30px 26px;border-radius:14px;width:min(340px,86vw);text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.mark{width:52px;height:52px;margin:0 auto 12px;background:#2f4b7c;color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700}
+h1{font-size:18px;color:#222;margin:0 0 4px}
+p{font-size:12px;color:#888;margin:0}
+.err{color:#c0392b;font-size:12px;margin-top:10px;display:none}
+</style>
+</head>
+<body>
+<div class="box">
+<div class="mark">张</div>
+<h1>大张工作台</h1>
+<p>正在进入…</p>
+<div class="err" id="err">入口暂不可用，稍后再试</div>
+</div>
+<script>
+fetch('tunnel.json?t='+Date.now()).then(function(r){return r.json()}).then(function(d){
+  if(d&&d.url){ location.replace(d.url); } else { throw 0; }
+}).catch(function(){ document.getElementById('err').style.display='block' });
+</script>
+</body>
+</html>
